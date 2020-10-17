@@ -6,9 +6,17 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
 
+[System.Serializable]
+public class HighScoreData
+{
+    public int HighScore;
+}
+
 /// <summary>
-/// ゲーム中のタイム管理とプレイヤーがゴール、又はゲームオーバー時の
-/// スコアの状態を監視するクラス
+/// ゲーム中のタイム管理とスコア管理
+/// 残り時間に応じてスコアをプラス
+/// 時間制限がある
+/// ステージの名前をKeyとして、それぞれのハイスコアを保存する
 /// </summary>
 public class ScoreAndTimeManager : MonoBehaviour
 {
@@ -17,6 +25,9 @@ public class ScoreAndTimeManager : MonoBehaviour
 
     bool m_inGame;
     public bool InGame { get => InGame = m_inGame; set => m_inGame = value; }
+
+    HighScoreData m_highScoreData;
+    string m_key;
 
     //singlton
     private static ScoreAndTimeManager m_instance;
@@ -42,6 +53,8 @@ public class ScoreAndTimeManager : MonoBehaviour
         {
             Destroy(this);
         }
+        m_highScoreData = new HighScoreData();
+        m_key = SceneManager.GetActiveScene().name;
     }
 
     // Update is called once per frame
@@ -65,16 +78,18 @@ public class ScoreAndTimeManager : MonoBehaviour
         InGame = true;
     }
 
-    /// <summary>
-    /// 残り時間に応じてスコアをプラス
-    /// 時間制限がある
-    /// </summary>
     public void OnGoal()
     {
         InGame = false;
         int m_resultScore = Mathf.FloorToInt(m_timeLimit) * 100;//ここは後で修正するだろう
+        //ハイスコアとリザルトスコアを比較する
+        if (m_resultScore > LoadHighScore())
+        {
+            SaveHighScore(m_resultScore);
+        }
+
         Debug.Log("Score: " + m_resultScore);
-        Debug.Log("Goal!!");
+        Debug.Log("HighScore: " + LoadHighScore());
     }
 
     /// <summary>
@@ -84,5 +99,32 @@ public class ScoreAndTimeManager : MonoBehaviour
     {
         InGame = false;
         Debug.Log("GameOver");
+    }
+
+
+    public void SaveHighScore(int score)
+    {
+        m_highScoreData.HighScore = score;//error
+        string json = JsonUtility.ToJson(m_highScoreData, true);
+        Debug.Log("シリアライズされた JSONデータ" + json);
+        PlayerPrefs.SetString(m_key, json);
+    }
+
+    public int LoadHighScore()
+    {
+        string json = PlayerPrefs.GetString(m_key);
+        m_highScoreData = JsonUtility.FromJson<HighScoreData>(json);
+        if (m_highScoreData == null)
+        {
+            //m_highScoreDate変数がインスタンスされない場合があるからここで保険としてインスタンス化している
+            m_highScoreData = new HighScoreData();
+            return 0;
+        }
+        return m_highScoreData.HighScore;
+    }
+
+    public void ResetHighScore()
+    {
+        SaveHighScore(0);
     }
 }
