@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
 /// <summary>
 /// ゲーム中のタイム管理とプレイヤーがゴール、又はゲームオーバー時の
@@ -42,7 +44,6 @@ public class ScoreAndTimeManager : MonoBehaviour
         }
     }
 
-
     // Update is called once per frame
     void Update()
     {
@@ -71,8 +72,8 @@ public class ScoreAndTimeManager : MonoBehaviour
     public void OnGoal()
     {
         InGame = false;
-        int score = Mathf.FloorToInt(m_timeLimit) * 100;//ここは後で修正するだろう
-        Debug.Log("Score ;" + score);
+        int m_resultScore = Mathf.FloorToInt(m_timeLimit) * 100;//ここは後で修正するだろう
+        Debug.Log("Score: " + m_resultScore);
         Debug.Log("Goal!!");
     }
 
