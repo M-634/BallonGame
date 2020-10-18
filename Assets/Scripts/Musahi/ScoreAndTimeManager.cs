@@ -12,6 +12,11 @@ public class HighScoreData
 {
     public int HighScore;
 }
+//*****
+//シングルトンのクラスにセーブ機能があるのはまずいので
+//機能のに応じてクラスを分ける
+//time score save
+//*****
 
 /// <summary>
 /// ゲーム中のタイム管理とスコア管理
