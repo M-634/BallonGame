@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
+using UnityEditor;
 
 [System.Serializable]
 public class HighScoreData
@@ -16,7 +17,7 @@ public class HighScoreData
 /// ゲーム中のタイム管理とスコア管理
 /// 残り時間に応じてスコアをプラス
 /// 時間制限がある
-/// ステージの名前をKeyとして、それぞれのハイスコアを保存する
+/// ステージの名前をpathとして、それぞれのハイスコアを保存する
 /// </summary>
 public class ScoreAndTimeManager : MonoBehaviour
 {
@@ -27,7 +28,9 @@ public class ScoreAndTimeManager : MonoBehaviour
     public bool InGame { get => InGame = m_inGame; set => m_inGame = value; }
 
     HighScoreData m_highScoreData;
-    string m_key;
+    public int m_currentGetScore;
+    int m_HighScore;
+    string m_path;
 
     //singlton
     private static ScoreAndTimeManager m_instance;
@@ -53,8 +56,13 @@ public class ScoreAndTimeManager : MonoBehaviour
         {
             Destroy(this);
         }
+    }
+
+    private void Start()
+    {
+        m_path = Application.dataPath + $"/{SceneManager.GetActiveScene().name}_HighScoreData.json";
         m_highScoreData = new HighScoreData();
-        m_key = SceneManager.GetActiveScene().name;
+        m_HighScore = LoadHighScore();
     }
 
     // Update is called once per frame
@@ -81,15 +89,15 @@ public class ScoreAndTimeManager : MonoBehaviour
     public void OnGoal()
     {
         InGame = false;
-        int m_resultScore = Mathf.FloorToInt(m_timeLimit) * 100;//ここは後で修正するだろう
+        int m_resultScore = Mathf.FloorToInt(m_timeLimit) * 100 + m_currentGetScore;//ここは後で修正するだろう
         //ハイスコアとリザルトスコアを比較する
-        if (m_resultScore > LoadHighScore())
+        if (m_resultScore > m_HighScore)
         {
             SaveHighScore(m_resultScore);
+            m_HighScore = m_resultScore;
         }
-
         Debug.Log("Score: " + m_resultScore);
-        Debug.Log("HighScore: " + LoadHighScore());
+        Debug.Log("HighScore: " + m_HighScore);
     }
 
     /// <summary>
@@ -101,25 +109,40 @@ public class ScoreAndTimeManager : MonoBehaviour
         Debug.Log("GameOver");
     }
 
+    public void AddScore(int score)
+    {
+        m_currentGetScore += score;
+    }
 
     public void SaveHighScore(int score)
     {
         m_highScoreData.HighScore = score;//error
         string json = JsonUtility.ToJson(m_highScoreData, true);
         Debug.Log("シリアライズされた JSONデータ" + json);
-        PlayerPrefs.SetString(m_key, json);
+        
+        //ハイスコアを上書きする
+        StreamWriter writer = new StreamWriter(m_path, false);
+        writer.Write(json);
+        writer.Flush();
+        writer.Close();
+        Debug.Log("Saving HighScore.....");
     }
 
     public int LoadHighScore()
     {
-        string json = PlayerPrefs.GetString(m_key);
-        m_highScoreData = JsonUtility.FromJson<HighScoreData>(json);
-        if (m_highScoreData == null)
+        if (!File.Exists(m_path))
         {
-            //m_highScoreDate変数がインスタンスされない場合があるからここで保険としてインスタンス化している
-            m_highScoreData = new HighScoreData();
+            //make file
+            SaveHighScore(0);
+            Debug.Log("Initialize file.....");
             return 0;
         }
+
+        StreamReader reader = new StreamReader(m_path);
+        string json = reader.ReadToEnd();
+        reader.Close();
+        m_highScoreData = JsonUtility.FromJson<HighScoreData>(json);
+        Debug.Log("Loading HighScore.....");
         return m_highScoreData.HighScore;
     }
 
