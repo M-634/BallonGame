@@ -245,7 +245,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1d9ca427c00fdf4a871c9ca5ec6b543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_getScore: 100
+  m_OnCollissionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1370690758}
+        m_MethodName: GetCoin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!135 &203794016
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -254,7 +267,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 203794014}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -318,7 +331,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &547524817
 GameObject:
@@ -498,13 +511,14 @@ GameObject:
   - component: {fileID: 805818377}
   - component: {fileID: 805818376}
   - component: {fileID: 805818375}
+  - component: {fileID: 805818379}
   m_Layer: 0
   m_Name: Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &805818375
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -577,8 +591,34 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &805818379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805818374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d34ba180592f6a47b69ebaaa02bbe55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OnCollissionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1370690756}
+        m_MethodName: GameOver
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &852427548
 GameObject:
   m_ObjectHideFlags: 0
@@ -798,9 +838,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1370690757}
+  - component: {fileID: 1370690758}
   - component: {fileID: 1370690756}
   m_Layer: 0
-  m_Name: Manager
+  m_Name: '[Manager]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -815,12 +856,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1370690755}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ab4e87f3275db841b22e3bd9ef04e78, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d899d99d35af664e842eeff9320745a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_timeLimitText: {fileID: 1837389731}
   m_timeLimit: 60
-  m_currentGetScore: 0
 --- !u!4 &1370690757
 Transform:
   m_ObjectHideFlags: 0
@@ -829,12 +869,27 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1370690755}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.582027, y: -5.901407, z: 4.0503545}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1370690758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370690755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf6d2614aec3a841b62170abb63e68d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_currentScore: 0
+  m_currentHighScore: 0
+  m_getCoinScore: 100
 --- !u!1 &1550367975
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,7 +922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b349eebf5c702b841ab087653af9edcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_onGoal:
+  m_OnCollissionEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1370690756}
@@ -949,11 +1004,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1550367975}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 19.34}
+  m_LocalPosition: {x: 0, y: 1, z: 7.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1837389730
 GameObject:

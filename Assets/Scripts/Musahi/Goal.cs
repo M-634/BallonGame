@@ -3,15 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Goal : MonoBehaviour
+public class Goal : CollisionEvent
 {
-    [SerializeField] UnityEvent m_onGoal;
-
-    private void OnTriggerEnter(Collider other)
+    public override void AddEvent()
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            m_onGoal?.Invoke();
-        }
+        Debug.Log("Goal");
     }
 }
