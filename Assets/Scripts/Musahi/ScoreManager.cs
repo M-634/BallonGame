@@ -13,7 +13,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] int m_currentScore;
     [SerializeField] int m_currentHighScore;
     /// <summary>コイン獲得時に得られるスコア</summary>
-    [SerializeField] int m_getCoinScore = 100;
+    [SerializeField]  const int m_getCoinScore = 100;
 
     SaveAndLoadWithJSON m_json;
     string m_path;
