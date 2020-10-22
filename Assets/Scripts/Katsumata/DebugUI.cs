@@ -16,8 +16,12 @@ public class DebugUI : MonoBehaviour
     [SerializeField] Text swipeCoefficientText;
     public Slider forwardForce;
     [SerializeField] Text forwardForceText;
-    public Slider brakeCoefficient;
-    [SerializeField] Text brakeCoefficientText;
+    public Slider forwardBrakeCoefficient;
+    [SerializeField] Text forwardBrakeCoefficientText;
+    [SerializeField] Text rotateForceText;
+    [SerializeField] Text rotateBrakeCoefficientText;
+    public Slider rotateBrakeCoefficient;
+
 
     private void Start()
     {
@@ -30,7 +34,9 @@ public class DebugUI : MonoBehaviour
         swipeDistanceText.text = "swipeした距離 : " + playerController.swipeDistance_x;
         swipeCoefficientText.text = "horizontal : " + swipeCoefficient.value;
         forwardForceText.text = "forwardForce : " + forwardForce.value;
-        brakeCoefficientText.text = "空気摩擦係数 : " + brakeCoefficient.value;
+        forwardBrakeCoefficientText.text = "空気摩擦係数 : " + forwardBrakeCoefficient.value;
+        rotateForceText.text = "rotateForce : " + playerController.debugRotateForce;
+        rotateBrakeCoefficientText.text = "回転減衰係数 : " + rotateBrakeCoefficient.value;
     }
 
     public void OnDebugButton()
