@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Coin :  CollisionEvent
+public class GoalEvent : CollisionEvent<GoalEvent>
 {
     public override void AddEvent()
     {
-        this.gameObject.SetActive(false);
-        Debug.Log("get coin");
+        TimeScheduler.Instance.OnGoal();
+        Debug.Log("Goal");
     }
 }

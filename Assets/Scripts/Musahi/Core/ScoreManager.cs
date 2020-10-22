@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 /// <summary>
 ///タイムリミットの残り時間とPlayerが獲得したコイン数のスコアを管理する。
 ///ハイスコアが出たらセーブする。
@@ -17,6 +18,32 @@ public class ScoreManager : MonoBehaviour
 
     SaveAndLoadWithJSON m_json;
     string m_path;
+
+    //singlton
+    private static ScoreManager m_instance;
+    public static ScoreManager Instance
+    {
+        get
+        {
+            if (m_instance == null)
+            {
+                m_instance = FindObjectOfType<ScoreManager>();
+                if (m_instance == null)
+                {
+                    Debug.LogError("TimeShedulerをアタッチしているGameObjectはありません");
+                }
+            }
+            return m_instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if (m_instance != null && this != Instance)
+        {
+            Destroy(this);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +59,7 @@ public class ScoreManager : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーがコインに衝突したらイベントで呼ばれる関数
+    /// プレイヤーがコインに衝突したら呼ばれる関数
     /// </summary>
     public void GetCoin()
     {
@@ -40,7 +67,7 @@ public class ScoreManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ゴール時にTimesheduler呼ばれる関数
+    /// ゴール時にTimeshedulernのOnGoal()から呼ばれる関数
     /// タイムリミットの残り時間をスコアに加えへリザルトを出す。
     /// </summary>
     public void AddTimeScore(int timeScore)

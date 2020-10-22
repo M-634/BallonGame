@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// プレイヤーの衝突イベントをまとめるベースクラス
+/// プレイヤーと衝突するオブジェクのイベントをまとめたベースクラス
 /// </summary>
-public class CollisionEvent :MonoBehaviour
+public abstract class CollisionEvent<T> :MonoBehaviour where T:MonoBehaviour
 {
-    [SerializeField] protected UnityEvent  m_OnCollissionEvent;
+    protected UnityEvent  m_OnCollissionEvent;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -29,7 +29,7 @@ public class CollisionEvent :MonoBehaviour
     }
 
     /// <summary>
-    /// 派生クラスで追加したいs衝突時のイベント
+    /// 衝突時に呼ばれたいイベントを追加する抽象関数
     /// </summary>
-    public virtual void AddEvent() { }
+    public abstract void AddEvent();
 }
