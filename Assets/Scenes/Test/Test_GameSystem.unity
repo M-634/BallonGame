@@ -245,20 +245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1d9ca427c00fdf4a871c9ca5ec6b543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_OnCollissionEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1370690758}
-        m_MethodName: GetCoin
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!135 &203794016
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -587,7 +573,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805818374}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.42, z: 9.56}
+  m_LocalPosition: {x: 0, y: 1.42, z: 11.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -605,20 +591,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d34ba180592f6a47b69ebaaa02bbe55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_OnCollissionEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1370690756}
-        m_MethodName: GameOver
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &852427548
 GameObject:
   m_ObjectHideFlags: 0
@@ -861,7 +833,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_timeLimitText: {fileID: 1837389731}
   m_timeLimit: 60
-  m_scoreManager: {fileID: 1370690758}
 --- !u!4 &1370690757
 Transform:
   m_ObjectHideFlags: 0
@@ -922,20 +893,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b349eebf5c702b841ab087653af9edcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_OnCollissionEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1370690756}
-        m_MethodName: OnGoal
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!65 &1550367977
 BoxCollider:
   m_ObjectHideFlags: 0

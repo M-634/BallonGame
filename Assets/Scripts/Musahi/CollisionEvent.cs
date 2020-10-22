@@ -6,16 +6,14 @@ using UnityEngine.Events;
 /// <summary>
 /// プレイヤーと衝突するオブジェクのイベントをまとめたベースクラス
 /// </summary>
+[RequireComponent(typeof(Collider))]
 public abstract class CollisionEvent<T> :MonoBehaviour where T:MonoBehaviour
 {
-    protected UnityEvent  m_OnCollissionEvent;
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            m_OnCollissionEvent.AddListener(() => AddEvent());
-            m_OnCollissionEvent?.Invoke();
+            AddEvent();
         }
     }
 
@@ -23,8 +21,7 @@ public abstract class CollisionEvent<T> :MonoBehaviour where T:MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            m_OnCollissionEvent.AddListener(() => AddEvent());
-            m_OnCollissionEvent?.Invoke();
+            AddEvent();
         }
     }
 
@@ -33,3 +30,4 @@ public abstract class CollisionEvent<T> :MonoBehaviour where T:MonoBehaviour
     /// </summary>
     public abstract void AddEvent();
 }
+
