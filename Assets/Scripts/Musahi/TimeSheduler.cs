@@ -13,6 +13,7 @@ public class TimeSheduler : MonoBehaviour
     [SerializeField] Text m_timeLimitText;
     [SerializeField] float m_timeLimit = 300f;
 
+    [SerializeField] ScoreManager m_scoreManager;
     /// <summary>ゲーム中かどうか判定する </summary>
     public bool InGame { get; set; }
 
@@ -70,7 +71,7 @@ public class TimeSheduler : MonoBehaviour
     {
         InGame = false;
         int timeScore = Mathf.FloorToInt(m_timeLimit) * 100;//修正ポイント(どういう計算になるかは未定)
-        GetComponent<ScoreManager>().AddTimeScore(timeScore);
+        m_scoreManager.AddTimeScore(timeScore);
     }
 
     /// <summary>
