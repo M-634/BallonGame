@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Musahi : MonoBehaviour
+public class Shimada : MonoBehaviour
 {
-      //ここは俺のフォルダー
+    //ここは島田のフォルダーだ
 }
