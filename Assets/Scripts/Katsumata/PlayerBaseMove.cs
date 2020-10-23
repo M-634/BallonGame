@@ -70,7 +70,7 @@ public class PlayerBaseMove : MonoBehaviour
         if (Input.touchCount > 0)
         {
             touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
+            if (touch.phase == TouchPhase.Ended)
             {
                 m_rb.AddForce(this.transform.forward * forwardForce);
             }
