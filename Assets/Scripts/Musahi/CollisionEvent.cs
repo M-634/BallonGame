@@ -4,18 +4,16 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// プレイヤーの衝突イベントをまとめるベースクラス
+/// プレイヤーと衝突するオブジェクのイベントをまとめたベースクラス
 /// </summary>
-public class CollisionEvent :MonoBehaviour
+[RequireComponent(typeof(Collider))]
+public abstract class CollisionEvent<T> :MonoBehaviour where T:MonoBehaviour
 {
-    [SerializeField] protected UnityEvent  m_OnCollissionEvent;
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            m_OnCollissionEvent.AddListener(() => AddEvent());
-            m_OnCollissionEvent?.Invoke();
+            AddEvent();
         }
     }
 
@@ -23,13 +21,13 @@ public class CollisionEvent :MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            m_OnCollissionEvent.AddListener(() => AddEvent());
-            m_OnCollissionEvent?.Invoke();
+            AddEvent();
         }
     }
 
     /// <summary>
-    /// 派生クラスで追加したいs衝突時のイベント
+    /// 衝突時に呼ばれたいイベントを追加する抽象関数
     /// </summary>
-    public virtual void AddEvent() { }
+    public abstract void AddEvent();
 }
+
