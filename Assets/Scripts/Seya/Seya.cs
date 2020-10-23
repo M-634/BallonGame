@@ -2,7 +2,6 @@
 
 public class Seya : MonoBehaviour
 {    // 瀬谷です
-    [SerializeField] bool isDrill;
     [SerializeField] bool isLeft;
     private const float radius = 11.0f;
     private float angle = 0.0f;
