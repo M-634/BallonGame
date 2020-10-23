@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 /// <summary>
@@ -8,40 +10,13 @@ using UnityEngine.UI;
 /// ゲームはタイムリミット制。
 /// </summary>
 [RequireComponent(typeof(ScoreManager))]
-public class TimeSheduler : MonoBehaviour
+public class TimeScheduler : SingletonMonoBehavior<TimeScheduler>
 {
     [SerializeField] Text m_timeLimitText;
     [SerializeField] float m_timeLimit = 300f;
 
-    [SerializeField] ScoreManager m_scoreManager;
     /// <summary>ゲーム中かどうか判定する </summary>
     public bool InGame { get; set; }
-
-    //singlton
-    private static TimeSheduler m_instance;
-    public static TimeSheduler Instance
-    {
-        get
-        {
-            if (m_instance == null)
-            {
-                m_instance = FindObjectOfType<TimeSheduler>();
-                if (m_instance == null)
-                {
-                    Debug.LogError("TimeShedulerをアタッチしているGameObjectはありません");
-                }
-            }
-            return m_instance;
-        }
-    }
-
-    private void Awake()
-    {
-        if (m_instance != null && this != Instance)
-        {
-            Destroy(this);
-        }
-    }
 
     // Update is called once per frame
     void Update()
@@ -71,7 +46,7 @@ public class TimeSheduler : MonoBehaviour
     {
         InGame = false;
         int timeScore = Mathf.FloorToInt(m_timeLimit) * 100;//修正ポイント(どういう計算になるかは未定)
-        m_scoreManager.AddTimeScore(timeScore);
+        ScoreManager.Instance.AddTimeScore(timeScore);
     }
 
     /// <summary>
