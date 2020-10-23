@@ -34,6 +34,7 @@ public class Maeda : MonoBehaviour
         else
         {
             gameObject.transform.localScale += new Vector3(0, 10 * increase, 0) * Time.deltaTime;
+
             if (gameObject.transform.localScale.y >= 20)
             {
                 increase *= -1;

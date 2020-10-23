@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 /// <summary>
 ///タイムリミットの残り時間とPlayerが獲得したコイン数のスコアを管理する。
 ///ハイスコアが出たらセーブする。
 /// </summary>
-public class ScoreManager : MonoBehaviour
+public class ScoreManager : SingletonMonoBehavior<ScoreManager>
 {
     [SerializeField] int m_currentScore;
     [SerializeField] int m_currentHighScore;
@@ -32,7 +33,7 @@ public class ScoreManager : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーがコインに衝突したらイベントで呼ばれる関数
+    /// プレイヤーがコインに衝突したら呼ばれる関数
     /// </summary>
     public void GetCoin()
     {
@@ -40,7 +41,7 @@ public class ScoreManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ゴール時にTimesheduler呼ばれる関数
+    /// ゴール時にTimeshedulernのOnGoal()から呼ばれる関数
     /// タイムリミットの残り時間をスコアに加えへリザルトを出す。
     /// </summary>
     public void AddTimeScore(int timeScore)
