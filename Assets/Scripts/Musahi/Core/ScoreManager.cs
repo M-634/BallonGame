@@ -9,7 +9,7 @@ using UnityEngine.UI;
 ///タイムリミットの残り時間とPlayerが獲得したコイン数のスコアを管理する。
 ///ハイスコアが出たらセーブする。
 /// </summary>
-public class ScoreManager : MonoBehaviour
+public class ScoreManager : SingletonMonoBehavior<ScoreManager>
 {
     [SerializeField] int m_currentScore;
     [SerializeField] int m_currentHighScore;
@@ -18,32 +18,6 @@ public class ScoreManager : MonoBehaviour
 
     SaveAndLoadWithJSON m_json;
     string m_path;
-
-    //singlton
-    private static ScoreManager m_instance;
-    public static ScoreManager Instance
-    {
-        get
-        {
-            if (m_instance == null)
-            {
-                m_instance = FindObjectOfType<ScoreManager>();
-                if (m_instance == null)
-                {
-                    Debug.LogError("TimeShedulerをアタッチしているGameObjectはありません");
-                }
-            }
-            return m_instance;
-        }
-    }
-
-    private void Awake()
-    {
-        if (m_instance != null && this != Instance)
-        {
-            Destroy(this);
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
