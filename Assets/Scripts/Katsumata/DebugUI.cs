@@ -7,7 +7,7 @@ public class DebugUI : MonoBehaviour
 {
     [SerializeField] GameObject player;
     [SerializeField] Text playerSpeedText;
-    [SerializeField] PlayerController playerController;
+    [SerializeField] PlayerBaseMove playerController;
     [SerializeField] Text swipeDistanceText;
     [SerializeField] Button debugButton;
     [SerializeField] Button backButton;
@@ -25,7 +25,7 @@ public class DebugUI : MonoBehaviour
 
     private void Start()
     {
-        playerController = player.GetComponent<PlayerController>();
+        playerController = player.GetComponent<PlayerBaseMove>();
     }
     // Update is called once per frame
     void Update()
