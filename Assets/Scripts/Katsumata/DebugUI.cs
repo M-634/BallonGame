@@ -21,6 +21,8 @@ public class DebugUI : MonoBehaviour
     [SerializeField] Text rotateForceText;
     [SerializeField] Text rotateBrakeCoefficientText;
     public Slider rotateBrakeCoefficient;
+    [SerializeField] Text maxSpeedText;
+    public Slider maxSpeed;
 
 
     private void Start()
@@ -37,6 +39,7 @@ public class DebugUI : MonoBehaviour
         forwardBrakeCoefficientText.text = "空気摩擦係数 : " + forwardBrakeCoefficient.value;
         rotateForceText.text = "rotateForce : " + playerController.debugRotateForce;
         rotateBrakeCoefficientText.text = "回転減衰係数 : " + rotateBrakeCoefficient.value;
+        maxSpeedText.text = "最大速度 : " + maxSpeed.name;
     }
 
     public void OnDebugButton()

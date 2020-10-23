@@ -10,6 +10,7 @@ public class PlayerBaseMove : MonoBehaviour
     [SerializeField, Range(0, 1f)] public float rotateBrekeCoefficient = 0.9f;
     
     public float speed;
+    public float maxSpeed = 50;
     [SerializeField] public float horizontalSpeed = 2.0f;
     Vector3 mouthPosi;
 
@@ -40,6 +41,8 @@ public class PlayerBaseMove : MonoBehaviour
     }
     void FixedUpdate()
     {
+
+
         if (mouthDebug)
         {
             MouthAim();
@@ -86,6 +89,11 @@ public class PlayerBaseMove : MonoBehaviour
         }
     }
 
+    void SpeedLimiting()
+    {
+        //m_rb.velocity.magnitude = maxSpeed;
+    }
+
     void Swipe()
     {
 
@@ -103,30 +111,7 @@ public class PlayerBaseMove : MonoBehaviour
             touchPos = new Vector2(
             (swipeDistance_x) / Screen.width, 0);
         }
-
-        //if (touch.phase == TouchPhase.Ended && swipe)
-        //{
-        //    swipeDistance_x = touch.position.x - touchBeginPos.x; //現状デバッグ用に変数作って取得してる
-        //    touchPos = new Vector2(
-        //    (swipeDistance_x) / Screen.width, 0);
-        //}
     }
-
-    //public void TouchBegin()
-    //{
-    //    touchBeginPos = touch.position;
-    //    Debug.Log("イベント発生！");
-    //}
-    //public void TouchEnd()
-    //{
-    //    swipe = true;
-    //    touchEndPos = touch.position;
-    //    swipeDistance_x = touch.position.x - touchBeginPos.x; //現状デバッグ用に変数作って取得してる
-    //    touchPos = new Vector2(
-    //    (swipeDistance_x) / Screen.width, 0);
-    //    Debug.Log("touchEndイベント発生！");
-    //}
-
     void MouthAim()
     {
         mouthPosi = Input.mousePosition;
@@ -178,5 +163,10 @@ public class PlayerBaseMove : MonoBehaviour
     public void ChangeRotateBrakeCoefficient()
     {
         rotateBrekeCoefficient = debugUI.rotateBrakeCoefficient.value;
+    }
+    /// <summary>これもデバッグ用、MaxSpeedSliderのOnValueChangedで呼び出してる</summary>
+    public void ChangeMaxSpeed()
+    {
+        maxSpeed = debugUI.maxSpeed.value;
     }
 }
