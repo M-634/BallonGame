@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerBaseMove : MonoBehaviour
 {
     Rigidbody m_rb;
-    [SerializeField] float forwardForce = 50;
+    public float forwardForce = 50;
     [SerializeField, Range(0, 1f)] public float forwardBrekeCoefficient = 0.995f;
     [SerializeField, Range(0, 1f)] public float rotateBrekeCoefficient = 0.9f;
-    
-    public float speed;
+
+    public float Speed { get; private set; }
     public float maxSpeed = 50;
     [SerializeField] public float horizontalSpeed = 2.0f;
     Vector3 mouthPosi;
@@ -19,29 +19,30 @@ public class PlayerBaseMove : MonoBehaviour
     Vector2 touchBeginPos;
     //Vector2 touchEndPos;
     public float swipeDistance_x = 0;
-    DebugUI debugUI = new DebugUI();
     [SerializeField] GameObject debugUIobj;
     [SerializeField] bool mouthDebug;
     /// <summary>スワイプをしたかどうかのフラグ。回転力を加えるとき一回だけrotateForceに+=をしたい </summary>
     bool swipe = false;
     float rotateForce = 0;
     public float debugRotateForce = 0;
-    
+
 
 
     private void Start()
     {
         m_rb = GetComponent<Rigidbody>();
-        debugUI = debugUIobj.GetComponent<DebugUI>();
     }
     // Update is called once per frame
     private void Update()
     {
-        speed = m_rb.velocity.magnitude;
+        Speed = m_rb.velocity.magnitude;
     }
     void FixedUpdate()
     {
-
+        //if (!TimeScheduler.Instance.InGame)
+        //{
+        //    return;
+        //}
 
         if (mouthDebug)
         {
@@ -139,34 +140,5 @@ public class PlayerBaseMove : MonoBehaviour
         transform.Rotate(0, rotateForce, 0);
         debugRotateForce = rotateForce;
         swipe = false;
-
-    }
-
-    /// <summary>デバッグ用、SwipeCoefficientSliderのOnValueChangedで呼び出してる</summary>
-    public void ChangeSwipeCoefficient()
-    {
-        horizontalSpeed = debugUI.swipeCoefficient.value;
-    }
-
-    /// <summary>これもデバッグ用、FowrardForceSliderのOnValueChangedで呼び出してる</summary>
-    public void ChangeForwardForce()
-    {
-        forwardForce = debugUI.forwardForce.value;
-    }
-
-    /// <summary>これもデバッグ用、airBreakCoefficientSliderのOnValueChangedで呼び出してる</summary>
-    public void ChangeForwardBrakeCoefficient()
-    {
-        forwardBrekeCoefficient = debugUI.forwardBrakeCoefficient.value;
-    }
-    /// <summary>これもデバッグ用、RotateBrakeCoefficientSliderのOnValueChangedで呼び出してる</summary>
-    public void ChangeRotateBrakeCoefficient()
-    {
-        rotateBrekeCoefficient = debugUI.rotateBrakeCoefficient.value;
-    }
-    /// <summary>これもデバッグ用、MaxSpeedSliderのOnValueChangedで呼び出してる</summary>
-    public void ChangeMaxSpeed()
-    {
-        maxSpeed = debugUI.maxSpeed.value;
     }
 }
