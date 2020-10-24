@@ -2,29 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// デフォルトのユーザー制御によるプレイヤーの動きを制御する
+/// </summary>
 public class PlayerBaseMove : MonoBehaviour
 {
     Rigidbody m_rb;
+    /// <summary>全身する力。RigidBodyのAddForceで制御する </summary>
     public float forwardForce = 50;
-    [SerializeField, Range(0, 1f)] public float forwardBrekeCoefficient = 0.995f;
+    /// <summary>空気抵抗の比率 </summary>
+    [SerializeField, Range(0, 1f)] public float airBrekeCoefficient = 0.995f;
+    /// <summary>回転の減衰比率 </summary>
     [SerializeField, Range(0, 1f)] public float rotateBrekeCoefficient = 0.9f;
-
+    /// <summary>横向いた時の追加速度の減衰比率 </summary>
+    [SerializeField, Range(0, 1f)] public float addAirBrake = 0.7f;
+    /// <summary>速度を格納する。現状DebugUIに値を渡してる </summary>
     public float Speed { get; private set; }
+    /// <summary>速度制限をする。最大速度 </summary>
     public float maxSpeed = 50;
+    /// <summary>最大速度を超過したときにかかるブレーキの係数 </summary>
+    [SerializeField, Range(0, 1f)] public float maxSpeedExcessBrake = 0.9f;
+    /// <summary>スワイプした時にどの程度指に付いてくるかの係数 </summary>
     [SerializeField] public float horizontalSpeed = 2.0f;
+
+    /// <summary>touchを格納、画面タッチをしてる一本目の指を取得する。現状指一本 </summary>
+    Touch touch;
+    /// <summary>一本目の指のタッチしてる座標を取得する </summary>
+    Vector2 touchPos = new Vector2();
+    /// <summary>一本目の指のタッチしてる座標を取得し、スワイプするときの最初に触れた場所 </summary>
+    Vector2 touchBeginPos;
+    /// <summary>x軸のスワイプの動きを格納する</summary>
+    public float swipeDistance_x = 0;
+
+    [SerializeField] GameObject debugUIobj;
+
+    /// <summary>unity上でマウスを使ってデバッグを行う時にフラグをオンにする </summary>
+    [SerializeField] bool mouthDebug;
     Vector3 mouthPosi;
 
-    Touch touch;
-    Vector2 touchPos = new Vector2();
-    Vector2 touchBeginPos;
-    //Vector2 touchEndPos;
-    public float swipeDistance_x = 0;
-    [SerializeField] GameObject debugUIobj;
-    [SerializeField] bool mouthDebug;
     /// <summary>スワイプをしたかどうかのフラグ。回転力を加えるとき一回だけrotateForceに+=をしたい </summary>
     bool swipe = false;
-    float rotateForce = 0;
-    public float debugRotateForce = 0;
+    /// <summary> プレイヤーの回転速度</summary>
+    public float rotateSpeed { get; private set; }
+
 
 
 
@@ -55,14 +75,12 @@ public class PlayerBaseMove : MonoBehaviour
             Swipe();
         }
 
-        m_rb.velocity = m_rb.velocity * forwardBrekeCoefficient;
-        if (m_rb.velocity.magnitude < 0.01)
+        AirBrake();
+        if (m_rb.velocity.magnitude > maxSpeed)
         {
-            m_rb.velocity = m_rb.velocity * 0;
+            SpeedLimiting();
         }
-
-
-        AddRotatePlayer();
+        RotatePlayer();
     }
 
     /// <summary>加減速を計算する</summary>
@@ -78,6 +96,86 @@ public class PlayerBaseMove : MonoBehaviour
         }
     }
 
+    
+    /// <summary>
+    /// スピードの最高速度を設定。超過したら空気抵抗を強める
+    /// </summary>
+    void SpeedLimiting()
+    {
+        m_rb.velocity = m_rb.velocity * maxSpeedExcessBrake;
+    }
+
+    /// <summary>
+    /// スワイプした距離を測る関数
+    /// </summary>
+    void Swipe()
+    {
+        // 画面タッチが行われたら
+        if (touch.phase == TouchPhase.Began)
+        {
+            touchBeginPos = touch.position;
+            swipeDistance_x = 0;
+        }
+
+        if (touch.phase == TouchPhase.Moved)
+        {
+            swipe = true;
+            swipeDistance_x = touch.position.x - touchBeginPos.x; //現状DebugUI用に変数作って取得してる
+            touchPos = new Vector2(
+            (swipeDistance_x) / Screen.width, 0);
+        }
+    }
+
+    /// <summary>
+    /// ユーザーのスワイプした距離をプレイヤーの回転を反映する関数
+    /// </summary>
+    void RotatePlayer()
+    {
+        //プレイヤーのスワイプ以外での回転を無くす
+        if (m_rb.angularVelocity.magnitude > 0)
+        {
+            m_rb.angularVelocity = m_rb.angularVelocity * 0;
+        }
+
+        if (swipe || mouthDebug)
+        {
+            rotateSpeed = horizontalSpeed * touchPos.x;
+        }
+        else
+        {
+            rotateSpeed *= rotateBrekeCoefficient;
+            if (Mathf.Abs(rotateSpeed) <= 0.01)
+            {
+                rotateSpeed = 0;
+            }
+        }
+
+        transform.Rotate(0, rotateSpeed, 0);
+        swipe = false;
+    }
+
+    /// <summary>
+    /// 空気抵抗を処理する。
+    /// 横を向かせるようにスワイプするとブレーキが強まる。
+    /// 一定値未満のスピードだと止まる
+    /// </summary>
+    void AirBrake()
+    {
+        m_rb.velocity = m_rb.velocity * airBrekeCoefficient;
+        if (rotateSpeed > 0.1f)
+        {
+            m_rb.velocity = m_rb.velocity * addAirBrake;
+        }
+
+        if (m_rb.velocity.magnitude < 0.01)
+        {
+            m_rb.velocity = m_rb.velocity * 0;
+        }
+    }
+
+    /// <summary>
+    /// unityで実行してデバッグする用。マウスクリックで加速
+    /// </summary>
     void MouthForce()
     {
         if (Input.GetMouseButtonDown(0))
@@ -90,55 +188,12 @@ public class PlayerBaseMove : MonoBehaviour
         }
     }
 
-    void SpeedLimiting()
-    {
-        //m_rb.velocity.magnitude = maxSpeed;
-    }
-
-    void Swipe()
-    {
-
-        // 画面タッチが行われたら
-        if (touch.phase == TouchPhase.Began)
-        {
-            touchBeginPos = touch.position;
-            swipeDistance_x = 0;
-        }
-
-        if (touch.phase == TouchPhase.Moved)
-        {
-            swipe = true;
-            swipeDistance_x = touch.position.x - touchBeginPos.x; //現状デバッグ用に変数作って取得してる
-            touchPos = new Vector2(
-            (swipeDistance_x) / Screen.width, 0);
-        }
-    }
+    /// <summary>
+    /// デバッグ用。プレイヤーがマウスの方を向く
+    /// </summary>
     void MouthAim()
     {
         mouthPosi = Input.mousePosition;
         touchPos.x = mouthPosi.x / Screen.width;
-    }
-    void AddRotatePlayer()
-    {
-        if (m_rb.angularVelocity.magnitude > 0)
-        {
-            m_rb.angularVelocity = m_rb.angularVelocity * 0;
-        }
-        if (swipe || mouthDebug)
-        {
-            rotateForce = horizontalSpeed * touchPos.x;
-        }
-        else
-        {
-            rotateForce *= rotateBrekeCoefficient;
-            if (Mathf.Abs(rotateForce) <= 0.01)
-            {
-                rotateForce = 0;
-            }
-        }
-
-        transform.Rotate(0, rotateForce, 0);
-        debugRotateForce = rotateForce;
-        swipe = false;
     }
 }
