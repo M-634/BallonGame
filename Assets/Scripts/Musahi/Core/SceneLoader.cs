@@ -14,22 +14,19 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
 {
     private IEnumerator m_currentLoadCorutine;
 
-    public void LoadAddtiveWithCallback(string sceneName,UnityAction callback = null)
+    public void Load(string loadSceneName)
     {
-        m_currentLoadCorutine = LoadAddtiveWithCallbackCorutine(sceneName, callback);
+        m_currentLoadCorutine = LoadWithCorutine(loadSceneName);
         StartCoroutine(m_currentLoadCorutine);
     }
 
-    private IEnumerator LoadAddtiveWithCallbackCorutine(string sceneName,UnityAction callback = null)
+    private IEnumerator LoadWithCorutine(string loadSceneName)
     {
-        AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
-        async.allowSceneActivation = true;
+        AsyncOperation async = SceneManager.LoadSceneAsync(loadSceneName, LoadSceneMode.Single);
 
         while (async.progress < 0.99f)
         {
             yield return new WaitForEndOfFrame();
         }
-
-        callback?.Invoke();
     }
 }

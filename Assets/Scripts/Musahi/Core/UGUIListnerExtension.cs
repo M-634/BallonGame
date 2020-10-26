@@ -10,7 +10,7 @@ using UnityEngine.UI;
 /// </summary>
 public static class UGUIListnerExtension 
 {
-   public static IEnumerator Fadeout(this Graphic graphic ,float fadeTime = 2f,UnityAction callback = null)
+   public static IEnumerator FadeOut(this Graphic graphic ,float fadeTime = 2f,UnityAction callback = null)
     {
         while (graphic.color.a > 0f)
         {
@@ -27,6 +27,7 @@ public static class UGUIListnerExtension
         while (graphic.color.a < 1f)
         {
             float temp = graphic.color.a + Time.deltaTime / fadeTime;
+            graphic.SetAlpha(temp);
             yield return null;
         }
     }
