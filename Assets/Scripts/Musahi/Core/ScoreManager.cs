@@ -6,15 +6,14 @@ using UnityEngine.UI;
 
 
 /// <summary>
-///タイムリミットの残り時間とPlayerが獲得したコイン数のスコアを管理する。
-///ハイスコアが出たらセーブする。
+///ゲーム中のスコア周りを管理するクラス
 /// </summary>
-public class ScoreManager : SingletonMonoBehavior<ScoreManager>
+public class ScoreManager : MonoBehaviour
 {
     [SerializeField] int m_currentScore;
-    [SerializeField] int m_currentHighScore;
-    /// <summary>コイン獲得時に得られるスコア</summary>
-    [SerializeField]  const int m_getCoinScore = 100;
+    [SerializeField] int m_highScore;
+    /// <summary>1コイン獲得時に得られるスコア</summary>
+    [SerializeField] int m_getCoinScore = 100;
 
     SaveAndLoadWithJSON m_json;
     string m_path;
@@ -29,7 +28,7 @@ public class ScoreManager : SingletonMonoBehavior<ScoreManager>
         m_path = Application.dataPath + $"/{SceneManager.GetActiveScene().name}_HighScoreData.json";
 #endif
         m_json = new SaveAndLoadWithJSON(m_path);
-        m_currentHighScore = m_json.LoadHighScore();
+        m_highScore = m_json.LoadHighScore();
     }
 
     /// <summary>
@@ -41,7 +40,6 @@ public class ScoreManager : SingletonMonoBehavior<ScoreManager>
     }
 
     /// <summary>
-    /// ゴール時にTimeshedulernのOnGoal()から呼ばれる関数
     /// タイムリミットの残り時間をスコアに加えへリザルトを出す。
     /// </summary>
     public void AddTimeScore(int timeScore)
@@ -52,14 +50,14 @@ public class ScoreManager : SingletonMonoBehavior<ScoreManager>
 
     private void Result()
     {
-        if (m_currentScore > m_currentHighScore)
+        if (m_currentScore > m_highScore)
         {
             //リザルトをセーブ
             m_json.SaveHighScore(m_currentScore);
-            m_currentHighScore = m_currentScore;
+            m_highScore = m_currentScore;
         }
 
         Debug.Log("Score: " + m_currentScore);
-        Debug.Log("HighScore: " + m_currentHighScore);
+        Debug.Log("HighScore: " + m_highScore);
     }
 }

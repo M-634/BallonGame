@@ -6,14 +6,16 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 /// <summary>
-/// ゲーム中の時間を管理する
+/// ゲーム中の状態を監視するクラス
 /// ゲームはタイムリミット制。
 /// </summary>
 [RequireComponent(typeof(ScoreManager))]
-public class TimeScheduler : SingletonMonoBehavior<TimeScheduler>
+public class GameState : MonoBehaviour
 {
     [SerializeField] Text m_timeLimitText;
     [SerializeField] float m_timeLimit = 300f;
+
+    [SerializeField] ScoreManager m_scoreManager;
 
     /// <summary>ゲーム中かどうか判定する </summary>
     public bool InGame { get; set; }
@@ -46,7 +48,7 @@ public class TimeScheduler : SingletonMonoBehavior<TimeScheduler>
     {
         InGame = false;
         int timeScore = Mathf.FloorToInt(m_timeLimit) * 100;//修正ポイント(どういう計算になるかは未定)
-        ScoreManager.Instance.AddTimeScore(timeScore);
+        m_scoreManager.AddTimeScore(timeScore);
     }
 
     /// <summary>
