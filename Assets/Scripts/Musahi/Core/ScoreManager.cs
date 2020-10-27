@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
 
 
 /// <summary>
-///タイムリミットの残り時間とPlayerが獲得したコイン数のスコアを管理する。
-///ハイスコアが出たらセーブする。
+///ゲーム中のスコア周りを管理するクラス
 /// </summary>
-public class ScoreManager : SingletonMonoBehavior<ScoreManager>
+public class ScoreManager : MonoBehaviour
 {
+    [SerializeField] int m_highScore;
     [SerializeField] int m_currentScore;
-    [SerializeField] int m_currentHighScore;
-    /// <summary>コイン獲得時に得られるスコア</summary>
-    [SerializeField]  const int m_getCoinScore = 100;
+    [SerializeField] Text m_currentScoreText;
+    /// <summary>1コイン獲得時に得られるスコア</summary>
+    [SerializeField] int m_getCoinScore = 100;
+
+    //リザルトシーンは作らないかな。
+    [Header("リザルトテキスト")]
+    [SerializeField] Text m_leftTimeText;
+    [SerializeField] Text m_getScoreText;
+    [SerializeField] Text m_totalScoreText; 
 
     SaveAndLoadWithJSON m_json;
     string m_path;
@@ -29,7 +36,7 @@ public class ScoreManager : SingletonMonoBehavior<ScoreManager>
         m_path = Application.dataPath + $"/{SceneManager.GetActiveScene().name}_HighScoreData.json";
 #endif
         m_json = new SaveAndLoadWithJSON(m_path);
-        m_currentHighScore = m_json.LoadHighScore();
+        m_highScore = m_json.LoadHighScore();
     }
 
     /// <summary>
@@ -38,28 +45,46 @@ public class ScoreManager : SingletonMonoBehavior<ScoreManager>
     public void GetCoin()
     {
         m_currentScore += m_getCoinScore;
+        m_currentScoreText.text = "Score: " + m_currentScore.ToString();
     }
 
+    
     /// <summary>
-    /// ゴール時にTimeshedulernのOnGoal()から呼ばれる関数
-    /// タイムリミットの残り時間をスコアに加えへリザルトを出す。
+    /// ゲームクリア!
+    /// 獲得スコアと残り時間を表示。それらを掛け合わせたトータルスコアを表示する。
+    /// ハイスコアを更新したらセーブする
     /// </summary>
-    public void AddTimeScore(int timeScore)
+    public void Result(int leftTime)
     {
-        m_currentScore += timeScore;
-        Result();
+        int totalScore = m_currentScore * leftTime;
+
+        int score = 0;
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(
+        DOTween.To(() => score, num => score = num, m_currentScore, 2f)
+            .OnUpdate(() => m_getScoreText.text = ("Score: " + score.ToString()))
+            .OnComplete(() => Debug.Log("")));
+
+        //ここ修正ポイント
+        int time = 0;
+        sequence.Append(
+            DOTween.To(() => time, num => time = num, leftTime, 2f)
+            .OnUpdate(() => m_leftTimeText.text = ("LeftTime;" + time.ToString()))
+            .OnComplete(() => Debug.Log("")));
+
+
+        int total = 0;
+        sequence.Append(
+            DOTween.To(() => total, num => total = num,totalScore , 2f))
+            .OnUpdate(() => m_totalScoreText.text = ("TotalScore:" + total.ToString()))
+            .OnComplete(() => SaveHighScore(totalScore));
     }
 
-    private void Result()
+    private void SaveHighScore(int totalScore)
     {
-        if (m_currentScore > m_currentHighScore)
+        if (totalScore > m_highScore)
         {
-            //リザルトをセーブ
-            m_json.SaveHighScore(m_currentScore);
-            m_currentHighScore = m_currentScore;
+            m_json.SaveHighScore(totalScore);
         }
-
-        Debug.Log("Score: " + m_currentScore);
-        Debug.Log("HighScore: " + m_currentHighScore);
     }
 }
