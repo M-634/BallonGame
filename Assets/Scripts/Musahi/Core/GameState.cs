@@ -74,7 +74,7 @@ public class GameState : MonoBehaviour
         m_gameUI.gameObject.SetActive(false);
         m_GameClearUI.gameObject.SetActive(true);
         //残り時間をScoreManagerに渡す
-        m_scoreManager.Result(m_timeLimit);
+        m_scoreManager.Result(Mathf.FloorToInt(m_timeLimit));
     }
 
     /// <summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
 
 
 /// <summary>
@@ -19,7 +20,7 @@ public class ScoreManager : MonoBehaviour
     //リザルトシーンは作らないかな。
     [Header("リザルトテキスト")]
     [SerializeField] Text m_leftTimeText;
-    [SerializeField] Text m_resultScoreText;
+    [SerializeField] Text m_getScoreText;
     [SerializeField] Text m_totalScoreText; 
 
     SaveAndLoadWithJSON m_json;
@@ -53,14 +54,37 @@ public class ScoreManager : MonoBehaviour
     /// 獲得スコアと残り時間を表示。それらを掛け合わせたトータルスコアを表示する。
     /// ハイスコアを更新したらセーブする
     /// </summary>
-    public void Result(float leftTime)
+    public void Result(int leftTime)
     {
-  
-        if (m_currentScore > m_highScore)
+        int totalScore = m_currentScore * leftTime;
+
+        int score = 0;
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(
+        DOTween.To(() => score, num => score = num, m_currentScore, 2f)
+            .OnUpdate(() => m_getScoreText.text = ("Score: " + score.ToString()))
+            .OnComplete(() => Debug.Log("")));
+
+        //ここ修正ポイント
+        int time = 0;
+        sequence.Append(
+            DOTween.To(() => time, num => time = num, leftTime, 2f)
+            .OnUpdate(() => m_leftTimeText.text = ("LeftTime;" + time.ToString()))
+            .OnComplete(() => Debug.Log("")));
+
+
+        int total = 0;
+        sequence.Append(
+            DOTween.To(() => total, num => total = num,totalScore , 2f))
+            .OnUpdate(() => m_totalScoreText.text = ("TotalScore:" + total.ToString()))
+            .OnComplete(() => SaveHighScore(totalScore));
+    }
+
+    private void SaveHighScore(int totalScore)
+    {
+        if (totalScore > m_highScore)
         {
-            //リザルトをセーブ
-            m_json.SaveHighScore(m_currentScore);
-            m_highScore = m_currentScore;
+            m_json.SaveHighScore(totalScore);
         }
     }
 }
