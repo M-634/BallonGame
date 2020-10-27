@@ -20,6 +20,22 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
         StartCoroutine(m_currentLoadCorutine);
     }
 
+    public void LoadAddtive(string loadNamde)
+    {
+        m_currentLoadCorutine = LoadAddtiveCorutine(loadNamde);
+        StartCoroutine(m_currentLoadCorutine);
+    }
+
+    private IEnumerator LoadAddtiveCorutine(string loadSceneName)
+    {
+        AsyncOperation async = SceneManager.LoadSceneAsync(loadSceneName, LoadSceneMode.Additive);
+
+        while (async.progress < 0.99f)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
     private IEnumerator LoadWithCorutine(string loadSceneName)
     {
         AsyncOperation async = SceneManager.LoadSceneAsync(loadSceneName, LoadSceneMode.Single);

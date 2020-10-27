@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -15,10 +16,24 @@ public class GameState : MonoBehaviour
     [SerializeField] Text m_timeLimitText;
     [SerializeField] float m_timeLimit = 300f;
 
-    [SerializeField] ScoreManager m_scoreManager;
+    [Header("UI")]
+    [SerializeField] Canvas m_gameUI;
+    [SerializeField] Canvas m_GameOverUI;
+    [SerializeField] Canvas m_GameClearUI;
+
+    ScoreManager m_scoreManager;
 
     /// <summary>ゲーム中かどうか判定する </summary>
-    public bool InGame { get; set; }
+    public bool InGame { get; set; }//
+    private float m_oldSeconds;//1フレーム前の秒数
+
+    private void Awake()
+    {
+        m_scoreManager = GetComponent<ScoreManager>();
+        m_gameUI.gameObject.SetActive(true);
+        m_GameOverUI.gameObject.SetActive(false);
+        m_GameClearUI.gameObject.SetActive(false);
+    }
 
     // Update is called once per frame
     void Update()
@@ -27,8 +42,17 @@ public class GameState : MonoBehaviour
 
         //タイムリミット
         m_timeLimit -= Time.deltaTime;
-        m_timeLimitText.text = m_timeLimit.ToString("F2") + "秒";
+        //分と秒を設定
+        int minute = (int)m_timeLimit / 60;
+        float seconds = m_timeLimit - minute * 60;
+        //UIに00:00形式で表示する
+        if ((int)seconds != (int)m_oldSeconds)
+        {
+            m_timeLimitText.text = minute.ToString("00") + ":" + ((int)seconds).ToString("00");
+        }
+        m_oldSeconds = seconds;
 
+        //タイマーリミット!
         if (m_timeLimit <= 0)
         {
             m_timeLimit = 0;
@@ -47,8 +71,10 @@ public class GameState : MonoBehaviour
     public void OnGoal()
     {
         InGame = false;
-        int timeScore = Mathf.FloorToInt(m_timeLimit) * 100;//修正ポイント(どういう計算になるかは未定)
-        m_scoreManager.AddTimeScore(timeScore);
+        m_gameUI.gameObject.SetActive(false);
+        m_GameClearUI.gameObject.SetActive(true);
+        //残り時間をScoreManagerに渡す
+        m_scoreManager.Result(m_timeLimit);
     }
 
     /// <summary>
@@ -57,6 +83,8 @@ public class GameState : MonoBehaviour
     public void GameOver()
     {
         InGame = false;
+        m_gameUI.gameObject.SetActive(false);
+        m_GameOverUI.gameObject.SetActive(true);
         Debug.Log("GameOver");
     }
 }

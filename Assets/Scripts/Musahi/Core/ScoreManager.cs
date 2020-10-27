@@ -10,10 +10,17 @@ using UnityEngine.UI;
 /// </summary>
 public class ScoreManager : MonoBehaviour
 {
-    [SerializeField] int m_currentScore;
     [SerializeField] int m_highScore;
+    [SerializeField] int m_currentScore;
+    [SerializeField] Text m_currentScoreText;
     /// <summary>1コイン獲得時に得られるスコア</summary>
     [SerializeField] int m_getCoinScore = 100;
+
+    //リザルトシーンは作らないかな。
+    [Header("リザルトテキスト")]
+    [SerializeField] Text m_leftTimeText;
+    [SerializeField] Text m_resultScoreText;
+    [SerializeField] Text m_totalScoreText; 
 
     SaveAndLoadWithJSON m_json;
     string m_path;
@@ -37,27 +44,23 @@ public class ScoreManager : MonoBehaviour
     public void GetCoin()
     {
         m_currentScore += m_getCoinScore;
+        m_currentScoreText.text = "Score: " + m_currentScore.ToString();
     }
 
+    
     /// <summary>
-    /// タイムリミットの残り時間をスコアに加えへリザルトを出す。
+    /// ゲームクリア!
+    /// 獲得スコアと残り時間を表示。それらを掛け合わせたトータルスコアを表示する。
+    /// ハイスコアを更新したらセーブする
     /// </summary>
-    public void AddTimeScore(int timeScore)
+    public void Result(float leftTime)
     {
-        m_currentScore += timeScore;
-        Result();
-    }
-
-    private void Result()
-    {
+  
         if (m_currentScore > m_highScore)
         {
             //リザルトをセーブ
             m_json.SaveHighScore(m_currentScore);
             m_highScore = m_currentScore;
         }
-
-        Debug.Log("Score: " + m_currentScore);
-        Debug.Log("HighScore: " + m_highScore);
     }
 }
