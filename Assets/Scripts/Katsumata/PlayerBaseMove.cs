@@ -16,6 +16,8 @@ public class PlayerBaseMove : MonoBehaviour
     [SerializeField, Range(0, 1f)] public float rotateBrekeCoefficient = 0.9f;
     /// <summary>横向いた時の追加速度の減衰比率 </summary>
     [SerializeField, Range(0, 1f)] public float addAirBrake = 0.7f;
+    /// <summary>横向いた時の追加速度の減衰比率の適用時のrotateSpeedの値 </summary>
+    [SerializeField] public float addAirBrakeStart = 1f;
     /// <summary>速度を格納する。現状DebugUIに値を渡してる </summary>
     public float Speed { get; private set; }
     /// <summary>速度制限をする。最大速度 </summary>
@@ -23,7 +25,7 @@ public class PlayerBaseMove : MonoBehaviour
     /// <summary>最大速度を超過したときにかかるブレーキの係数 </summary>
     [SerializeField, Range(0, 1f)] public float maxSpeedExcessBrake = 0.9f;
     /// <summary>スワイプした時にどの程度指に付いてくるかの係数 </summary>
-    [SerializeField] public float horizontalSpeed = 2.0f;
+    [SerializeField] public float horizontalSpeed = 35.0f;
 
     /// <summary>touchを格納、画面タッチをしてる一本目の指を取得する。現状指一本 </summary>
     Touch touch;
@@ -43,7 +45,10 @@ public class PlayerBaseMove : MonoBehaviour
     /// <summary>スワイプをしたかどうかのフラグ。回転力を加えるとき一回だけrotateForceに+=をしたい </summary>
     bool swipe = false;
     /// <summary> プレイヤーの回転速度</summary>
-    public float rotateSpeed { get; private set; }
+    public float RotateSpeed { get; private set; }
+
+    /// <summary>進行方向とみてる方向の角度 </summary>
+    public float forwardToLookAngle = 0;
 
 
 
@@ -63,6 +68,12 @@ public class PlayerBaseMove : MonoBehaviour
         //{
         //    return;
         //}
+        if (touch.phase == TouchPhase.Moved)
+        {
+            touchBeginPos = touch.position;
+        }
+
+        CalculateForwardToLookAngle();
 
         if (mouthDebug)
         {
@@ -78,7 +89,7 @@ public class PlayerBaseMove : MonoBehaviour
         AirBrake();
         if (m_rb.velocity.magnitude > maxSpeed)
         {
-            SpeedLimiting();
+            SpeedLimit();
         }
         RotatePlayer();
     }
@@ -96,11 +107,11 @@ public class PlayerBaseMove : MonoBehaviour
         }
     }
 
-    
+
     /// <summary>
     /// スピードの最高速度を設定。超過したら空気抵抗を強める
     /// </summary>
-    void SpeedLimiting()
+    void SpeedLimit()
     {
         m_rb.velocity = m_rb.velocity * maxSpeedExcessBrake;
     }
@@ -120,6 +131,7 @@ public class PlayerBaseMove : MonoBehaviour
         if (touch.phase == TouchPhase.Moved)
         {
             swipe = true;
+            
             swipeDistance_x = touch.position.x - touchBeginPos.x; //現状DebugUI用に変数作って取得してる
             touchPos = new Vector2(
             (swipeDistance_x) / Screen.width, 0);
@@ -139,18 +151,18 @@ public class PlayerBaseMove : MonoBehaviour
 
         if (swipe || mouthDebug)
         {
-            rotateSpeed = horizontalSpeed * touchPos.x;
+            RotateSpeed = horizontalSpeed * touchPos.x;
         }
         else
         {
-            rotateSpeed *= rotateBrekeCoefficient;
-            if (Mathf.Abs(rotateSpeed) <= 0.01)
+            RotateSpeed *= rotateBrekeCoefficient;
+            if (Mathf.Abs(RotateSpeed) <= 0.01f)
             {
-                rotateSpeed = 0;
+                RotateSpeed = 0;
             }
         }
 
-        transform.Rotate(0, rotateSpeed, 0);
+        transform.Rotate(0, RotateSpeed, 0);
         swipe = false;
     }
 
@@ -162,15 +174,23 @@ public class PlayerBaseMove : MonoBehaviour
     void AirBrake()
     {
         m_rb.velocity = m_rb.velocity * airBrekeCoefficient;
-        if (rotateSpeed > 0.1f)
+        if (Mathf.Abs(forwardToLookAngle) > addAirBrakeStart)
         {
             m_rb.velocity = m_rb.velocity * addAirBrake;
         }
 
-        if (m_rb.velocity.magnitude < 0.01)
+        if (m_rb.velocity.magnitude < 0.01f)
         {
             m_rb.velocity = m_rb.velocity * 0;
         }
+    }
+
+    /// <summary>
+    /// 進行方向とみている方向の角度を計算する
+    /// </summary>
+    void CalculateForwardToLookAngle()
+    {
+        forwardToLookAngle = Vector3.Angle(m_rb.velocity, transform.forward);
     }
 
     /// <summary>

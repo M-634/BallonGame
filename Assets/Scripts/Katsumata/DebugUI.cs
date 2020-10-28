@@ -23,6 +23,8 @@ public class DebugUI : MonoBehaviour
     public Slider rotateBrakeCoefficient;
     [SerializeField] Text maxSpeedText;
     public Slider maxSpeedSlider;
+    [SerializeField] Text addAirBrakeText;
+    public Slider addAirBrakeSlider;
 
 
     private void Start()
@@ -37,9 +39,10 @@ public class DebugUI : MonoBehaviour
         swipeCoefficientText.text = "horizontal : " + swipeCoefficient.value;
         forwardForceText.text = "forwardForce : " + forwardForce.value;
         forwardBrakeCoefficientText.text = "空気摩擦係数 : " + forwardBrakeCoefficient.value;
-        rotateForceText.text = "rotateForce : " + playerBaseMove.rotateSpeed;
+        rotateForceText.text = "rotateForce : " + playerBaseMove.RotateSpeed;
         rotateBrakeCoefficientText.text = "回転減衰係数 : " + rotateBrakeCoefficient.value;
         maxSpeedText.text = "最大速度 : " + maxSpeedSlider.value;
+        addAirBrakeText.text = "回転時の空気摩擦係数 : " + addAirBrakeSlider.value;
     }
 
     public void OnDebugButton()
@@ -80,5 +83,10 @@ public class DebugUI : MonoBehaviour
     public void ChangeMaxSpeed()
     {
         playerBaseMove.maxSpeed = maxSpeedSlider.value;
+    }
+    /// <summary>これもデバッグ用、MaxSpeedSliderのOnValueChangedで呼び出してる</summary>
+    public void ChangeAddAirBrake()
+    {
+        playerBaseMove.addAirBrake = addAirBrakeSlider.value;
     }
 }
