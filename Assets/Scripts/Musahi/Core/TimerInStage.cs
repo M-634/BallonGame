@@ -7,11 +7,11 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 /// <summary>
-/// ゲーム中の状態を監視するクラス
-/// ゲームはタイムリミット制。
+/// ゲーム中のタイマーの制御（カウントダウン）とそれに伴う
+/// ゲームシーンの状態（Start,Goal,GameOver）を監視するクラス
 /// </summary>
 [RequireComponent(typeof(ScoreManager))]
-public class GameState : MonoBehaviour
+public class TimerInStage : MonoBehaviour
 {
     [SerializeField] Text m_timeLimitText;
     [SerializeField] float m_timeLimit = 300f;
@@ -24,12 +24,13 @@ public class GameState : MonoBehaviour
     ScoreManager m_scoreManager;
 
     /// <summary>ゲーム中かどうか判定する </summary>
-    public bool InGame { get; set; }//
+    public bool InGame { get; set; }
     private float m_oldSeconds;//1フレーム前の秒数
 
     private void Awake()
     {
         m_scoreManager = GetComponent<ScoreManager>();
+        StageParent.Instance.GetStagePrefab().SetActive(true);
         m_gameUI.gameObject.SetActive(true);
         m_GameOverUI.gameObject.SetActive(false);
         m_GameClearUI.gameObject.SetActive(false);

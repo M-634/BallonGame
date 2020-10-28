@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Test_Player_Musashi : MonoBehaviour
 {
-    [SerializeField] GameState m_gameState;
+    [SerializeField] TimerInStage m_gameState;
     public float m_speed = 1f;
 
     private void Awake()
     {
-        m_gameState = FindObjectOfType<GameState>();
+        m_gameState = FindObjectOfType<TimerInStage>();
         if (m_gameState == null)
         {
             Debug.LogError("TimeSchedulerコンポーネントをアタッチされたゲームオブジェクトが存在しません");

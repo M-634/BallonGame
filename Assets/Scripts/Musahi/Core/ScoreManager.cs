@@ -29,12 +29,15 @@ public class ScoreManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //ここも変更Point！現状はシーンの名前でパスを振り分けているが、1つのシーンを使い回すため
+        //stageごとにIDなどを振り分ける
         //ハイスコアをロードする。
-#if UNITY_ANDROID
-        m_path = Application.streamingAssetsPath + $"/{SceneManager.GetActiveScene().name}_HighScoreData.json";  
-#else
-        m_path = Application.dataPath + $"/{SceneManager.GetActiveScene().name}_HighScoreData.json";
-#endif
+        //#if UNITY_ANDROID
+        //        m_path = Application.streamingAssetsPath + $"/{SceneManager.GetActiveScene().name}_HighScoreData.json";  
+        //#else
+        //        m_path = Application.dataPath + $"/{SceneManager.GetActiveScene().name}_HighScoreData.json";
+        //#endif
+        m_path = StageParent.Instance.FullPath;
         m_json = new SaveAndLoadWithJSON(m_path);
         m_highScore = m_json.LoadHighScore();
     }

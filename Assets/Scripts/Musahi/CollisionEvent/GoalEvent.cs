@@ -5,16 +5,26 @@ using UnityEngine.Events;
 
 public class GoalEvent :MonoBehaviour, IEventCollision
 {
-    GameState m_gameState;
+    TimerInStage m_gameState;
 
     private void Awake()
     {
-        m_gameState = FindObjectOfType<GameState>();
+        //m_gameState = FindObjectOfType<TimerInStage>();
+        //if (m_gameState == null)
+        //{
+        //    Debug.LogError("GameStateコンポーネントをアタッチされたGameObjectが存在しません");
+        //}
+    }
+
+    private void OnEnable()
+    {
+        m_gameState = FindObjectOfType<TimerInStage>();
         if (m_gameState == null)
         {
             Debug.LogError("GameStateコンポーネントをアタッチされたGameObjectが存在しません");
         }
     }
+
 
     /// <summary>
     /// ゲームクリア

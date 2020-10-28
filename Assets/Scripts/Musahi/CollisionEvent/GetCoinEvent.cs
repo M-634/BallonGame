@@ -10,9 +10,19 @@ public class GetCoinEvent :MonoBehaviour, IEventCollision
 {
      ScoreManager m_scoreManager;
 
-    private void Awake()
+    //private void Awake()
+    //{
+    //    gameObject.SetActive(true);
+    //    m_scoreManager = FindObjectOfType<ScoreManager>();
+    //    if (m_scoreManager == null)
+    //    {
+    //        Debug.LogError("ScoreManagerコンポーネントをアタッチされたGameObjectが存在しません");
+    //    }
+    //}
+
+    private void OnEnable()
     {
-        gameObject.SetActive(true);
+        //ここイベントに変えたい...
         m_scoreManager = FindObjectOfType<ScoreManager>();
         if (m_scoreManager == null)
         {

@@ -8,11 +8,20 @@ using UnityEngine;
 /// </summary>
 public class Obstacle :MonoBehaviour, IEventCollision
 {
-    protected GameState m_gameState;
+    protected TimerInStage m_gameState;
 
     virtual protected void Awake()
     {
-        m_gameState = FindObjectOfType<GameState>();
+        //m_gameState = FindObjectOfType<TimerInStage>();
+        //if (m_gameState == null)
+        //{
+        //    Debug.LogError("GameStateコンポーネントをアタッチされたGameObjectが存在しません");
+        //}
+    }
+
+    virtual protected void OnEnable()
+    {
+        m_gameState = FindObjectOfType<TimerInStage>();
         if (m_gameState == null)
         {
             Debug.LogError("GameStateコンポーネントをアタッチされたGameObjectが存在しません");
