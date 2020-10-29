@@ -13,6 +13,11 @@ public enum WeatherConditions
     ThunderStorm,
     Hurricane
 }
+
+/*
+ このクラスは大いに修正すべきだ、セレクトからゲームシーンへどの用にStage情報を
+持っていくか考えなおす必要があるだろう
+ */
 /// <summary>
 /// ステージ情報を管理する
 /// セレクト画面でボタンを押した時に確定させ、

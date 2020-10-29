@@ -23,6 +23,7 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T:MonoBehaviour
                 if (m_instance == null)
                 {
                     Debug.LogError(t + "をアタッチしているGameObjectはありません");
+                    return null;
                 }
             }
             return m_instance;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Test_Player_Musashi : MonoBehaviour
 {
-    [SerializeField] TimerInStage m_gameState;
+    TimerInStage m_gameState;
     public float m_speed = 1f;
 
     private void Awake()

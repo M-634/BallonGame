@@ -18,9 +18,22 @@ public class SaveAndLoadWithJSON
     readonly string m_path;
     HighScoreData m_highScoreData;
 
+    /// <summary>
+    /// test用のコンストラクター
+    /// </summary>
+    public SaveAndLoadWithJSON()
+    {
+        m_path = Application.dataPath + $"/Test_HighScoreData.json";
+        m_highScoreData = new HighScoreData();
+    }
+
     public SaveAndLoadWithJSON(string path)
     {
-        m_path = path;
+#if UNITY_ANDROID
+        m_path = Application.streamingAssetsPath + $"/{path}_HighScoreData.json";  
+#else
+        m_path = Application.dataPath + $"/{path}_HighScoreData.json";
+#endif
         m_highScoreData = new HighScoreData();
     }
 

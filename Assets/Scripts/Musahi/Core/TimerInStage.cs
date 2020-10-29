@@ -10,33 +10,31 @@ using UnityEngine.UI;
 /// ゲーム中のタイマーの制御（カウントダウン）とそれに伴う
 /// ゲームシーンの状態（Start,Goal,GameOver）を監視するクラス
 /// </summary>
-[RequireComponent(typeof(ScoreManager))]
+[RequireComponent(typeof(ScoreManager), typeof(UISetActiveControl))]
 public class TimerInStage : Reciver
 {
     [SerializeField] Text m_timeLimitText;
     [SerializeField] float m_timeLimit = 300f;
 
-    [Header("UI")]
-    [SerializeField] Canvas m_gameUI;
-    [SerializeField] Canvas m_GameOverUI;
-    [SerializeField] Canvas m_GameClearUI;
-
+    UISetActiveControl m_UISetActiveControl;
     ScoreManager m_scoreManager;
 
     /// <summary>ゲーム中かどうか判定する </summary>
     public bool InGame { get; set; }
     private float m_oldSeconds;//1フレーム前の秒数
 
-     protected override void Start()
+    protected override void Start()
     {
         base.Start();
         m_scoreManager = GetComponent<ScoreManager>();
-        //ステージを出現させる
-        StageParent.Instance.AppearanceStageObject();
+        m_UISetActiveControl = GetComponent<UISetActiveControl>();
+        //ステージを出現させる(ここシングルトンに依存しているから変える)
+        if (StageParent.Instance != null)
+        {
+            StageParent.Instance.AppearanceStageObject();
+        }
         //各UIの表示を設定する
-        m_gameUI.gameObject.SetActive(true);
-        m_GameOverUI.gameObject.SetActive(false);
-        m_GameClearUI.gameObject.SetActive(false);
+        m_UISetActiveControl.InisitializeUISetAcitve();
     }
 
     // Update is called once per frame
@@ -75,8 +73,7 @@ public class TimerInStage : Reciver
     public void OnGoal()
     {
         InGame = false;
-        m_gameUI.gameObject.SetActive(false);
-        m_GameClearUI.gameObject.SetActive(true);
+        m_UISetActiveControl.UISetActiveWithGameClear();
         //残り時間をScoreManagerに渡す
         m_scoreManager.Result(Mathf.FloorToInt(m_timeLimit));
         UnSubscribe();
@@ -88,12 +85,9 @@ public class TimerInStage : Reciver
     public void GameOver()
     {
         InGame = false;
-        m_gameUI.gameObject.SetActive(false);
-        m_GameOverUI.gameObject.SetActive(true);
-        Debug.Log("GameOver");
-
-        //セレクト画面に戻る
+        m_UISetActiveControl.UISetActiveWithGameOver();
         UnSubscribe();
+        //セレクト画面に戻る
     }
 
     protected override void Subscribe()
