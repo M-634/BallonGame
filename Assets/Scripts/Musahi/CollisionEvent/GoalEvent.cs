@@ -3,35 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GoalEvent :MonoBehaviour, IEventCollision
+public class GoalEvent :Sender
 {
-    TimerInStage m_gameState;
-
-    private void Awake()
+    public override void CollisionEvent()
     {
-        //m_gameState = FindObjectOfType<TimerInStage>();
-        //if (m_gameState == null)
-        //{
-        //    Debug.LogError("GameStateコンポーネントをアタッチされたGameObjectが存在しません");
-        //}
-    }
-
-    private void OnEnable()
-    {
-        m_gameState = FindObjectOfType<TimerInStage>();
-        if (m_gameState == null)
-        {
-            Debug.LogError("GameStateコンポーネントをアタッチされたGameObjectが存在しません");
-        }
-    }
-
-
-    /// <summary>
-    /// ゲームクリア
-    /// </summary>
-    public void CollisionEvent()
-    {
-        Debug.Log("ゴール！！");
-        m_gameState.OnGoal();
+        ExecuteGameClearEvent();
+        Debug.Log("Goal!!");
     }
 }

@@ -9,7 +9,7 @@ using DG.Tweening;
 /// <summary>
 ///ゲーム中のスコア周りを管理するクラス
 /// </summary>
-public class ScoreManager : MonoBehaviour
+public class ScoreManager : Reciver
 {
     [SerializeField] int m_highScore;
     [SerializeField] int m_currentScore;
@@ -21,22 +21,15 @@ public class ScoreManager : MonoBehaviour
     [Header("リザルトテキスト")]
     [SerializeField] Text m_leftTimeText;
     [SerializeField] Text m_getScoreText;
-    [SerializeField] Text m_totalScoreText; 
+    [SerializeField] Text m_totalScoreText;
 
     SaveAndLoadWithJSON m_json;
     string m_path;
 
     // Start is called before the first frame update
-    void Start()
+     protected override void Start()
     {
-        //ここも変更Point！現状はシーンの名前でパスを振り分けているが、1つのシーンを使い回すため
-        //stageごとにIDなどを振り分ける
-        //ハイスコアをロードする。
-        //#if UNITY_ANDROID
-        //        m_path = Application.streamingAssetsPath + $"/{SceneManager.GetActiveScene().name}_HighScoreData.json";  
-        //#else
-        //        m_path = Application.dataPath + $"/{SceneManager.GetActiveScene().name}_HighScoreData.json";
-        //#endif
+        base.Start();
         m_path = StageParent.Instance.FullPath;
         m_json = new SaveAndLoadWithJSON(m_path);
         m_highScore = m_json.LoadHighScore();
@@ -89,5 +82,25 @@ public class ScoreManager : MonoBehaviour
         {
             m_json.SaveHighScore(totalScore);
         }
+
+        UnSubscribe();
+        //ステージを非表示にする
+        StageParent.Instance.GetAppearanceStage.SetActive(false);
+        //ステージを初期化する
+        StageParent.Instance.Initialization();
+        //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
+        SceneLoader.Instance.LoadWithTap("SelectScene 1");
+    }
+
+    protected override void Subscribe()
+    {
+        Sender.GetCoinEvent += () =>GetCoin();
+        base.Subscribe();
+    }
+
+    protected override void UnSubscribe()
+    {
+        Sender.GetCoinEvent -= () => GetCoin();
+        base.UnSubscribe();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,40 +20,42 @@ public enum WeatherConditions
 /// </summary>
 public class StageParent : SingletonMonoBehavior<StageParent>
 {
-    /// <summary>ステージプレハブリスト</summary>
-    [SerializeField] List<GameObject> m_stagePrefabsList;
-
-    /// <summary>出現させるステージ</summary>
-    private GameObject m_stageObject;
+    /// <summary>ステージプレハブを登録する</summary>
+    [SerializeField] GameObject[] m_stagePrefabs;
+    /// <summary>インスタンス化したstagePrefabが入ったObject</summary>
+    private readonly List<GameObject> m_stageDateList = new List<GameObject>();
+    [SerializeField] GameObject m_getAppearanceStage;//serializeはDebug用
+    /// <summary>出現させるステージプレハブ </summary>
+    public GameObject GetAppearanceStage { get => m_getAppearanceStage; }
     /// <summary>ステージの天候状態</summary>
     public WeatherConditions WeatherConditions { get; set; }
-
     /// <summary>ハイスコアをセーブするパス</summary>
     public string FullPath { get; private set; }
 
     private void Start()
     {
-        foreach (var stage in m_stagePrefabsList)
+        foreach (var stage in m_stagePrefabs)
         {
             var go = Instantiate(stage);
             go.transform.SetParent(this.transform);
             go.SetActive(false);
+            m_stageDateList.Add(go);
         }
         Initialization();
     }
 
     public void Initialization()
     {
-        m_stageObject = null;
+        m_getAppearanceStage = null;
         WeatherConditions = WeatherConditions.None;
         FullPath = "";
     }
 
     /// <summary>
-    /// セレクト画面から呼ばれる関数
-    /// セレクトボタンスクリプトでステージプレハブと天候をセットしておく
+    /// ステージセレクトボタンを押した時に、次のゲームシーンで出現させる
+    /// ステージ情報を確定させる
     /// </summary>
-    public void SetStageInfo(GameObject stage, WeatherConditions conditions)
+    public void SetStageInfo(GameObject stage, WeatherConditions conditions, Action callback)
     {
         if (stage == null)
         {
@@ -60,18 +63,28 @@ public class StageParent : SingletonMonoBehavior<StageParent>
             return;
         }
 
-        bool isStage = m_stagePrefabsList.Contains(stage);
+        //stageを検索
+        int index = -1;
+        for (int i = 0; i < m_stagePrefabs.Length; i++)
+        {
+            if (m_stagePrefabs[i].Equals(stage))
+            {
+                index = i;
+                break;
+            }
+        }
 
-        if (!isStage)
+        if (index == -1)
         {
             Debug.LogError("ステージリストに指定したプレハブが存在しません!!");
             return;
         }
-        else
-        {
-            m_stageObject = stage;
-        }
 
+        //stageをセットする
+        m_getAppearanceStage = m_stageDateList[index];
+
+
+        //天候をセットする
         WeatherConditions = conditions;
 
         //pathを指定する
@@ -80,13 +93,9 @@ public class StageParent : SingletonMonoBehavior<StageParent>
 #else
         FullPath = Application.dataPath + $"/{stage.name}_HighScoreData.json";
 #endif
-    }
-     
-    public GameObject GetStagePrefab()
-    {
-        return m_stageObject;
-    }
 
-
+        //ゲームシーンをロード
+        callback?.Invoke();
+    }
 
 }

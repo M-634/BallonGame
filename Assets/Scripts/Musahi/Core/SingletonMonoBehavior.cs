@@ -33,7 +33,7 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T:MonoBehaviour
     {
         if (this != m_instance && m_instance != null)
         {
-            Destroy(this);
+            Destroy(this.gameObject);
             Debug.LogError(typeof(T) + "は既に他のGameObjectにアタッチされているため、コンポーネントを破棄しました"
                 + "アタッチされているGameObjectは" + Instance.gameObject.name + "です");
             return;

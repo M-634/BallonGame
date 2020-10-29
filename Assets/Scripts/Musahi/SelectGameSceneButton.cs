@@ -14,7 +14,6 @@ public class SelectGameSceneButton : MonoBehaviour
 
     public void SceneLoad(string m_loadSceneName)
     {
-        StageParent.Instance.SetStageInfo(m_stagePrefab, m_conditions);
-        SceneLoader.Instance.Load(m_loadSceneName);
+        StageParent.Instance.SetStageInfo(m_stagePrefab, m_conditions,() => SceneLoader.Instance.Load(m_loadSceneName));
     }
 }

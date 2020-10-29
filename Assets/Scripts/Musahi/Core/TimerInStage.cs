@@ -11,7 +11,7 @@ using UnityEngine.UI;
 /// ゲームシーンの状態（Start,Goal,GameOver）を監視するクラス
 /// </summary>
 [RequireComponent(typeof(ScoreManager))]
-public class TimerInStage : MonoBehaviour
+public class TimerInStage : Reciver
 {
     [SerializeField] Text m_timeLimitText;
     [SerializeField] float m_timeLimit = 300f;
@@ -27,10 +27,13 @@ public class TimerInStage : MonoBehaviour
     public bool InGame { get; set; }
     private float m_oldSeconds;//1フレーム前の秒数
 
-    private void Awake()
+     protected override void Start()
     {
+        base.Start();
         m_scoreManager = GetComponent<ScoreManager>();
-        StageParent.Instance.GetStagePrefab().SetActive(true);
+        //ステージを出現させる
+        StageParent.Instance.GetAppearanceStage.SetActive(true);
+        //各UIの表示を設定する
         m_gameUI.gameObject.SetActive(true);
         m_GameOverUI.gameObject.SetActive(false);
         m_GameClearUI.gameObject.SetActive(false);
@@ -76,6 +79,7 @@ public class TimerInStage : MonoBehaviour
         m_GameClearUI.gameObject.SetActive(true);
         //残り時間をScoreManagerに渡す
         m_scoreManager.Result(Mathf.FloorToInt(m_timeLimit));
+        UnSubscribe();
     }
 
     /// <summary>
@@ -87,5 +91,22 @@ public class TimerInStage : MonoBehaviour
         m_gameUI.gameObject.SetActive(false);
         m_GameOverUI.gameObject.SetActive(true);
         Debug.Log("GameOver");
+
+        //セレクト画面に戻る
+        UnSubscribe();
+    }
+
+    protected override void Subscribe()
+    {
+        Sender.GameClearEvent += () => OnGoal();
+        Sender.GameOverEvent += () => GameOver();
+        base.Subscribe();
+    }
+
+    protected override void UnSubscribe()
+    {
+        Sender.GameClearEvent -= () => OnGoal();
+        Sender.GameOverEvent -= () => GameOver();
+        base.UnSubscribe();
     }
 }

@@ -11,7 +11,6 @@ public class FadeInScene : MonoBehaviour
 {
     [SerializeField] Image m_fadeImage;
     [SerializeField] float m_fadeInTime = 2f;
-    /// <summary>GameOver時は0.5f、それ以外は1f</summary>
     [SerializeField,Range(0.5f,1f)] float m_setAlpha = 1f;
 
     // Start is called before the first frame update
