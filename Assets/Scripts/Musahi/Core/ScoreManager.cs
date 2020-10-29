@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
-
+using Unity.Collections.LowLevel.Unsafe;
 
 /// <summary>
 ///ゲーム中のスコア周りを管理するクラス
@@ -40,6 +40,7 @@ public class ScoreManager : Reciver
     /// </summary>
     public void GetCoin()
     {
+        //2回目でエラーが起きる原因不明
         m_currentScore += m_getCoinScore;
         m_currentScoreText.text = "Score: " + m_currentScore.ToString();
     }

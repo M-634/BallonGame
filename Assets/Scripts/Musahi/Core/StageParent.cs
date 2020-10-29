@@ -98,4 +98,17 @@ public class StageParent : SingletonMonoBehavior<StageParent>
         callback?.Invoke();
     }
 
+
+    public void AppearanceStageObject()
+    {
+        //ステージの非表示な子オブジェクトのを表示する
+        foreach (Transform item in m_getAppearanceStage.transform)
+        {
+            if (item.gameObject.activeSelf == false)
+            {
+                item.gameObject.SetActive(true);
+            }
+        }
+        m_getAppearanceStage.SetActive(true);
+    }
 }

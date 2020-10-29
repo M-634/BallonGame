@@ -32,7 +32,7 @@ public class TimerInStage : Reciver
         base.Start();
         m_scoreManager = GetComponent<ScoreManager>();
         //ステージを出現させる
-        StageParent.Instance.GetAppearanceStage.SetActive(true);
+        StageParent.Instance.AppearanceStageObject();
         //各UIの表示を設定する
         m_gameUI.gameObject.SetActive(true);
         m_GameOverUI.gameObject.SetActive(false);
