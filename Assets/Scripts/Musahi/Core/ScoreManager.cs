@@ -39,7 +39,22 @@ public class ScoreManager : Reciver
     {
         //2回目でエラーが起きる原因不明
         m_currentScore += m_getCoinScore;
-        m_UISetActiveControl.CurrentScoreText.text = "Score: " + m_currentScore;
+        //m_UISetActiveControl.CurrentScoreText.text = "Score: " + m_currentScore;
+        if (m_UISetActiveControl)
+        {
+            if (m_UISetActiveControl.CurrentScoreText)
+            {
+                m_UISetActiveControl.CurrentScoreText.text = "Score: " + m_currentScore;
+            }
+            else
+            {
+                Debug.LogError("m_UISetActiveControl.CurrentScoreText" + "がnullです。");
+            }
+        }
+        else
+        {
+            Debug.LogError("m_UISetActiveControl" + "がNullです。");
+        }
     }
 
 
@@ -78,7 +93,7 @@ public class ScoreManager : Reciver
     {
         if (totalScore > m_highScore)
         {
-            // m_json.SaveHighScore(totalScore);
+            m_json.SaveHighScore(totalScore);
         }
 
         UnSubscribe();
