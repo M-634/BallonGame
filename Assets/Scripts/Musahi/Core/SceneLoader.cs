@@ -31,9 +31,14 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
         StartCoroutine(m_currentLoadCorutine);
     }
 
-    public void LoadWithTap(string loadSceneName)
+    /// <summary>
+    /// ゲームクリア時のリザルト表示後、ゲームオーバー後
+    ///ゲームシーン→セレクトシーン
+    /// </summary>
+    /// <param name="selectSceneName"></param>
+    public void LoadWithTap(string selectSceneName)
     {
-        m_currentLoadCorutine = LoadWithTapCorutine(loadSceneName);
+        m_currentLoadCorutine = LoadWithTapCorutine(selectSceneName);
         StartCoroutine(m_currentLoadCorutine);
     }
 

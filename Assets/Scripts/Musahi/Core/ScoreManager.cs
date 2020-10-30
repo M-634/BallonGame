@@ -83,9 +83,12 @@ public class ScoreManager : Reciver
 
         UnSubscribe();
         //ステージを非表示にする
-        // StageParent.Instance.GetAppearanceStage.SetActive(false);
-        //ステージを初期化する
-        //StageParent.Instance.Initialization();
+        if (StageParent.Instance != null)
+        {
+            StageParent.Instance.GetAppearanceStage.SetActive(false);
+            //ステージを初期化する
+            StageParent.Instance.Initialization();
+        }
         //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
         if (SceneLoader.Instance != null)
         {
