@@ -8,7 +8,8 @@ public class DebugUI : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] Text playerSpeedText;
     [SerializeField] PlayerBaseMove playerBaseMove;
-    [SerializeField] Text swipeDistanceText;
+    [SerializeField] Text XaxisSwipeDistanceText;
+    [SerializeField] Text YaxisSwipeDistanceText;
     [SerializeField] Button debugButton;
     [SerializeField] Button backButton;
     [SerializeField] GameObject debugPannel;
@@ -35,7 +36,8 @@ public class DebugUI : MonoBehaviour
     void Update()
     {
         playerSpeedText.text = "velocity,magnitude : " + playerBaseMove.Speed;
-        swipeDistanceText.text = "swipeした距離 : " + playerBaseMove.swipeDistance_x;
+        XaxisSwipeDistanceText.text = "横方向にswipeした距離 : " + playerBaseMove.swipeDistance_x;
+        YaxisSwipeDistanceText.text = "縦方向にswipeした距離 : " + playerBaseMove.swipeDistance_y;
         swipeCoefficientText.text = "horizontal : " + swipeCoefficient.value;
         forwardForceText.text = "forwardForce : " + forwardForce.value;
         forwardBrakeCoefficientText.text = "空気摩擦係数 : " + forwardBrakeCoefficient.value;

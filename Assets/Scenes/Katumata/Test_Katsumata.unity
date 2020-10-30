@@ -3436,11 +3436,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1000382680}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 97, y: -121}
+  m_AnchoredPosition: {x: 97, y: -137}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &401392184
@@ -9930,7 +9930,7 @@ RectTransform:
   - {fileID: 1347469334}
   - {fileID: 2100219274}
   m_Father: {fileID: 1000382680}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -11284,6 +11284,7 @@ RectTransform:
   m_Children:
   - {fileID: 825916713}
   - {fileID: 1547726568}
+  - {fileID: 1297763018}
   - {fileID: 401392183}
   - {fileID: 1984653388}
   - {fileID: 847472206}
@@ -13968,6 +13969,84 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1297763017
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1297763018}
+  - component: {fileID: 1297763020}
+  - component: {fileID: 1297763019}
+  m_Layer: 5
+  m_Name: YaxisSwipeDistanceText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1297763018
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297763017}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1000382680}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 97, y: -109}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1297763019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297763017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 3
+    m_AlignByGeometry: 1
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: YaxisSwipeDistance
+--- !u!222 &1297763020
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297763017}
+  m_CullTransparentMesh: 0
 --- !u!43 &1310450858
 Mesh:
   m_ObjectHideFlags: 0
@@ -16722,7 +16801,7 @@ GameObject:
   - component: {fileID: 1547726567}
   - component: {fileID: 1547726566}
   m_Layer: 5
-  m_Name: SwipeDistanceText
+  m_Name: XaxisSwipeDistanceText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16760,7 +16839,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SwipeDistance
+  m_Text: XaxisSwipeDistance
 --- !u!222 &1547726567
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17249,6 +17328,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3999297259844618981}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1704405179 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3999297259844618981}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704405178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c296c2431ff7b83409eaf7fa676b14e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1713359430
 Mesh:
   m_ObjectHideFlags: 0
@@ -18457,8 +18548,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1704405178}
   playerSpeedText: {fileID: 825916711}
-  playerBaseMove: {fileID: 0}
-  swipeDistanceText: {fileID: 1547726566}
+  playerBaseMove: {fileID: 1704405179}
+  XaxisSwipeDistanceText: {fileID: 1547726566}
+  YaxisSwipeDistanceText: {fileID: 1297763019}
   debugButton: {fileID: 1984653389}
   backButton: {fileID: 787397596}
   debugPannel: {fileID: 847472205}
@@ -19761,7 +19853,7 @@ RectTransform:
   m_Children:
   - {fileID: 632005}
   m_Father: {fileID: 1000382680}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -20771,7 +20863,7 @@ PrefabInstance:
     - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
         type: 3}
       propertyPath: forwardForce
-      value: 400
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
         type: 3}
@@ -20781,7 +20873,7 @@ PrefabInstance:
     - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
         type: 3}
       propertyPath: horizontalSpeed
-      value: 65
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
         type: 3}
@@ -20791,12 +20883,12 @@ PrefabInstance:
     - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
         type: 3}
       propertyPath: addAirBrakeStart
-      value: 45
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
         type: 3}
       propertyPath: addAirBrake
-      value: 0.98
+      value: 0.966
       objectReference: {fileID: 0}
     - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
         type: 3}
@@ -20807,6 +20899,11 @@ PrefabInstance:
         type: 3}
       propertyPath: maxSpeedExcessBrake
       value: 0.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
+        type: 3}
+      propertyPath: beginSwipeBrake
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3999297260338569818, guid: ab42b3ef5acd0694998a29df74156a0c,
         type: 3}

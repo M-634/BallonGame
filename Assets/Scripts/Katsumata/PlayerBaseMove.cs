@@ -16,7 +16,7 @@ public class PlayerBaseMove : MonoBehaviour
     [SerializeField, Range(0, 1f)] public float rotateBrekeCoefficient = 0.9f;
     /// <summary>横向いた時の追加速度の減衰比率 </summary>
     [SerializeField, Range(0, 1f)] public float addAirBrake = 0.7f;
-    /// <summary>横向いた時の追加速度の減衰比率の適用時のrotateSpeedの値 </summary>
+    /// <summary>横向いた時の追加速度の減衰比率の角度(度数法) </summary>
     [SerializeField] public float addAirBrakeStart = 1f;
     /// <summary>速度を格納する。現状DebugUIに値を渡してる </summary>
     public float Speed { get; private set; }
@@ -35,6 +35,12 @@ public class PlayerBaseMove : MonoBehaviour
     Vector2 touchBeginPos;
     /// <summary>x軸のスワイプの動きを格納する</summary>
     public float swipeDistance_x = 0;
+    /// <summary>y軸のスワイプの動きを格納する</summary>
+    public float swipeDistance_y = 0;
+    /// <summary>スワイプした距離の最大値</summary>
+    public float maxSwipeDistance_y = 80f;
+    /// <summary>ブレーキがかかるスワイプ</summary>
+    public float beginSwipeBrake = 1f;
 
     [SerializeField] GameObject debugUIobj;
 
@@ -64,16 +70,17 @@ public class PlayerBaseMove : MonoBehaviour
     }
     void FixedUpdate()
     {
-        //if (!TimeScheduler.Instance.InGame)
+        //if (!GameState.Instance.InGame)
         //{
         //    return;
         //}
         if (touch.phase == TouchPhase.Moved)
         {
             touchBeginPos = touch.position;
+            touchPos = Vector2.zero;
         }
 
-        CalculateForwardToLookAngle();
+        //CalculateForwardToLookAngle();
 
         if (mouthDebug)
         {
@@ -126,15 +133,17 @@ public class PlayerBaseMove : MonoBehaviour
         {
             touchBeginPos = touch.position;
             swipeDistance_x = 0;
+            swipeDistance_y = 0;
         }
 
         if (touch.phase == TouchPhase.Moved)
         {
             swipe = true;
-            
+
             swipeDistance_x = touch.position.x - touchBeginPos.x; //現状DebugUI用に変数作って取得してる
+            swipeDistance_y = touch.position.y - touchBeginPos.y;
             touchPos = new Vector2(
-            (swipeDistance_x) / Screen.width, 0);
+            swipeDistance_x / Screen.width, swipeDistance_y / Screen.height);
         }
     }
 
@@ -174,9 +183,14 @@ public class PlayerBaseMove : MonoBehaviour
     void AirBrake()
     {
         m_rb.velocity = m_rb.velocity * airBrekeCoefficient;
-        if (Mathf.Abs(forwardToLookAngle) > addAirBrakeStart)
+        //if (Mathf.Abs(forwardToLookAngle) > addAirBrakeStart) //横向いた時の追加ブレーキを判定する
+        //{
+        //    m_rb.velocity = m_rb.velocity * addAirBrake;
+        //}
+
+        if (swipeDistance_y < -beginSwipeBrake)
         {
-            m_rb.velocity = m_rb.velocity * addAirBrake;
+            m_rb.velocity = m_rb.velocity * addAirBrake * CalculateSwipeYaxisRate();
         }
 
         if (m_rb.velocity.magnitude < 0.01f)
@@ -185,13 +199,20 @@ public class PlayerBaseMove : MonoBehaviour
         }
     }
 
+    float CalculateSwipeYaxisRate()
+    {
+        float swipeYaxisRate = 0;
+        swipeYaxisRate = 1 - Mathf.InverseLerp(touchPos.y, maxSwipeDistance_y, swipeYaxisRate);
+        return swipeYaxisRate;
+    }
+
     /// <summary>
     /// 進行方向とみている方向の角度を計算する
     /// </summary>
-    void CalculateForwardToLookAngle()
-    {
-        forwardToLookAngle = Vector3.Angle(m_rb.velocity, transform.forward);
-    }
+    //void CalculateForwardToLookAngle()
+    //{
+    //    forwardToLookAngle = Vector3.Angle(m_rb.velocity, transform.forward);
+    //}
 
     /// <summary>
     /// unityで実行してデバッグする用。マウスクリックで加速
