@@ -8,16 +8,12 @@ using UnityEngine;
 /// </summary>
 public enum WeatherConditions
 {
-    None,
+    Initialize,
     Sunny,
     ThunderStorm,
     Hurricane
 }
 
-/*
- このクラスは大いに修正すべきだ、セレクトからゲームシーンへどの用にStage情報を
-持っていくか考えなおす必要があるだろう
- */
 /// <summary>
 /// ステージ情報を管理する
 /// セレクト画面でボタンを押した時に確定させ、
@@ -25,17 +21,20 @@ public enum WeatherConditions
 /// </summary>
 public class StageParent : SingletonMonoBehavior<StageParent>
 {
-    /// <summary>ステージプレハブを登録する</summary>
+    /// <summary>ステージプレハブを登録する(Projectからアサインすること)</summary>
     [SerializeField] GameObject[] m_stagePrefabs;
-    /// <summary>インスタンス化したstagePrefabが入ったリスト</summary>
+    /// <summary>インスタンス化したstagePrefabが入ったリスト(Hierarchy上に生成されたプレハブ)</summary>
     private readonly List<GameObject> m_stageDateList = new List<GameObject>();
-    /// <summary>出現させるステージプレハブ </summary>
+    /// <summary>出現させるステージ </summary>
     public GameObject GetAppearanceStage { get; private set; }
     /// <summary>ステージの天候状態</summary>
     public WeatherConditions WeatherConditions { get; set; }
+    /// <summary>ステージ名</summary>
+    public string StageName { get; set; }
 
     private void Start()
     {
+        //最初のダミーシーンでステージを生成して、アクティブを非表示にする
         foreach (var stage in m_stagePrefabs)
         {
             var go = Instantiate(stage);
@@ -49,14 +48,14 @@ public class StageParent : SingletonMonoBehavior<StageParent>
     public void Initialization()
     {
         GetAppearanceStage = null;
-        WeatherConditions = WeatherConditions.None;
+        WeatherConditions = WeatherConditions.Initialize;
     }
 
     /// <summary>
     /// ステージセレクトボタンを押した時に、次のゲームシーンで出現させる
     /// ステージ情報を確定させる
     /// </summary>
-    public void SetStageInfo(GameObject stage, WeatherConditions conditions, Action callback)
+    public void SetStageInfo(GameObject stage, WeatherConditions conditions,string loadScene)
     {
         if (stage == null)
         {
@@ -83,13 +82,12 @@ public class StageParent : SingletonMonoBehavior<StageParent>
 
         //stageをセットする
         GetAppearanceStage = m_stageDateList[index];
-
-
         //天候をセットする
         WeatherConditions = conditions;
-
+        //名前をセットする
+        StageName = stage.name;
         //ゲームシーンをロード
-        callback?.Invoke();
+        SceneLoader.Instance.Load(loadScene);
     }
 
 

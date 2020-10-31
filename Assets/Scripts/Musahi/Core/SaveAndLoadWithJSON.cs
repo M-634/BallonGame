@@ -4,19 +4,20 @@ using System.IO;
 using UnityEngine;
 
 [System.Serializable]
-public class HighScoreData
+public class StageData
 {
     public int HighScore;
+    public bool IsStageClear;
 }
 
 /// <summary>
 /// Jsonを使用したセーブ機能。
 /// ステージ名でパスを振り分ける
 /// </summary>
-public class SaveAndLoadWithJSON 
+public class SaveAndLoadWithJSON
 {
     readonly string m_path;
-    HighScoreData m_highScoreData;
+    StageData m_StageData;
 
     /// <summary>
     /// test用のコンストラクター
@@ -24,7 +25,7 @@ public class SaveAndLoadWithJSON
     public SaveAndLoadWithJSON()
     {
         m_path = Application.dataPath + $"/Test_HighScoreData.json";
-        m_highScoreData = new HighScoreData();
+        m_StageData = new StageData();
     }
 
     public SaveAndLoadWithJSON(string path)
@@ -34,13 +35,14 @@ public class SaveAndLoadWithJSON
 #elif UNITY_EDITOR
         m_path = Application.dataPath + $"/{path}_HighScoreData.json";
 #endif
-        m_highScoreData = new HighScoreData();
+        m_StageData = new StageData();
     }
 
-    public void SaveHighScore(int score)
+    public void SaveHighScore(int score,bool isClear)
     {
-        m_highScoreData.HighScore = score;//error
-        string json = JsonUtility.ToJson(m_highScoreData, true);
+        m_StageData.IsStageClear = isClear;
+        m_StageData.HighScore = score;
+        string json = JsonUtility.ToJson(m_StageData, true);
         Debug.Log("シリアライズされた JSONデータ" + json);
 
         //ハイスコアを上書きする
@@ -51,12 +53,14 @@ public class SaveAndLoadWithJSON
         Debug.Log("Saving HighScore.....");
     }
 
+
+
     public int LoadHighScore()
     {
         if (!File.Exists(m_path))
         {
             //make file
-            SaveHighScore(0);
+            SaveHighScore(0,false);
             Debug.Log("Initialize file.....");
             return 0;
         }
@@ -64,8 +68,23 @@ public class SaveAndLoadWithJSON
         StreamReader reader = new StreamReader(m_path);
         string json = reader.ReadToEnd();
         reader.Close();
-        m_highScoreData = JsonUtility.FromJson<HighScoreData>(json);
+        m_StageData = JsonUtility.FromJson<StageData>(json);
         Debug.Log("Loading HighScore.....");
-        return m_highScoreData.HighScore;
+        return m_StageData.HighScore;
+    }
+
+    public bool CheakStageClear()
+    {
+        if (!File.Exists(m_path))
+        {
+            return false;
+        }
+
+        StreamReader reader = new StreamReader(m_path);
+        string json = reader.ReadToEnd();
+        reader.Close();
+        m_StageData = JsonUtility.FromJson<StageData>(json);
+        Debug.Log("cheaking stage clear flag....");
+        return m_StageData.IsStageClear;
     }
 }

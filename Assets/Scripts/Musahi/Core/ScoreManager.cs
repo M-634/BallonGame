@@ -19,32 +19,22 @@ public class ScoreManager : MonoBehaviour
 
     UISetActiveControl m_UISetActiveControl;
     SaveAndLoadWithJSON m_json;
-    string m_path;
 
     // Start is called before the first frame update
-     private void Start()
+    private void Start()
     {
         m_UISetActiveControl = GetComponent<UISetActiveControl>();
         m_UISetActiveControl.CurrentScoreText.text = "Score: ";
 
         if (StageParent.Instance)
         {
-            if (StageParent.Instance.GetAppearanceStage)
-            {
-                m_path = StageParent.Instance.GetAppearanceStage.name;
-                m_json = new SaveAndLoadWithJSON(m_path);
-            }
-            else
-            {
-                Debug.LogError("StageParent.Instance.GetAppearanceStage" + "がNullです！");
-                return;
-            }
+            //ステージの名前と天候状態でパスを分ける
+            string path = StageParent.Instance.StageName + "_" +StageParent.Instance.WeatherConditions.ToString();
+            m_json = new SaveAndLoadWithJSON(path);
         }
         else
         {
-#if UNITY_EDITOR
             m_json = new SaveAndLoadWithJSON();//test
-#endif
         }
 
         m_highScore = m_json.LoadHighScore();
@@ -56,26 +46,9 @@ public class ScoreManager : MonoBehaviour
     /// </summary>
     public void GetCoin()
     {
-        //2回目でエラーが起きる原因不明
         m_currentScore += m_getCoinScore;
-        //m_UISetActiveControl.CurrentScoreText.text = "Score: " + m_currentScore;
-        if (m_UISetActiveControl)
-        {
-            if (m_UISetActiveControl.CurrentScoreText)
-            {
-                m_UISetActiveControl.CurrentScoreText.text = "Score: " + m_currentScore;
-            }
-            else
-            {
-                Debug.LogError("m_UISetActiveControl.CurrentScoreText" + "がnullです。");
-            }
-        }
-        else
-        {
-            Debug.LogError("m_UISetActiveControl" + "がNullです。");
-        }
+        m_UISetActiveControl.CurrentScoreText.text = "Score: " + m_currentScore;
     }
-
 
     /// <summary>
     /// ゲームクリア!
@@ -84,7 +57,7 @@ public class ScoreManager : MonoBehaviour
     /// </summary>
     public void Result(int leftTime)
     {
-        int totalScore = m_currentScore * leftTime;
+        int totalScore = m_currentScore * leftTime;//スコアと残り時間のスコアをどう計算するかは未定
 
         int score = 0;
         Sequence sequence = DOTween.Sequence();
@@ -93,37 +66,35 @@ public class ScoreManager : MonoBehaviour
             .OnUpdate(() => m_UISetActiveControl.GetScoreText.text = ("Score: " + score.ToString()))
             .OnComplete(() => Debug.Log("")));
 
-        //ここ修正ポイント
         int time = 0;
         sequence.Append(
             DOTween.To(() => time, num => time = num, leftTime, 2f)
             .OnUpdate(() => m_UISetActiveControl.LeftTimeScoreText.text = ("LeftTime;" + time.ToString()))
             .OnComplete(() => Debug.Log("")));
 
-
         int total = 0;
         sequence.Append(
             DOTween.To(() => total, num => total = num, totalScore, 2f))
             .OnUpdate(() => m_UISetActiveControl.TotalScoreText.text = ("TotalScore:" + total.ToString()))
-            .OnComplete(() => SaveHighScore(totalScore));
+            .OnComplete(() => SaveAndLoad(totalScore));
     }
 
-    private void SaveHighScore(int totalScore)
+    private void SaveAndLoad(int totalScore)
     {
         if (totalScore > m_highScore)
         {
-            m_json.SaveHighScore(totalScore);
+            m_json.SaveHighScore(totalScore,true);
         }
 
         //ステージを非表示にする
-        if (StageParent.Instance != null)
+        if (StageParent.Instance)
         {
             StageParent.Instance.GetAppearanceStage.SetActive(false);
             //ステージを初期化する
             StageParent.Instance.Initialization();
         }
         //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
-        if (SceneLoader.Instance != null)
+        if (SceneLoader.Instance)
         {
             SceneLoader.Instance.LoadWithTap("SelectScene 1");
         }
