@@ -31,7 +31,7 @@ public class SaveAndLoadWithJSON
     {
 #if UNITY_ANDROID
         m_path = Application.streamingAssetsPath + $"/{path}_HighScoreData.json";  
-#else
+#elif UNITY_EDITOR
         m_path = Application.dataPath + $"/{path}_HighScoreData.json";
 #endif
         m_highScoreData = new HighScoreData();

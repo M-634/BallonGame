@@ -11,7 +11,7 @@ using UnityEngine.UI;
 /// ゲームシーンの状態（Start,Goal,GameOver）を監視するクラス
 /// </summary>
 [RequireComponent(typeof(ScoreManager), typeof(UISetActiveControl))]
-public class TimerInStage : Reciver
+public class TimerInStage : MonoBehaviour
 {
     [SerializeField] Text m_timeLimitText;
     [SerializeField] float m_timeLimit = 300f;
@@ -23,9 +23,8 @@ public class TimerInStage : Reciver
     public bool InGame { get; set; }
     private float m_oldSeconds;//1フレーム前の秒数
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
         m_scoreManager = GetComponent<ScoreManager>();
         m_UISetActiveControl = GetComponent<UISetActiveControl>();
         //ステージを出現させる(ここシングルトンに依存しているから変える)
@@ -73,10 +72,16 @@ public class TimerInStage : Reciver
     public void OnGoal()
     {
         InGame = false;
-        m_UISetActiveControl.UISetActiveWithGameClear();
+        if (m_UISetActiveControl)
+        {
+            m_UISetActiveControl.UISetActiveWithGameClear();
+        }
+        else
+        {
+            Debug.LogError(" m_UISetActiveControl" + "はNullです");
+        }
         //残り時間をScoreManagerに渡す
         m_scoreManager.Result(Mathf.FloorToInt(m_timeLimit));
-        UnSubscribe();
     }
 
     /// <summary>
@@ -85,22 +90,14 @@ public class TimerInStage : Reciver
     public void GameOver()
     {
         InGame = false;
-        m_UISetActiveControl.UISetActiveWithGameOver();
-        UnSubscribe();
+        if (m_UISetActiveControl)
+        {
+            m_UISetActiveControl.UISetActiveWithGameOver();
+        }
+        else
+        {
+            Debug.LogError(" m_UISetActiveControl" + "はNullです");
+        }
         //セレクト画面に戻る
-    }
-
-    protected override void Subscribe()
-    {
-        Sender.GameClearEvent += () => OnGoal();
-        Sender.GameOverEvent += () => GameOver();
-        base.Subscribe();
-    }
-
-    protected override void UnSubscribe()
-    {
-        Sender.GameClearEvent -= () => OnGoal();
-        Sender.GameOverEvent -= () => GameOver();
-        base.UnSubscribe();
     }
 }

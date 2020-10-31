@@ -10,7 +10,7 @@ using Unity.Collections.LowLevel.Unsafe;
 ///ゲーム中のスコア周りを管理するクラス
 /// </summary>
 [RequireComponent(typeof(UISetActiveControl))]
-public class ScoreManager : Reciver
+public class ScoreManager : MonoBehaviour
 {
     private int m_highScore;
     private int m_currentScore;
@@ -22,12 +22,31 @@ public class ScoreManager : Reciver
     string m_path;
 
     // Start is called before the first frame update
-    protected override void Start()
+     private void Start()
     {
-        base.Start();
         m_UISetActiveControl = GetComponent<UISetActiveControl>();
         m_UISetActiveControl.CurrentScoreText.text = "Score: ";
-        m_json = new SaveAndLoadWithJSON();
+
+        if (StageParent.Instance)
+        {
+            if (StageParent.Instance.GetAppearanceStage)
+            {
+                m_path = StageParent.Instance.GetAppearanceStage.name;
+                m_json = new SaveAndLoadWithJSON(m_path);
+            }
+            else
+            {
+                Debug.LogError("StageParent.Instance.GetAppearanceStage" + "がNullです！");
+                return;
+            }
+        }
+        else
+        {
+#if UNITY_EDITOR
+            m_json = new SaveAndLoadWithJSON();//test
+#endif
+        }
+
         m_highScore = m_json.LoadHighScore();
         Debug.Log("HighScore: " + m_highScore);
     }
@@ -96,7 +115,6 @@ public class ScoreManager : Reciver
             m_json.SaveHighScore(totalScore);
         }
 
-        UnSubscribe();
         //ステージを非表示にする
         if (StageParent.Instance != null)
         {
@@ -109,17 +127,5 @@ public class ScoreManager : Reciver
         {
             SceneLoader.Instance.LoadWithTap("SelectScene 1");
         }
-    }
-
-    protected override void Subscribe()
-    {
-        Sender.GetCoinEvent += () => GetCoin();
-        base.Subscribe();
-    }
-
-    protected override void UnSubscribe()
-    {
-        Sender.GetCoinEvent -= () => GetCoin();
-        base.UnSubscribe();
     }
 }

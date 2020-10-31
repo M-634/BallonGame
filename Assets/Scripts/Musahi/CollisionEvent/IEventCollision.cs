@@ -5,7 +5,7 @@
 /// </summary>
 public interface IEventCollision
 {
-    void CollisionEvent();
+    void CollisionEvent(EventSystemInGameScene eventSystem);
 }
 
 

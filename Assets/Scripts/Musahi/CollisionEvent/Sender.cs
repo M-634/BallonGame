@@ -6,8 +6,10 @@ using UnityEngine.UIElements;
 /// イベントを発行するベースクラス
 /// memo:イベントのリスナーはScoreManagerとTimerInStageクラス
 ///</summary>
-public abstract class Sender: MonoBehaviour,IEventCollision
+public abstract class Sender: MonoBehaviour
 {
+    //ここのEventがシーンのロード時にNullになってなく、前のゲームシーンで登録されたメソッドが
+    //オブジェクトが破棄された状態にもかかわらず呼び出されている。
     public static event Action GetCoinEvent = null;
     public static event Action GameOverEvent = null;
     public static event Action GameClearEvent = null;

@@ -27,15 +27,12 @@ public class StageParent : SingletonMonoBehavior<StageParent>
 {
     /// <summary>ステージプレハブを登録する</summary>
     [SerializeField] GameObject[] m_stagePrefabs;
-    /// <summary>インスタンス化したstagePrefabが入ったObject</summary>
+    /// <summary>インスタンス化したstagePrefabが入ったリスト</summary>
     private readonly List<GameObject> m_stageDateList = new List<GameObject>();
-    [SerializeField] GameObject m_getAppearanceStage;//serializeはDebug用
     /// <summary>出現させるステージプレハブ </summary>
-    public GameObject GetAppearanceStage { get => m_getAppearanceStage; }
+    public GameObject GetAppearanceStage { get; private set; }
     /// <summary>ステージの天候状態</summary>
     public WeatherConditions WeatherConditions { get; set; }
-    /// <summary>ハイスコアをセーブするパス</summary>
-    public string FullPath { get; private set; }
 
     private void Start()
     {
@@ -51,9 +48,8 @@ public class StageParent : SingletonMonoBehavior<StageParent>
 
     public void Initialization()
     {
-        m_getAppearanceStage = null;
+        GetAppearanceStage = null;
         WeatherConditions = WeatherConditions.None;
-        FullPath = "";
     }
 
     /// <summary>
@@ -86,18 +82,11 @@ public class StageParent : SingletonMonoBehavior<StageParent>
         }
 
         //stageをセットする
-        m_getAppearanceStage = m_stageDateList[index];
+        GetAppearanceStage = m_stageDateList[index];
 
 
         //天候をセットする
         WeatherConditions = conditions;
-
-        //pathを指定する
-#if UNITY_ANDROID
-        m_fullPath = Application.streamingAssetsPath + $"/{stage.name}_HighScoreData.json";  
-#else
-        FullPath = Application.dataPath + $"/{stage.name}_HighScoreData.json";
-#endif
 
         //ゲームシーンをロード
         callback?.Invoke();
@@ -106,14 +95,14 @@ public class StageParent : SingletonMonoBehavior<StageParent>
 
     public void AppearanceStageObject()
     {
-        //ステージの非表示な子オブジェクトのを表示する
-        foreach (Transform item in m_getAppearanceStage.transform)
+        //ステージの非表示な子オブジェクトを表示する
+        foreach (Transform item in GetAppearanceStage.transform)
         {
             if (item.gameObject.activeSelf == false)
             {
                 item.gameObject.SetActive(true);
             }
         }
-        m_getAppearanceStage.SetActive(true);
+        GetAppearanceStage.SetActive(true);
     }
 }

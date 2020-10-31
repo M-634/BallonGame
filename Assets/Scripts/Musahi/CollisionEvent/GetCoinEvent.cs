@@ -6,11 +6,11 @@ using UnityEngine.Events;
 /// <summary>
 /// コイン獲得時のイベント
 /// </summary>
-public class GetCoinEvent :Sender
+public class GetCoinEvent : MonoBehaviour, IEventCollision
 {
-    public override void CollisionEvent()
+    public void CollisionEvent(EventSystemInGameScene eventSystem)
     {
-        ExecuteGetCoinEvent();
+        eventSystem.ExecuteGetCoinEvent();
         gameObject.SetActive(false);
         Debug.Log("コイン獲得");
     }

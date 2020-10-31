@@ -10,7 +10,7 @@ using UnityEngine;
 /// <typeparam name="T"></typeparam>
 public class SingletonMonoBehavior<T> : MonoBehaviour where T:MonoBehaviour
 {
-    [SerializeField] bool m_dontDestroyOnLoad = false;
+    [SerializeField] protected bool m_dontDestroyOnLoad = false;
     private static T m_instance;
     public static T Instance 
     {
@@ -35,7 +35,7 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T:MonoBehaviour
         if (this != m_instance && m_instance != null)
         {
             Destroy(this.gameObject);
-            Debug.LogError(typeof(T) + "は既に他のGameObjectにアタッチされているため、コンポーネントを破棄しました"
+            Debug.LogWarning(typeof(T) + "は既に他のGameObjectにアタッチされているため、コンポーネントを破棄しました"
                 + "アタッチされているGameObjectは" + Instance.gameObject.name + "です");
             return;
         }

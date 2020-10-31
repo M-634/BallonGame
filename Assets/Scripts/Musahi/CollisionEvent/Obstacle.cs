@@ -7,13 +7,12 @@ using UnityEngine;
 /// 全ての障害物のベースクラス.
 /// プレイヤーに当たるとゲームオーバーする
 /// </summary>
-public class Obstacle : Sender
+public class Obstacle : MonoBehaviour,IEventCollision
 {
-   
     /// <summary>ゲームオーバー </summary>
-    public override void CollisionEvent()
+    public void CollisionEvent(EventSystemInGameScene eventSystem)
     {
-        ExecuteGameOverEvent();
+        eventSystem.ExecuteGameOverEvent();
         Debug.Log("GameOver!");
     }
 }

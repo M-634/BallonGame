@@ -1,14 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public  class Reciver : MonoBehaviour
+public  class Reciver : MonoBehaviour,IDisposable
 {
-
-    // Use this for initialization
-    virtual protected void Start()
+    private void OnEnable()
     {
         Subscribe();
     }
+
+    private void OnDisable()
+    {
+        UnSubscribe();
+    }
+
 
     protected virtual void Subscribe()
     {
@@ -18,5 +23,10 @@ public  class Reciver : MonoBehaviour
     protected virtual void UnSubscribe()
     {
         Debug.Log("unSubscribe event....");
+    }
+
+    public void Dispose()
+    {
+        Debug.Log("yaAAAAAAAAAAAAAaa");
     }
 }

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GoalEvent :Sender
+public class GoalEvent :MonoBehaviour,IEventCollision
 {
-    public override void CollisionEvent()
+    public void CollisionEvent(EventSystemInGameScene eventSystem)
     {
-        ExecuteGameClearEvent();
+        eventSystem.ExecuteGameClearEvent();
         Debug.Log("Goal!!");
     }
 }
