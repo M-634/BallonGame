@@ -32,11 +32,11 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T:MonoBehaviour
 
     virtual protected void Awake()
     {
-        if (this != m_instance && m_instance != null)
+        if (m_instance != null && this != m_instance)
         {
-            Destroy(this.gameObject);
             Debug.LogWarning(typeof(T) + "は既に他のGameObjectにアタッチされているため、コンポーネントを破棄しました"
                 + "アタッチされているGameObjectは" + Instance.gameObject.name + "です");
+            Destroy(this.gameObject);
             return;
         }
 

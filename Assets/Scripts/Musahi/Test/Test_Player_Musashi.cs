@@ -10,6 +10,7 @@ public class Test_Player_Musashi : MonoBehaviour
     EventSystemInGameScene m_eventSystemInGameScene;
     private void Awake()
     {
+        //ここもっといいやり方ないかなー|дﾟ)
         m_gameState = FindObjectOfType<TimerInStage>();
         if (m_gameState == null)
         {
