@@ -22,7 +22,11 @@ public class SelectGameSceneButton : MonoBehaviour
     //このままだと、m_json.CheakStageClear()が繰り返し呼ばれてしまうので修正する必要がある
     private void Start()
     {
-        if (m_nextSceneButton)
+        //まだ解放されていないステージのセレクトボタンならStart関数の処理を辞める
+        if (!GetComponent<Button>().interactable)
+            return;
+   
+        if (m_nextSceneButton && m_nextButton != this)
         {
             m_nextButton = m_nextSceneButton.GetComponent<Button>();
             m_nextButton.interactable = false;

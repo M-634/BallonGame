@@ -18,6 +18,6 @@ public class FadeInScene : MonoBehaviour
     {
         m_fadeImage.enabled = true;
         m_fadeImage.SetAlpha(m_setAlpha);
-        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime ,()=> m_fadeImage.enabled = false));
+        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime, () => m_fadeImage.enabled = false)) ;
     }
 }

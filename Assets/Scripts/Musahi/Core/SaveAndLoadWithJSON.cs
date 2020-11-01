@@ -28,6 +28,10 @@ public class SaveAndLoadWithJSON
         m_StageData = new StageData();
     }
 
+    /// <summary>
+    /// パスを指定するコンストラクター
+    /// </summary>
+    /// <param name="path">ステージ名 ＋ 天候状態の名前</param>
     public SaveAndLoadWithJSON(string path)
     {
 #if UNITY_ANDROID
@@ -84,7 +88,6 @@ public class SaveAndLoadWithJSON
         string json = reader.ReadToEnd();
         reader.Close();
         m_StageData = JsonUtility.FromJson<StageData>(json);
-        Debug.Log("cheaking stage clear flag....");
         return m_StageData.IsStageClear;
     }
 }
