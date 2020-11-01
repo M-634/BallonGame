@@ -15,7 +15,6 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
     private IEnumerator m_currentLoadCorutine;
     [SerializeField] Text m_tapToLoadText;
 
-    [Header("この変数にアタッチするCanvasのSortOrderを１にすること")]
     [SerializeField] Canvas m_loadCanvas;
     [SerializeField] Image m_fadeImage;
     [SerializeField] float m_fadeOutTime;
@@ -24,6 +23,7 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
     private void Start()
     {
         m_tapToLoadText.gameObject.SetActive(false);
+        m_loadCanvas.sortingOrder = 1;//描画を最前列にするため
         m_loadCanvas.enabled = false;
     }
 
@@ -67,6 +67,7 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
     {
         m_loadCanvas.enabled = true;
         m_tapToLoadText.gameObject.SetActive(true);
+
         while (true)
         {
 #if UNITY_ANDROID

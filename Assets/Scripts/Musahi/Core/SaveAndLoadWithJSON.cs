@@ -16,7 +16,9 @@ public class StageData
 /// </summary>
 public class SaveAndLoadWithJSON
 {
-    readonly string m_path;
+    string m_folderPath;
+    string m_filepath;
+
     StageData m_StageData;
 
     /// <summary>
@@ -24,7 +26,8 @@ public class SaveAndLoadWithJSON
     /// </summary>
     public SaveAndLoadWithJSON()
     {
-        m_path = Application.dataPath + $"/Test_HighScoreData.json";
+        m_folderPath = Path.Combine(Application.dataPath, "SaveData");
+        m_filepath = Application.dataPath + $"/Test_HighScoreData.json";
         m_StageData = new StageData();
     }
 
@@ -34,23 +37,33 @@ public class SaveAndLoadWithJSON
     /// <param name="path">ステージ名 ＋ 天候状態の名前</param>
     public SaveAndLoadWithJSON(string path)
     {
+
 #if UNITY_ANDROID
-        m_path = Application.streamingAssetsPath + $"/{path}_HighScoreData.json";  
+        m_folderPath = Path.Combine(Application.streamingAssetsPath, "SaveData");
+        m_filepath = Path.Combine(m_folderPath, $"{path}_HighScoreData.json");
 #elif UNITY_EDITOR
-        m_path = Application.dataPath + $"/{path}_HighScoreData.json";
+        m_folderPath = Path.Combine(Application.dataPath, "SaveData");
+        m_filepath = Path.Combine(m_folderPath, $"{path}_HighScoreData.json");
 #endif
         m_StageData = new StageData();
     }
 
-    public void SaveHighScore(int score,bool isClear)
+    public void SaveHighScore(int score, bool isClear)
     {
         m_StageData.IsStageClear = isClear;
         m_StageData.HighScore = score;
         string json = JsonUtility.ToJson(m_StageData, true);
         Debug.Log("シリアライズされた JSONデータ" + json);
 
+        //SaveDataフォルダーがないなら作成する
+        if (!Directory.Exists(m_folderPath))
+        {
+            Directory.CreateDirectory(m_folderPath);
+            Debug.Log("Initialize folder.....");
+        }
+
         //ハイスコアを上書きする
-        StreamWriter writer = new StreamWriter(m_path, false);
+        StreamWriter writer = new StreamWriter(m_filepath, false);
         writer.Write(json);
         writer.Flush();
         writer.Close();
@@ -61,15 +74,15 @@ public class SaveAndLoadWithJSON
 
     public int LoadHighScore()
     {
-        if (!File.Exists(m_path))
+        if (!File.Exists(m_filepath))
         {
             //make file
-            SaveHighScore(0,false);
+            SaveHighScore(0, false);
             Debug.Log("Initialize file.....");
             return 0;
         }
 
-        StreamReader reader = new StreamReader(m_path);
+        StreamReader reader = new StreamReader(m_filepath);
         string json = reader.ReadToEnd();
         reader.Close();
         m_StageData = JsonUtility.FromJson<StageData>(json);
@@ -79,15 +92,31 @@ public class SaveAndLoadWithJSON
 
     public bool CheakStageClear()
     {
-        if (!File.Exists(m_path))
+        if (!File.Exists(m_filepath))
         {
             return false;
         }
 
-        StreamReader reader = new StreamReader(m_path);
+        StreamReader reader = new StreamReader(m_filepath);
         string json = reader.ReadToEnd();
         reader.Close();
         m_StageData = JsonUtility.FromJson<StageData>(json);
         return m_StageData.IsStageClear;
+    }
+
+    /// <summary>
+    /// SaveDataフォルダーを削除する関数
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public void DeletSaveData()
+    {
+        if (!Directory.Exists(m_folderPath))
+        {
+            Debug.Log(m_folderPath + "にフォルダーは存在しません");
+            return;
+        }
+
+        //フォルダーに存在するjsonファイルを全て削除する
+        Directory.Delete(m_folderPath, true);
     }
 }
