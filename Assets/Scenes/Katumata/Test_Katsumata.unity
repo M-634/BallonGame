@@ -819,7 +819,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.64646465, y: 1}
+  m_AnchorMax: {x: 0.3333111, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1226,8 +1226,8 @@ RectTransform:
   m_Father: {fileID: 414721474}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.8, y: 0}
-  m_AnchorMax: {x: 0.8, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7292,7 +7292,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.8, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -13305,7 +13305,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Swipe\u4FC2\u6570"
+  m_Text: horizontalSpeed
 --- !u!222 &1166841341
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14406,8 +14406,8 @@ RectTransform:
   m_Father: {fileID: 643478615}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.96000004, y: 0}
-  m_AnchorMax: {x: 0.96000004, y: 1}
+  m_AnchorMin: {x: 0.92999995, y: 0}
+  m_AnchorMax: {x: 0.92999995, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -15025,7 +15025,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1404136536}
-  m_LocalRotation: {x: 0.120781, y: 0.00000002705635, z: -0.000000004271425, w: 0.9926792}
+  m_LocalRotation: {x: 0.12078097, y: -0.0000000036734484, z: -5.3247723e-10, w: 0.9926792}
   m_LocalPosition: {x: 0, y: 4.9589996, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -16329,7 +16329,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1488250876}
-  m_LocalRotation: {x: 0.120781, y: 0.00000002705635, z: -0.000000004271425, w: 0.9926792}
+  m_LocalRotation: {x: 0.12078097, y: -0.0000000036734484, z: -5.3247723e-10, w: 0.9926792}
   m_LocalPosition: {x: 0, y: 4.9589996, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -16417,8 +16417,8 @@ RectTransform:
   m_Father: {fileID: 2121634076}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.64646465, y: 0}
-  m_AnchorMax: {x: 0.64646465, y: 1}
+  m_AnchorMin: {x: 0.3333111, y: 0}
+  m_AnchorMax: {x: 0.3333111, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -17848,10 +17848,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 100484445}
   m_HandleRect: {fileID: 1516545797}
   m_Direction: 0
-  m_MinValue: 1
-  m_MaxValue: 100
+  m_MinValue: 0.01
+  m_MaxValue: 300
   m_WholeNumbers: 0
-  m_Value: 65
+  m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -19341,7 +19341,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.96000004, y: 1}
+  m_AnchorMax: {x: 0.92999995, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -20952,7 +20952,7 @@ PrefabInstance:
     - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
         type: 3}
       propertyPath: horizontalSpeed
-      value: 20
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
         type: 3}
@@ -20982,12 +20982,12 @@ PrefabInstance:
     - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
         type: 3}
       propertyPath: beginSwipeBrake
-      value: 100
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
         type: 3}
       propertyPath: maxSwipeDistance_y
-      value: 200
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
         type: 3}

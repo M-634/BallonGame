@@ -25,26 +25,18 @@ public class PlayerBaseMove : MonoBehaviour
     /// <summary>最大速度を超過したときにかかるブレーキの係数 </summary>
     [SerializeField, Range(0, 1f)] public float maxSpeedExcessBrake = 0.9f;
     /// <summary>スワイプした時にどの程度指に付いてくるかの係数 </summary>
-    [SerializeField] public float horizontalSpeed = 35.0f;
+    [SerializeField] public float horizontalSpeed = 0.5f;
 
     /// <summary>touchを格納、画面タッチをしてる一本目の指を取得する。現状指一本 </summary>
     Touch touch;
-    /// <summary>2本の指を使って連打してる人のためのバグ防止</summary>
-    //Touch touch2;
-    /// <summary>3本の指を使って連打してる人のためのバグ防止</summary>
-    //Touch touch3;
-    /// <summary>一本目の指のタッチしてる座標を取得する </summary>
-    Vector2 touchPos = new Vector2();
-    /// <summary>一本目の指のタッチしてる座標を取得し、スワイプするときの最初に触れた場所 </summary>
-    Vector2 touchBeginPos;
     /// <summary>x軸のスワイプの動きを格納する</summary>
     public float swipeDistance_x = 0;
     /// <summary>y軸のスワイプの動きを格納する</summary>
     public float swipeDistance_y = 0;
     /// <summary>スワイプした距離の最大値</summary>
-    public float maxSwipeDistance_y = 80f;
+    public float maxSwipeDistance_y = 0.2f;
     /// <summary>ブレーキがかかるスワイプ距離</summary>
-    public float beginSwipeBrake = 1f;
+    public float beginSwipeBrake = 0.05f;
 
     [SerializeField] GameObject debugUIobj;
 
@@ -76,13 +68,6 @@ public class PlayerBaseMove : MonoBehaviour
         //{
         //    return;
         //}
-        
-
-        if (touch.phase == TouchPhase.Moved)
-        {
-            touchBeginPos = touch.position;
-            touchPos = Vector2.zero;
-        }
 
 
         if (mouthDebug)
@@ -110,15 +95,12 @@ public class PlayerBaseMove : MonoBehaviour
     }
 
 
-
     /// <summary>加減速を計算する</summary>
     void TouchMoveForce()
     {
         if (Input.touchCount > 0)
         {
             touch = Input.GetTouch(0);
-            //touch2= Input.GetTouch(1);
-            //touch3 = Input.GetTouch(2);
             if (touch.phase == TouchPhase.Ended)
             {
                 if (!swipe) //前のフレームでスワイプしていなかったとき指を離したら加速する。
@@ -146,7 +128,7 @@ public class PlayerBaseMove : MonoBehaviour
         // 画面タッチが行われたら
         if (touch.phase == TouchPhase.Began)
         {
-            touchBeginPos = touch.position;
+            //touchBeginPos = touch.position;
             swipeDistance_x = 0;
             swipeDistance_y = 0;
         }
@@ -155,10 +137,8 @@ public class PlayerBaseMove : MonoBehaviour
         {
             swipe = true;
 
-            swipeDistance_x = touch.position.x - touchBeginPos.x; //現状DebugUI用に変数作って取得してる
-            swipeDistance_y = touch.position.y - touchBeginPos.y;
-            touchPos = new Vector2(
-            swipeDistance_x / Screen.width, swipeDistance_y / Screen.height);
+            swipeDistance_x = touch.deltaPosition.x / Screen.width; 
+            swipeDistance_y = touch.deltaPosition.y / Screen.height;
         }
         if (touch.phase == TouchPhase.Ended)
         {
@@ -179,7 +159,7 @@ public class PlayerBaseMove : MonoBehaviour
 
         if (swipe || mouthDebug)
         {
-            RotateSpeed = horizontalSpeed * touchPos.x;
+            RotateSpeed = horizontalSpeed * swipeDistance_x;
         }
         else
         {
@@ -189,7 +169,6 @@ public class PlayerBaseMove : MonoBehaviour
                 RotateSpeed = 0;
             }
         }
-
         transform.Rotate(0, RotateSpeed, 0);
     }
 
@@ -233,7 +212,6 @@ public class PlayerBaseMove : MonoBehaviour
         nowAngle.x = 0;
         nowAngle.z = 0;
         transform.localRotation = nowAngle;
-        //transform.rotation = Quaternion.AngleAxis(-transform.rotation.eulerAngles.z, new Vector3(0, 0, 1));
     }
 
     /// <summary>
@@ -265,6 +243,6 @@ public class PlayerBaseMove : MonoBehaviour
     void MouthAim()
     {
         mouthPosi = Input.mousePosition;
-        touchPos.x = mouthPosi.x / Screen.width;
+        swipeDistance_x = mouthPosi.x / Screen.width;
     }
 }
