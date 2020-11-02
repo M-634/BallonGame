@@ -16,7 +16,7 @@ public class PlayerBaseMove : MonoBehaviour
     [SerializeField, Range(0, 1f)] public float rotateBrekeCoefficient = 0.9f;
     /// <summary>横向いた時の追加速度の減衰比率 </summary>
     [SerializeField, Range(0, 1f)] public float addAirBrake = 0.7f;
-    /// <summary>横向いた時の追加速度の減衰比率の適用時のrotateSpeedの値 </summary>
+    /// <summary>横向いた時の追加速度の減衰比率の角度(度数法) </summary>
     [SerializeField] public float addAirBrakeStart = 1f;
     /// <summary>速度を格納する。現状DebugUIに値を渡してる </summary>
     public float Speed { get; private set; }
@@ -25,16 +25,18 @@ public class PlayerBaseMove : MonoBehaviour
     /// <summary>最大速度を超過したときにかかるブレーキの係数 </summary>
     [SerializeField, Range(0, 1f)] public float maxSpeedExcessBrake = 0.9f;
     /// <summary>スワイプした時にどの程度指に付いてくるかの係数 </summary>
-    [SerializeField] public float horizontalSpeed = 35.0f;
+    [SerializeField] public float horizontalSpeed = 0.5f;
 
     /// <summary>touchを格納、画面タッチをしてる一本目の指を取得する。現状指一本 </summary>
     Touch touch;
-    /// <summary>一本目の指のタッチしてる座標を取得する </summary>
-    Vector2 touchPos = new Vector2();
-    /// <summary>一本目の指のタッチしてる座標を取得し、スワイプするときの最初に触れた場所 </summary>
-    Vector2 touchBeginPos;
     /// <summary>x軸のスワイプの動きを格納する</summary>
     public float swipeDistance_x = 0;
+    /// <summary>y軸のスワイプの動きを格納する</summary>
+    public float swipeDistance_y = 0;
+    /// <summary>スワイプした距離の最大値</summary>
+    public float maxSwipeDistance_y = 0.2f;
+    /// <summary>ブレーキがかかるスワイプ距離</summary>
+    public float beginSwipeBrake = 0.05f;
 
     [SerializeField] GameObject debugUIobj;
 
@@ -43,14 +45,12 @@ public class PlayerBaseMove : MonoBehaviour
     Vector3 mouthPosi;
 
     /// <summary>スワイプをしたかどうかのフラグ。回転力を加えるとき一回だけrotateForceに+=をしたい </summary>
-    bool swipe = false;
+    public bool swipe = false;
     /// <summary> プレイヤーの回転速度</summary>
     public float RotateSpeed { get; private set; }
 
     /// <summary>進行方向とみてる方向の角度 </summary>
     public float forwardToLookAngle = 0;
-
-
 
 
     private void Start()
@@ -64,16 +64,11 @@ public class PlayerBaseMove : MonoBehaviour
     }
     void FixedUpdate()
     {
-        //if (!TimeScheduler.Instance.InGame)
+        //if (!GameState.Instance.InGame)
         //{
         //    return;
         //}
-        if (touch.phase == TouchPhase.Moved)
-        {
-            touchBeginPos = touch.position;
-        }
 
-        CalculateForwardToLookAngle();
 
         if (mouthDebug)
         {
@@ -94,6 +89,12 @@ public class PlayerBaseMove : MonoBehaviour
         RotatePlayer();
     }
 
+    private void OnCollisionExit(Collision collision)
+    {
+        SetProgressAngle();
+    }
+
+
     /// <summary>加減速を計算する</summary>
     void TouchMoveForce()
     {
@@ -102,7 +103,10 @@ public class PlayerBaseMove : MonoBehaviour
             touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Ended)
             {
-                m_rb.AddForce(this.transform.forward * forwardForce);
+                if (!swipe) //前のフレームでスワイプしていなかったとき指を離したら加速する。
+                {
+                    m_rb.AddForce(this.transform.forward * forwardForce);
+                }
             }
         }
     }
@@ -124,17 +128,21 @@ public class PlayerBaseMove : MonoBehaviour
         // 画面タッチが行われたら
         if (touch.phase == TouchPhase.Began)
         {
-            touchBeginPos = touch.position;
+            //touchBeginPos = touch.position;
             swipeDistance_x = 0;
+            swipeDistance_y = 0;
         }
 
         if (touch.phase == TouchPhase.Moved)
         {
             swipe = true;
-            
-            swipeDistance_x = touch.position.x - touchBeginPos.x; //現状DebugUI用に変数作って取得してる
-            touchPos = new Vector2(
-            (swipeDistance_x) / Screen.width, 0);
+
+            swipeDistance_x = touch.deltaPosition.x / Screen.width; 
+            swipeDistance_y = touch.deltaPosition.y / Screen.height;
+        }
+        if (touch.phase == TouchPhase.Ended)
+        {
+            swipe = false;
         }
     }
 
@@ -151,7 +159,7 @@ public class PlayerBaseMove : MonoBehaviour
 
         if (swipe || mouthDebug)
         {
-            RotateSpeed = horizontalSpeed * touchPos.x;
+            RotateSpeed = horizontalSpeed * swipeDistance_x;
         }
         else
         {
@@ -161,9 +169,7 @@ public class PlayerBaseMove : MonoBehaviour
                 RotateSpeed = 0;
             }
         }
-
         transform.Rotate(0, RotateSpeed, 0);
-        swipe = false;
     }
 
     /// <summary>
@@ -174,9 +180,14 @@ public class PlayerBaseMove : MonoBehaviour
     void AirBrake()
     {
         m_rb.velocity = m_rb.velocity * airBrekeCoefficient;
-        if (Mathf.Abs(forwardToLookAngle) > addAirBrakeStart)
+        //if (Mathf.Abs(forwardToLookAngle) > addAirBrakeStart) //横向いた時の追加ブレーキを判定する
+        //{
+        //    m_rb.velocity = m_rb.velocity * addAirBrake;
+        //}
+
+        if (swipeDistance_y < -beginSwipeBrake)
         {
-            m_rb.velocity = m_rb.velocity * addAirBrake;
+            m_rb.velocity = m_rb.velocity * addAirBrake * GetSwipeYaxisRate();
         }
 
         if (m_rb.velocity.magnitude < 0.01f)
@@ -185,13 +196,31 @@ public class PlayerBaseMove : MonoBehaviour
         }
     }
 
+    float GetSwipeYaxisRate()
+    {
+        float swipeYaxisRate = 0;
+        swipeYaxisRate = 1 - Mathf.InverseLerp(swipeDistance_y, maxSwipeDistance_y, swipeYaxisRate);
+        return swipeYaxisRate;
+    }
+
+    /// <summary>
+    /// 進行方向の角度をx,z回転を0にするように矯正する。
+    /// </summary>
+    void SetProgressAngle()
+    {
+        Quaternion nowAngle = transform.rotation;
+        nowAngle.x = 0;
+        nowAngle.z = 0;
+        transform.localRotation = nowAngle;
+    }
+
     /// <summary>
     /// 進行方向とみている方向の角度を計算する
     /// </summary>
-    void CalculateForwardToLookAngle()
-    {
-        forwardToLookAngle = Vector3.Angle(m_rb.velocity, transform.forward);
-    }
+    //void SetForwardToLookAngle()
+    //{
+    //    forwardToLookAngle = Vector3.Angle(m_rb.velocity, transform.forward);
+    //}
 
     /// <summary>
     /// unityで実行してデバッグする用。マウスクリックで加速
@@ -214,6 +243,6 @@ public class PlayerBaseMove : MonoBehaviour
     void MouthAim()
     {
         mouthPosi = Input.mousePosition;
-        touchPos.x = mouthPosi.x / Screen.width;
+        swipeDistance_x = mouthPosi.x / Screen.width;
     }
 }
