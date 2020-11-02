@@ -10,6 +10,8 @@ public class DebugUI : MonoBehaviour
     [SerializeField] PlayerBaseMove playerBaseMove;
     [SerializeField] Text XaxisSwipeDistanceText;
     [SerializeField] Text YaxisSwipeDistanceText;
+    [SerializeField] Text swipe;
+
     [SerializeField] Button debugButton;
     [SerializeField] Button backButton;
     [SerializeField] GameObject debugPannel;
@@ -19,13 +21,14 @@ public class DebugUI : MonoBehaviour
     [SerializeField] Text forwardForceText;
     public Slider forwardBrakeCoefficient;
     [SerializeField] Text forwardBrakeCoefficientText;
-    [SerializeField] Text rotateForceText;
+    //[SerializeField] Text rotateForceText;
     [SerializeField] Text rotateBrakeCoefficientText;
     public Slider rotateBrakeCoefficient;
     [SerializeField] Text maxSpeedText;
     public Slider maxSpeedSlider;
     [SerializeField] Text addAirBrakeText;
     public Slider addAirBrakeSlider;
+    
 
 
     private void Start()
@@ -38,13 +41,14 @@ public class DebugUI : MonoBehaviour
         playerSpeedText.text = "velocity,magnitude : " + playerBaseMove.Speed;
         XaxisSwipeDistanceText.text = "横方向にswipeした距離 : " + playerBaseMove.swipeDistance_x;
         YaxisSwipeDistanceText.text = "縦方向にswipeした距離 : " + playerBaseMove.swipeDistance_y;
+        swipe.text = "swipe : " + playerBaseMove.swipe;
         swipeCoefficientText.text = "horizontal : " + swipeCoefficient.value;
         forwardForceText.text = "forwardForce : " + forwardForce.value;
         forwardBrakeCoefficientText.text = "空気摩擦係数 : " + forwardBrakeCoefficient.value;
-        rotateForceText.text = "rotateForce : " + playerBaseMove.RotateSpeed;
+        //rotateForceText.text = "rotateForce : " + playerBaseMove.RotateSpeed;
         rotateBrakeCoefficientText.text = "回転減衰係数 : " + rotateBrakeCoefficient.value;
         maxSpeedText.text = "最大速度 : " + maxSpeedSlider.value;
-        addAirBrakeText.text = "回転時の空気摩擦係数 : " + addAirBrakeSlider.value;
+        addAirBrakeText.text = "下スワイプしたときのブレーキの係数 : " + addAirBrakeSlider.value;
     }
 
     public void OnDebugButton()

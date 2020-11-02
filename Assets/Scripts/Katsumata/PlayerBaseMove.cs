@@ -29,6 +29,10 @@ public class PlayerBaseMove : MonoBehaviour
 
     /// <summary>touchを格納、画面タッチをしてる一本目の指を取得する。現状指一本 </summary>
     Touch touch;
+    /// <summary>2本の指を使って連打してる人のためのバグ防止</summary>
+    //Touch touch2;
+    /// <summary>3本の指を使って連打してる人のためのバグ防止</summary>
+    //Touch touch3;
     /// <summary>一本目の指のタッチしてる座標を取得する </summary>
     Vector2 touchPos = new Vector2();
     /// <summary>一本目の指のタッチしてる座標を取得し、スワイプするときの最初に触れた場所 </summary>
@@ -39,7 +43,7 @@ public class PlayerBaseMove : MonoBehaviour
     public float swipeDistance_y = 0;
     /// <summary>スワイプした距離の最大値</summary>
     public float maxSwipeDistance_y = 80f;
-    /// <summary>ブレーキがかかるスワイプ</summary>
+    /// <summary>ブレーキがかかるスワイプ距離</summary>
     public float beginSwipeBrake = 1f;
 
     [SerializeField] GameObject debugUIobj;
@@ -49,14 +53,12 @@ public class PlayerBaseMove : MonoBehaviour
     Vector3 mouthPosi;
 
     /// <summary>スワイプをしたかどうかのフラグ。回転力を加えるとき一回だけrotateForceに+=をしたい </summary>
-    bool swipe = false;
+    public bool swipe = false;
     /// <summary> プレイヤーの回転速度</summary>
     public float RotateSpeed { get; private set; }
 
     /// <summary>進行方向とみてる方向の角度 </summary>
     public float forwardToLookAngle = 0;
-
-
 
 
     private void Start()
@@ -74,13 +76,14 @@ public class PlayerBaseMove : MonoBehaviour
         //{
         //    return;
         //}
+        
+
         if (touch.phase == TouchPhase.Moved)
         {
             touchBeginPos = touch.position;
             touchPos = Vector2.zero;
         }
 
-        //CalculateForwardToLookAngle();
 
         if (mouthDebug)
         {
@@ -101,15 +104,27 @@ public class PlayerBaseMove : MonoBehaviour
         RotatePlayer();
     }
 
+    private void OnCollisionExit(Collision collision)
+    {
+        SetProgressAngle();
+    }
+
+
+
     /// <summary>加減速を計算する</summary>
     void TouchMoveForce()
     {
         if (Input.touchCount > 0)
         {
             touch = Input.GetTouch(0);
+            //touch2= Input.GetTouch(1);
+            //touch3 = Input.GetTouch(2);
             if (touch.phase == TouchPhase.Ended)
             {
-                m_rb.AddForce(this.transform.forward * forwardForce);
+                if (!swipe) //前のフレームでスワイプしていなかったとき指を離したら加速する。
+                {
+                    m_rb.AddForce(this.transform.forward * forwardForce);
+                }
             }
         }
     }
@@ -145,6 +160,10 @@ public class PlayerBaseMove : MonoBehaviour
             touchPos = new Vector2(
             swipeDistance_x / Screen.width, swipeDistance_y / Screen.height);
         }
+        if (touch.phase == TouchPhase.Ended)
+        {
+            swipe = false;
+        }
     }
 
     /// <summary>
@@ -172,7 +191,6 @@ public class PlayerBaseMove : MonoBehaviour
         }
 
         transform.Rotate(0, RotateSpeed, 0);
-        swipe = false;
     }
 
     /// <summary>
@@ -190,7 +208,7 @@ public class PlayerBaseMove : MonoBehaviour
 
         if (swipeDistance_y < -beginSwipeBrake)
         {
-            m_rb.velocity = m_rb.velocity * addAirBrake * CalculateSwipeYaxisRate();
+            m_rb.velocity = m_rb.velocity * addAirBrake * GetSwipeYaxisRate();
         }
 
         if (m_rb.velocity.magnitude < 0.01f)
@@ -199,17 +217,29 @@ public class PlayerBaseMove : MonoBehaviour
         }
     }
 
-    float CalculateSwipeYaxisRate()
+    float GetSwipeYaxisRate()
     {
         float swipeYaxisRate = 0;
-        swipeYaxisRate = 1 - Mathf.InverseLerp(touchPos.y, maxSwipeDistance_y, swipeYaxisRate);
+        swipeYaxisRate = 1 - Mathf.InverseLerp(swipeDistance_y, maxSwipeDistance_y, swipeYaxisRate);
         return swipeYaxisRate;
+    }
+
+    /// <summary>
+    /// 進行方向の角度をx,z回転を0にするように矯正する。
+    /// </summary>
+    void SetProgressAngle()
+    {
+        Quaternion nowAngle = transform.rotation;
+        nowAngle.x = 0;
+        nowAngle.z = 0;
+        transform.localRotation = nowAngle;
+        //transform.rotation = Quaternion.AngleAxis(-transform.rotation.eulerAngles.z, new Vector3(0, 0, 1));
     }
 
     /// <summary>
     /// 進行方向とみている方向の角度を計算する
     /// </summary>
-    //void CalculateForwardToLookAngle()
+    //void SetForwardToLookAngle()
     //{
     //    forwardToLookAngle = Vector3.Angle(m_rb.velocity, transform.forward);
     //}
