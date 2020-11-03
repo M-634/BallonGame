@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -17,7 +18,6 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
     [SerializeField] string m_loadSelectSceneName;
     [SerializeField] string m_loadGameSceneName;
 
-   
     [Header("UI")]
     [SerializeField] Text m_tapToLoadText;
     [SerializeField] Canvas m_loadCanvas;
@@ -65,7 +65,7 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
     public void LoadSelectSceneWithTap()
     {
         m_currentLoadCorutine = LoadWithTapCorutine(m_loadSelectSceneName);
-        StartCoroutine(m_loadSelectSceneName);
+        StartCoroutine(m_currentLoadCorutine);
     }
 
     private IEnumerator LoadWithTapCorutine(string loadSceneName)

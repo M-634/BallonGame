@@ -341,7 +341,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283ad10e371dd8b47926d65c0babadbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_loadSceneName: Test_SelectScene
 --- !u!4 &529735687
 Transform:
   m_ObjectHideFlags: 0
@@ -722,6 +721,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SceneLoader
+      objectReference: {fileID: 0}
+    - target: {fileID: 3537571228798796415, guid: 6c32049e33b529e44806f3f89e9b0528,
+        type: 3}
+      propertyPath: m_loadTitleSceneName
+      value: Test_TitleScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 3537571228798796415, guid: 6c32049e33b529e44806f3f89e9b0528,
+        type: 3}
+      propertyPath: m_loadSelectSceneName
+      value: Test_SelectScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 3537571228798796415, guid: 6c32049e33b529e44806f3f89e9b0528,
+        type: 3}
+      propertyPath: m_loadGameSceneName
+      value: Test_Game
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c32049e33b529e44806f3f89e9b0528, type: 3}

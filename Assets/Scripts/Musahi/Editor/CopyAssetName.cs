@@ -1,18 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.Linq;
+using System.IO;
 
-public class CopyAssetName : MonoBehaviour
+
+public class CopyFileName : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [MenuItem("Assets/Copy FileName",false)]
+    static void  Execute()
     {
-        
-    }
+        //ファイルの名前を取得
+        int instanceID = Selection.activeInstanceID;
+        string path = AssetDatabase.GetAssetPath(instanceID);
+        string fileName = Path.GetFileName(path);
+        fileName = fileName.Split('.').FirstOrDefault();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //クリップボードにコピーする
+        GUIUtility.systemCopyBuffer = fileName;
+        Debug.Log("Copy clipboard : \n" + fileName);
     }
 }

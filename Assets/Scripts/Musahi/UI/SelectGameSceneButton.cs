@@ -44,6 +44,8 @@ public class SelectGameSceneButton : MonoBehaviour
                 m_nextButton.interactable = true;
             }
         }
+
+        GetComponent<Button>().onClick.AddListener(() => SetStageInfo());
     }
 
     public void SetStageInfo()
