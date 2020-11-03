@@ -52,13 +52,14 @@ public class PlayerBaseMove : MonoBehaviour
     /// <summary>進行方向とみてる方向の角度 </summary>
     public float forwardToLookAngle = 0;
 
-    Vector3 startPosition;
+    /// <summary>調整する高さの位置。この値から一定値を超えてズレたらこの高さにプレイヤーの高さを調整する </summary>
+    Vector3 AdjustHeightPosition;
 
 
     private void Start()
     {
         m_rb = GetComponent<Rigidbody>();
-        startPosition = gameObject.transform.position;
+        AdjustHeightPosition = gameObject.transform.position;
     }
     // Update is called once per frame
     private void Update()
@@ -91,7 +92,7 @@ public class PlayerBaseMove : MonoBehaviour
         }
         RotatePlayer();
 
-        if (Mathf.Abs(transform.position.y - startPosition.y) > 0.01f) //初期位置より一定値を超えて高さがズレていたら位置調整する
+        if (Mathf.Abs(transform.position.y - AdjustHeightPosition.y) > 0.01f) //初期位置より一定値を超えて高さがズレていたら位置調整する
         {
             SetHeightAdjust();
         }
@@ -227,7 +228,7 @@ public class PlayerBaseMove : MonoBehaviour
     /// </summary>
     void SetHeightAdjust()
     {
-        m_rb.AddForce(new Vector3(0, startPosition.y - transform.position.y, 0));
+        m_rb.AddForce(new Vector3(0, AdjustHeightPosition.y - transform.position.y, 0));
     }
 
     /// <summary>
