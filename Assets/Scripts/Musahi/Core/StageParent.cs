@@ -4,17 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ステージの天候状態
-/// </summary>
-public enum WeatherConditions
-{
-    Initialize,
-    Sunny,
-    ThunderStorm,
-    Hurricane
-}
-
-/// <summary>
 /// ステージ情報を管理する
 /// セレクト画面でボタンを押した時に確定させ、
 /// 次のゲームシーンで参照させる
@@ -31,6 +20,12 @@ public class StageParent : SingletonMonoBehavior<StageParent>
     public WeatherConditions WeatherConditions { get; set; }
     /// <summary>ステージ名</summary>
     public string StageName { get; set; }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void Start()
     {

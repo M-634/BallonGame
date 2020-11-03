@@ -26,6 +26,13 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
     [SerializeField] float m_fadeInTime;
 
     private IEnumerator m_currentLoadCorutine;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void Start()
     {
         m_tapToLoadText.gameObject.SetActive(false);

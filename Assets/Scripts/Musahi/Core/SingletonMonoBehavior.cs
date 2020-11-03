@@ -9,11 +9,10 @@ using UnityEngine;
 /// シングルトンパターンを実装する抽象クラス
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class SingletonMonoBehavior<T> : MonoBehaviour where T:MonoBehaviour
+public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
 {
-    [SerializeField] protected bool m_dontDestroyOnLoad = false;
     private static T m_instance;
-    public static T Instance 
+    public static T Instance
     {
         get
         {
@@ -33,18 +32,14 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T:MonoBehaviour
 
     virtual protected void Awake()
     {
-        if (m_instance != null && this != m_instance)
+        if (this != Instance)//ここの条件式を変えたらエラーが治った！
         {
             Debug.LogWarning(typeof(T) + "は既に他のGameObjectにアタッチされているため、コンポーネントを破棄しました"
                 + "アタッチされているGameObjectは" + Instance.gameObject.name + "です");
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             return;
         }
-
-        if (m_dontDestroyOnLoad)
-        {
-            DontDestroyOnLoad(this.gameObject);
-        }
+        //DontDestroyOnLoad(gameObject);は継承先で書くこと!
     }
 
 }
