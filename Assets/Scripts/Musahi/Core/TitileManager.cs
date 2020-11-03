@@ -7,10 +7,9 @@ using UnityEngine;
 /// </summary>
 public class TitileManager : MonoBehaviour
 {
-    [SerializeField] string m_loadSceneName;
     // Start is called before the first frame update
     void Start()
     {
-        SceneLoader.Instance.LoadWithTap(m_loadSceneName);   
+        SceneLoader.Instance.LoadSelectSceneWithTap();   
     }
 }

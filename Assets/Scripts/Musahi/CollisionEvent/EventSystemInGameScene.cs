@@ -2,10 +2,12 @@
 using System;
 using System.Collections;
 using System.Net.NetworkInformation;
+using System.Collections.Generic;
 
 /// <summary>
 /// ゲームシーンで起こるイベントをまとめたクラス
 /// ゲームシーン内にあるオブジェクトにアタッチする
+/// インスタンスをプレイヤーに持たせる
 /// </summary>
 public class EventSystemInGameScene : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class EventSystemInGameScene : MonoBehaviour
     private event Action GameOverEvent;
     private event Action GameClearEvent;
 
+    //ToDo:このクラスはゲームシーンに一つだけ存在するため、他のクラスに依存しないように設計し直す 
     [Header("イベントのリスナー")]
     [SerializeField] TimerInStage m_timer;
     [SerializeField] ScoreManager m_scoreManager;

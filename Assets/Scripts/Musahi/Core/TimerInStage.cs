@@ -28,7 +28,7 @@ public class TimerInStage : MonoBehaviour
         m_scoreManager = GetComponent<ScoreManager>();
         m_UISetActiveControl = GetComponent<UISetActiveControl>();
         //ステージを出現させる(ここシングルトンに依存しているから変える)
-        if (StageParent.Instance != null)
+        if (StageParent.Instance)
         {
             StageParent.Instance.AppearanceStageObject();
         }
@@ -99,5 +99,6 @@ public class TimerInStage : MonoBehaviour
             Debug.LogError(" m_UISetActiveControl" + "はNullです");
         }
         //セレクト画面に戻る
+        SceneLoader.Instance.LoadSelectSceneWithTap();
     }
 }

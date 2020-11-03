@@ -12,14 +12,20 @@ using UnityEngine.UI;
 /// </summary>
 public class SceneLoader : SingletonMonoBehavior<SceneLoader>
 {
-    private IEnumerator m_currentLoadCorutine;
-    [SerializeField] Text m_tapToLoadText;
+    [Header("ロードシーンの名前を設定すること")]
+    [SerializeField] string m_loadTitleSceneName;
+    [SerializeField] string m_loadSelectSceneName;
+    [SerializeField] string m_loadGameSceneName;
 
+   
+    [Header("UI")]
+    [SerializeField] Text m_tapToLoadText;
     [SerializeField] Canvas m_loadCanvas;
     [SerializeField] Image m_fadeImage;
     [SerializeField] float m_fadeOutTime;
     [SerializeField] float m_fadeInTime;
 
+    private IEnumerator m_currentLoadCorutine;
     private void Start()
     {
         m_tapToLoadText.gameObject.SetActive(false);
@@ -27,22 +33,18 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
         m_loadCanvas.enabled = false;
     }
 
-    /// <summary>
-    /// セレクトボタンを押したらロードする時に使う関数
-    /// </summary>
-    /// <param name="loadSceneName">ゲームシーン</param>
-    public void Load(string loadSceneName)
+    public void LoadGameScene()
     {
-        m_currentLoadCorutine = LoadWithCorutine(loadSceneName);
+        m_currentLoadCorutine = LoadGameSceneWithCorutine();
         StartCoroutine(m_currentLoadCorutine);
     }
 
-    private IEnumerator LoadWithCorutine(string loadSceneName)
+    private IEnumerator LoadGameSceneWithCorutine()
     {
         m_loadCanvas.enabled = true;
         StartCoroutine(m_fadeImage.FadeIn(m_fadeOutTime));
         yield return new WaitForSeconds(m_fadeOutTime);
-        AsyncOperation async = SceneManager.LoadSceneAsync(loadSceneName, LoadSceneMode.Single);
+        AsyncOperation async = SceneManager.LoadSceneAsync(m_loadGameSceneName, LoadSceneMode.Single);
 
         while (async.progress < 0.99f)
         {
@@ -53,14 +55,17 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
         m_loadCanvas.enabled = false;
     }
 
-    /// <summary>
-    /// 画面をタップしたらロードする関数
-    /// </summary>
-    /// <param name="selectSceneName">タイトル→セレクトシーン,ゲームシーン→セレクトシーン</param>
-    public void LoadWithTap(string selectSceneName)
+   
+    public void LoadTitleSceneWithTap()
     {
-        m_currentLoadCorutine = LoadWithTapCorutine(selectSceneName);
+        m_currentLoadCorutine = LoadWithTapCorutine(m_loadTitleSceneName);
         StartCoroutine(m_currentLoadCorutine);
+    }
+
+    public void LoadSelectSceneWithTap()
+    {
+        m_currentLoadCorutine = LoadWithTapCorutine(m_loadSelectSceneName);
+        StartCoroutine(m_loadSelectSceneName);
     }
 
     private IEnumerator LoadWithTapCorutine(string loadSceneName)

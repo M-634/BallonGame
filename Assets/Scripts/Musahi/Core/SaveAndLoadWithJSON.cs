@@ -71,6 +71,7 @@ public class SaveAndLoadWithJSON
             //writer.Close();
             Debug.Log("Saving HighScore.....");
         }
+        AssetDatabase.Refresh();
     }
 
     public int LoadHighScore()
@@ -125,11 +126,12 @@ public class SaveAndLoadWithJSON
             File.Delete(m_metaPath);//Unityではメタファイルを消すことが重要である。
         }
         Debug.Log("セーブデータを破棄しました！");
+        AssetDatabase.Refresh();
     }
 
     /// <summary>
     /// エディターでセーブデータを削除するデバック用の関数
-    /// ツールバー＞M-634 ＞DeletSaveDataを押すと実行される
+    /// メニューバー＞M-634 ＞DeletSaveDataを押すと実行される
     /// </summary>
     [MenuItem("M-634/DeletSaveData")]
     public static void DeleteSaveDatebyEditor()
@@ -147,6 +149,7 @@ public class SaveAndLoadWithJSON
             File.Delete(m_metaPath);//Unityではメタファイルを消すことが重要である。
         }
         Debug.Log("セーブデータを破棄しました！");
+        AssetDatabase.Refresh();
     }
 }
 #pragma warning restore IDE0063 // Use simple 'using' statement

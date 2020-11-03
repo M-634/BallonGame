@@ -96,7 +96,7 @@ public class ScoreManager : MonoBehaviour
         //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
         if (SceneLoader.Instance)
         {
-            SceneLoader.Instance.LoadWithTap("SelectScene 1");
+            SceneLoader.Instance.LoadSelectSceneWithTap();
         }
     }
 }

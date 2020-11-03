@@ -55,7 +55,7 @@ public class StageParent : SingletonMonoBehavior<StageParent>
     /// ステージセレクトボタンを押した時に、次のゲームシーンで出現させる
     /// ステージ情報を確定させる
     /// </summary>
-    public void SetStageInfo(GameObject stage, WeatherConditions conditions,string loadScene)
+    public void SetStageInfo(GameObject stage, WeatherConditions conditions)
     {
         if (stage == null)
         {
@@ -87,7 +87,7 @@ public class StageParent : SingletonMonoBehavior<StageParent>
         //名前をセットする
         StageName = stage.name;
         //ゲームシーンをロード
-        SceneLoader.Instance.Load(loadScene);
+        SceneLoader.Instance.LoadGameScene();
     }
 
 
