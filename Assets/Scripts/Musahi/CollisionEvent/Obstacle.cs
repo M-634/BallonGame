@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,24 +7,13 @@ using UnityEngine;
 /// 全ての障害物のベースクラス.
 /// プレイヤーに当たるとゲームオーバーする
 /// </summary>
-public class Obstacle :MonoBehaviour, IEventCollision
+public class Obstacle : MonoBehaviour,IEventCollision
 {
-    protected GameState m_gameState;
-
-    virtual protected void Awake()
+    /// <summary>ゲームオーバー </summary>
+    public void CollisionEvent(EventSystemInGameScene eventSystem)
     {
-        m_gameState = FindObjectOfType<GameState>();
-        if (m_gameState == null)
-        {
-            Debug.LogError("GameStateコンポーネントをアタッチされたGameObjectが存在しません");
-        }
-    }
-    /// <summary>
-    /// ゲームオーバー
-    /// </summary>
-    virtual public void CollisionEvent()
-    {
-        m_gameState.GameOver();
-        Debug.Log("ゲームオーバー");
+        eventSystem.ExecuteGameOverEvent();
+        Debug.Log("GameOver!");
     }
 }
+

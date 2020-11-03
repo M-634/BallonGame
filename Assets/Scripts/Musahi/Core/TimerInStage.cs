@@ -7,32 +7,33 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 /// <summary>
-/// ゲーム中の状態を監視するクラス
-/// ゲームはタイムリミット制。
+/// ゲーム中のタイマーの制御（カウントダウン）とそれに伴う
+/// ゲームシーンの状態（Start,Goal,GameOver）を監視するクラス
 /// </summary>
-[RequireComponent(typeof(ScoreManager))]
-public class GameState : MonoBehaviour
+[RequireComponent(typeof(ScoreManager), typeof(UISetActiveControl))]
+public class TimerInStage : MonoBehaviour
 {
     [SerializeField] Text m_timeLimitText;
     [SerializeField] float m_timeLimit = 300f;
 
-    [Header("UI")]
-    [SerializeField] Canvas m_gameUI;
-    [SerializeField] Canvas m_GameOverUI;
-    [SerializeField] Canvas m_GameClearUI;
-
+    UISetActiveControl m_UISetActiveControl;
     ScoreManager m_scoreManager;
 
     /// <summary>ゲーム中かどうか判定する </summary>
-    public bool InGame { get; set; }//
+    public bool InGame { get; set; }
     private float m_oldSeconds;//1フレーム前の秒数
 
-    private void Awake()
+    private void Start()
     {
         m_scoreManager = GetComponent<ScoreManager>();
-        m_gameUI.gameObject.SetActive(true);
-        m_GameOverUI.gameObject.SetActive(false);
-        m_GameClearUI.gameObject.SetActive(false);
+        m_UISetActiveControl = GetComponent<UISetActiveControl>();
+        //ステージを出現させる(ここシングルトンに依存しているから変える)
+        if (StageParent.Instance)
+        {
+            StageParent.Instance.AppearanceStageObject();
+        }
+        //各UIの表示を設定する
+        m_UISetActiveControl.InisitializeUISetAcitve();
     }
 
     // Update is called once per frame
@@ -71,8 +72,14 @@ public class GameState : MonoBehaviour
     public void OnGoal()
     {
         InGame = false;
-        m_gameUI.gameObject.SetActive(false);
-        m_GameClearUI.gameObject.SetActive(true);
+        if (m_UISetActiveControl)
+        {
+            m_UISetActiveControl.UISetActiveWithGameClear();
+        }
+        else
+        {
+            Debug.LogError(" m_UISetActiveControl" + "はNullです");
+        }
         //残り時間をScoreManagerに渡す
         m_scoreManager.Result(Mathf.FloorToInt(m_timeLimit));
     }
@@ -83,8 +90,15 @@ public class GameState : MonoBehaviour
     public void GameOver()
     {
         InGame = false;
-        m_gameUI.gameObject.SetActive(false);
-        m_GameOverUI.gameObject.SetActive(true);
-        Debug.Log("GameOver");
+        if (m_UISetActiveControl)
+        {
+            m_UISetActiveControl.UISetActiveWithGameOver();
+        }
+        else
+        {
+            Debug.LogError(" m_UISetActiveControl" + "はNullです");
+        }
+        //セレクト画面に戻る
+        SceneLoader.Instance.LoadSelectSceneWithTap();
     }
 }

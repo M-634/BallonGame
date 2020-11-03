@@ -3,25 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GoalEvent :MonoBehaviour, IEventCollision
+public class GoalEvent :MonoBehaviour,IEventCollision
 {
-    GameState m_gameState;
-
-    private void Awake()
+    public void CollisionEvent(EventSystemInGameScene eventSystem)
     {
-        m_gameState = FindObjectOfType<GameState>();
-        if (m_gameState == null)
-        {
-            Debug.LogError("GameStateコンポーネントをアタッチされたGameObjectが存在しません");
-        }
-    }
-
-    /// <summary>
-    /// ゲームクリア
-    /// </summary>
-    public void CollisionEvent()
-    {
-        Debug.Log("ゴール！！");
-        m_gameState.OnGoal();
+        eventSystem.ExecuteGameClearEvent();
+        Debug.Log("Goal!!");
     }
 }

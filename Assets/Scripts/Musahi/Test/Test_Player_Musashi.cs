@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class Test_Player_Musashi : MonoBehaviour
 {
-    [SerializeField] GameState m_gameState;
+    TimerInStage m_gameState;
     public float m_speed = 1f;
 
+    EventSystemInGameScene m_eventSystemInGameScene;
     private void Awake()
     {
-        m_gameState = FindObjectOfType<GameState>();
+        //ここもっといいやり方ないかなー|дﾟ)
+        m_gameState = FindObjectOfType<TimerInStage>();
         if (m_gameState == null)
         {
             Debug.LogError("TimeSchedulerコンポーネントをアタッチされたゲームオブジェクトが存在しません");
+        }
+        m_eventSystemInGameScene = FindObjectOfType<EventSystemInGameScene>();
+       if (m_eventSystemInGameScene == null)
+        {
+            Debug.LogError("EventSystemInGameSceneコンポーネントがアタッチされたゲームオブジェクトが存在しません");
         }
     }
 
@@ -28,7 +35,7 @@ public class Test_Player_Musashi : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent<IEventCollision>(out var eventCollision))
         {
-            eventCollision.CollisionEvent();
+            eventCollision.CollisionEvent(m_eventSystemInGameScene);
         }
     }
 }
