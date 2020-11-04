@@ -693,6 +693,7 @@ GameObject:
   - component: {fileID: 7835388383879761786}
   - component: {fileID: 7835388383879761787}
   - component: {fileID: 7835388383879761791}
+  - component: {fileID: 1461214707}
   m_Layer: 5
   m_Name: UIVolumeConfigCanvas
   m_TagString: Untagged
@@ -797,6 +798,23 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1461214707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7835388383879761780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9820d3357526c41419a1873485a22a18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_canvasGroup: {fileID: 7835388383879761791}
+  m_masterSlider: {fileID: 7835388383902944777}
+  m_bgmSlider: {fileID: 7835388384721926103}
+  m_seSlider: {fileID: 7835388383840615361}
+  m_envSlider: {fileID: 7835388385161260845}
 --- !u!1 &7835388383902944779
 GameObject:
   m_ObjectHideFlags: 0
