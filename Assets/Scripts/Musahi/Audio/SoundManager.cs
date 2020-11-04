@@ -27,10 +27,9 @@ public class SoundManager : SingletonMonoBehavior<SoundManager>
 
     [SerializeField, Header("Audio Mixer")]
     AudioMixer m_audioMixer;
-    [SerializeField] AudioMixerGroup m_bgmAMG, m_menuAMG, m_envAMG, m_voiceAMG;
+    [SerializeField] AudioMixerGroup m_bgmAMG, m_menuSeAMG, m_envAMG, m_voiceAMG;
 
-    [SerializeField] AudioMixer m_effectAudioMixer;
-
+  
     public bool IsPaused { get; private set; }
 
     private const string MasterVolumeParamName = "MasterVolume";
@@ -42,7 +41,40 @@ public class SoundManager : SingletonMonoBehavior<SoundManager>
     {
         base.Awake();
         DontDestroyOnLoad(gameObject);
+
+        //必要な分のAudioSorceを予め用意する
+        m_menuAudioSouce = InitializeAudioSource(this.gameObject, false, m_menuSeAMG);
+        m_bgmAudioSourceList = InitializeAudioSources(this.gameObject, true, m_bgmAMG, BGMAudiosorceNum);
+        m_enviromentAudioSource = InitializeAudioSource(this.gameObject, true, m_envAMG);
+        m_voiceAudioSource = InitializeAudioSource(this.gameObject, false, m_voiceAMG);
     }
+
+    //Audioの各種ボリュームのプロパティ
+    public float MasterVolume
+    {
+        get { return m_audioMixer.GetVolumeByLinear(MasterVolumeParamName); }
+        set { m_audioMixer.SetVolumeByLinear(MasterVolumeParamName, value); }
+    }
+
+    public float GameSeVolume 
+    {
+        get { return m_audioMixer.GetVolumeByLinear(GameSeVolumeParamName); }
+        set { m_audioMixer.SetVolumeByLinear(GameSeVolumeParamName, value); }
+    }
+
+    public float BGMVolume
+    {
+        get { return m_audioMixer.GetVolumeByLinear(BGMVolumeParamName); }
+        set { m_audioMixer.SetVolumeByLinear(BGMVolumeParamName, value); }
+    }
+
+    public float EnvironmentVolume
+    {
+        get { return m_audioMixer.GetVolumeByLinear(EnvVolumeParamName); }
+        set { m_audioMixer.SetVolumeByLinear(EnvVolumeParamName, value); }
+    }
+
+
 
     private AudioSource InitializeAudioSource(GameObject parentGameObject,bool isLoop = false,AudioMixerGroup amg = null)
     {
@@ -57,5 +89,18 @@ public class SoundManager : SingletonMonoBehavior<SoundManager>
         }
 
         return audioSource;
+    }
+
+    private List<AudioSource> InitializeAudioSources(GameObject parentGameObject,bool isLoop = false,
+        AudioMixerGroup amg = null,int count = 1)
+    {
+        List<AudioSource> audioSources = new List<AudioSource>();
+
+        for (int i = 0; i < count; i++)
+        {
+            var audioSource = InitializeAudioSource(parentGameObject, isLoop, amg);
+            audioSources.Add(audioSource);
+        }
+        return audioSources;
     }
 }

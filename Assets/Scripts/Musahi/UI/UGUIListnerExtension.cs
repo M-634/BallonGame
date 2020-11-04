@@ -14,14 +14,14 @@ public static class UGUIListnerExtension
     public static void Show(this CanvasGroup canvasGroup)
     {
         canvasGroup.interactable = true;
-        canvasGroup.alpha = 1;
+        canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
     }
 
     public static void Hide(this CanvasGroup canvasGroup)
     {
         canvasGroup.interactable = false;
-        canvasGroup.alpha = 1;
+        canvasGroup.alpha = 0f;
         canvasGroup.blocksRaycasts = false;
     }
 
