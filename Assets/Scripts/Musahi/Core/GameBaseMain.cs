@@ -9,6 +9,10 @@ public class GameBaseMain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_volumeConfig.SetMaseterSliderEvent(v => SoundManager.Instance.MasterVolume = v);
+        //設定画面のボリュームsliderの初期化
+        m_volumeConfig.SetMaseterSliderEvent(vol => SoundManager.Instance.MasterVolume = vol);
+        m_volumeConfig.SetBGMSliderEvent(vol => SoundManager.Instance.BGMVolume = vol);
+        m_volumeConfig.SetGameSeSliderEvent(vol => SoundManager.Instance.GameSeVolume = vol);
+        m_volumeConfig.SetEnvSliderEvent(vol => SoundManager.Instance.EnvironmentVolume = vol);
     }
 }

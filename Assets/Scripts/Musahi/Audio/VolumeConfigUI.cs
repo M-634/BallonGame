@@ -17,6 +17,11 @@ public class VolumeConfigUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //設定画面のボリュームsliderの初期化
+        SetMaseterSliderEvent(vol => SoundManager.Instance.MasterVolume = vol);
+        SetBGMSliderEvent(vol => SoundManager.Instance.BGMVolume = vol);
+        SetGameSeSliderEvent(vol => SoundManager.Instance.GameSeVolume = vol);
+        SetEnvSliderEvent(vol => SoundManager.Instance.EnvironmentVolume = vol);
         Hide();
     }
 
