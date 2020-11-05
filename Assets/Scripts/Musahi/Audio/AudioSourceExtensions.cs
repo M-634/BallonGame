@@ -36,7 +36,7 @@ public static class AudioSourceExtensions
         audioSource.DOFade(targetVolume, fadeTime);
     }
 
-    public static void PlayWithFadeOut(this AudioSource audioSource,float fadeTime = 0.1f)
+    public static void StopWithFadeOut(this AudioSource audioSource,float fadeTime = 0.1f)
     {
       
         //フェード時間がおかしかったら補正
