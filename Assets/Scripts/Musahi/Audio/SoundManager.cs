@@ -130,7 +130,7 @@ public class SoundManager : SingletonMonoBehavior<SoundManager>
         m_enviromentAudioSource.Play(audioClip);
     }
 
-    public void StopEnviromet(string clipName)
+    public void StopEnviromet()
     {
         if (m_enviromentAudioSource.isPlaying)
         {
