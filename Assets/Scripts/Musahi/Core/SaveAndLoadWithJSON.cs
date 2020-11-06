@@ -71,7 +71,9 @@ public class SaveAndLoadWithJSON
             //writer.Close();
             Debug.Log("Saving HighScore.....");
         }
+#if UNITY_EDITOR
         AssetDatabase.Refresh();
+#endif
     }
 
     public int LoadHighScore()
@@ -126,7 +128,10 @@ public class SaveAndLoadWithJSON
             File.Delete(m_metaPath);//Unityではメタファイルを消すことが重要である。
         }
         Debug.Log("セーブデータを破棄しました！");
+
+#if UNITY_EDITOR
         AssetDatabase.Refresh();
+#endif
     }
 
 #if UNITY_EDITOR
