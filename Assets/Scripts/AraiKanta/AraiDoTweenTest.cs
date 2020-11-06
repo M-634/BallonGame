@@ -17,14 +17,21 @@ public class AraiDoTweenTest : MonoBehaviour
     [SerializeField] Vector3 passing2;
     /// <summary>this.transform.DOPathのObjectの通過点X,Y,Z軸の変数3</summary>
     [SerializeField] Vector3 passing3;
+    /// <summary>this.transform.DOMoveの移動先の位置のX軸の変数</summary>
+    [SerializeField] float startPosX;
+    /// <summary>this.transform.DOMoveの移動先の位置のX軸の変数</summary>
+    [SerializeField] float endPosX;
     /// <summary>this.transform.DOMoveの移動時間の変数</summary>
     [SerializeField] private float travelT;
+    /// <summary>this.transform.DOMoveXの遅延時間の変数</summary>
+    [SerializeField] private float DelayT;
     /// <summary>往復移動</summary>
     [SerializeField] bool roundTrip;
     /// <summary>周回移動</summary>
     [SerializeField] bool rotation;
-    /// <summary>周回移動</summary>
-    [SerializeField] bool bird;
+    /// <summary>壁移動</summary>
+    [SerializeField] bool moveWall;
+    
 
     void Start()
     {
@@ -44,11 +51,13 @@ public class AraiDoTweenTest : MonoBehaviour
                 .SetLoops(-1)
                 .Play();
         }
-        if (bird)
+        if (moveWall)
         {
             DOTween.Sequence()
-                .Append(this.transform.DOMove(startVector, travelT).SetRelative().SetEase(Ease.OutCubic))
-                .Append(this.transform.DOMove(endvector, travelT).SetRelative().SetEase(Ease.OutCubic))
+                
+                .Append(this.transform.DOMoveX(startPosX, travelT).SetDelay(DelayT))
+                .Append(this.transform.DOMoveX(endPosX, travelT).SetDelay(DelayT))
+                .SetLoops(-1)
                 .Play();
         }
     }
