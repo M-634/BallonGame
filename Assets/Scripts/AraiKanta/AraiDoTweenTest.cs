@@ -22,9 +22,9 @@ public class AraiDoTweenTest : MonoBehaviour
     /// <summary>this.transform.DOMoveの移動先の位置のX軸の変数</summary>
     [SerializeField] float endPosX;
     /// <summary>this.transform.DOMoveの移動時間の変数</summary>
-    [SerializeField] private float travelT;
+    [SerializeField] private float traveTime;
     /// <summary>this.transform.DOMoveXの遅延時間の変数</summary>
-    [SerializeField] private float DelayT;
+    [SerializeField] private float delayTime;
     /// <summary>往復移動</summary>
     [SerializeField] bool roundTrip;
     /// <summary>周回移動</summary>
@@ -55,8 +55,8 @@ public class AraiDoTweenTest : MonoBehaviour
         {
             DOTween.Sequence()
                 
-                .Append(this.transform.DOMoveX(startPosX, travelT).SetDelay(DelayT))
-                .Append(this.transform.DOMoveX(endPosX, travelT).SetDelay(DelayT))
+                .Append(this.transform.DOMoveX(startPosX, travelT).SetDelay(delayTime))
+                .Append(this.transform.DOMoveX(endPosX, travelT).SetDelay(delayTime))
                 .SetLoops(-1)
                 .Play();
         }
