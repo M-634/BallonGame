@@ -7,7 +7,7 @@ using DG.Tweening;
 using Unity.Collections.LowLevel.Unsafe;
 
 /// <summary>
-///ゲーム中のスコア周りを管理するクラス
+///ゲーム中のスコアを管理し、ゲームクリアしたらリザルトを表示する
 /// </summary>
 [RequireComponent(typeof(UISetActiveControl))]
 public class ScoreManager : MonoBehaviour

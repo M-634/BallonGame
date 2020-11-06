@@ -59,7 +59,6 @@ public class UISetActiveControl : MonoBehaviour
 
     public void UISetActiveWithGameClear()
     {
-
         GameSceneUI.SetActive(false);
         GameClearUI.SetActive(true);
     }

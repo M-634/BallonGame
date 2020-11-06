@@ -16,7 +16,7 @@ public class StageData
 /// Jsonを使用したセーブ機能。
 /// </summary>
 #pragma warning disable IDE0063 // Use simple 'using' statement
-public class SaveAndLoadWithJSON
+public class SaveAndLoadWithJSON 
 {
     const string FolderName = "SaveData";
     const string EndOfFileName = "_HighScoreData.json";

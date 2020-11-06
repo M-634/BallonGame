@@ -2,31 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Test_Player_Musashi : MonoBehaviour
+public class Test_Player_Musashi : EventReceiver<Test_Player_Musashi>
 {
-    TimerInStage m_gameState;
+    //TimerInStage m_gameState;
     public float m_speed = 1f;
-
-    EventSystemInGameScene m_eventSystemInGameScene;
-    private void Awake()
-    {
-        //ここもっといいやり方ないかなー|дﾟ)
-        m_gameState = FindObjectOfType<TimerInStage>();
-        if (m_gameState == null)
-        {
-            Debug.LogError("TimeSchedulerコンポーネントをアタッチされたゲームオブジェクトが存在しません");
-        }
-        m_eventSystemInGameScene = FindObjectOfType<EventSystemInGameScene>();
-       if (m_eventSystemInGameScene == null)
-        {
-            Debug.LogError("EventSystemInGameSceneコンポーネントがアタッチされたゲームオブジェクトが存在しません");
-        }
-    }
+    private bool m_inGame;
 
     // Update is called once per frame
     void Update()
     {
-        if (!m_gameState.InGame) return;
+        //if (!m_gameState.InGame) return;
+        if (!m_inGame) return;
 
         transform.position += new Vector3(0, 0, m_speed / 90f);
     }
@@ -37,5 +23,29 @@ public class Test_Player_Musashi : MonoBehaviour
         {
             eventCollision.CollisionEvent(m_eventSystemInGameScene);
         }
+    }
+
+    public void GameStart()
+    {
+        m_inGame = true;
+    }
+
+    public void EndGaem()
+    {
+        m_inGame = false;
+    }
+
+    protected override void OnEnable()
+    {
+        m_eventSystemInGameScene.GameStartEvent += GameStart;
+        m_eventSystemInGameScene.GameClearEvent += EndGaem;
+        m_eventSystemInGameScene.GameOverEvent += EndGaem;
+    }
+
+    protected override void OnDisable()
+    {
+        m_eventSystemInGameScene.GameStartEvent -= GameStart;
+        m_eventSystemInGameScene.GameClearEvent -= EndGaem;
+        m_eventSystemInGameScene.GameOverEvent -= EndGaem;
     }
 }
