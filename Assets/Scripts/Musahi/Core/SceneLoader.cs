@@ -83,14 +83,15 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
         while (true)
         {
 #if UNITY_ANDROID
+            break;       
 #else
             if (Input.GetMouseButtonDown(0))
             {
                 m_tapToLoadText.gameObject.SetActive(false);
                 break;
             }
-#endif
             yield return null;
+#endif
         }
         
         StartCoroutine(m_fadeImage.FadeIn(m_fadeOutTime));
