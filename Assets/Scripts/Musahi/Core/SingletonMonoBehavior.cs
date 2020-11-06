@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 
@@ -8,11 +9,10 @@ using UnityEngine;
 /// シングルトンパターンを実装する抽象クラス
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class SingletonMonoBehavior<T> : MonoBehaviour where T:MonoBehaviour
+public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
 {
-    [SerializeField] bool m_dontDestroyOnLoad = false;
     private static T m_instance;
-    public static T Instance 
+    public static T Instance
     {
         get
         {
@@ -23,6 +23,7 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T:MonoBehaviour
                 if (m_instance == null)
                 {
                     Debug.LogError(t + "をアタッチしているGameObjectはありません");
+                    return null;
                 }
             }
             return m_instance;
@@ -31,18 +32,14 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T:MonoBehaviour
 
     virtual protected void Awake()
     {
-        if (this != m_instance && m_instance == null)
+        if (this != Instance)//ここの条件式を変えたらエラーが治った！
         {
-            Destroy(this);
-            Debug.LogError(typeof(T) + "は既に他のGameObjectにアタッチされているため、コンポーネントを破棄しました"
+            Debug.LogWarning(typeof(T) + "は既に他のGameObjectにアタッチされているため、コンポーネントを破棄しました"
                 + "アタッチされているGameObjectは" + Instance.gameObject.name + "です");
+            Destroy(gameObject);
             return;
         }
-
-        if (m_dontDestroyOnLoad)
-        {
-            DontDestroyOnLoad(this.gameObject);
-        }
+        //DontDestroyOnLoad(gameObject);は継承先で書くこと!
     }
 
 }
