@@ -6,9 +6,9 @@ using DG.Tweening;
 public class AraiDoTweenTest : MonoBehaviour
 {
     /// <summary>this.transform.DOMoveの移動先の位置のX,Y,Z軸の変数</summary>
-    [SerializeField] Vector3 startVector;
+    [SerializeField] Vector3 startPos;
     /// <summary>this.transform.DOMoveの移動後の位置のX,Y,Z軸の変数</summary>
-    [SerializeField] Vector3 endvector;
+    [SerializeField] Vector3 endPos;
     /// <summary>this.transform.DOPathのObjectの通過点X,Y,Z軸の変数0</summary>
     [SerializeField] Vector3 passing0;
     /// <summary>this.transform.DOPathのObjectの通過点X,Y,Z軸の変数1</summary>
@@ -38,8 +38,8 @@ public class AraiDoTweenTest : MonoBehaviour
         if (roundTrip)
         {
             DOTween.Sequence()
-                .Append(this.transform.DOMove(startVector, travelT).SetRelative())
-                .Append(this.transform.DOMove(endvector, travelT).SetRelative())
+                .Append(this.transform.DOMove(startPos, travelT).SetRelative())
+                .Append(this.transform.DOMove(endPos, travelT).SetRelative())
                 .SetLoops(-1)
                 .Play();
         }
