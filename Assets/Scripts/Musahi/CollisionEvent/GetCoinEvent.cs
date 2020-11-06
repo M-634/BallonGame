@@ -6,27 +6,12 @@ using UnityEngine.Events;
 /// <summary>
 /// コイン獲得時のイベント
 /// </summary>
-public class GetCoinEvent :MonoBehaviour, IEventCollision
+public class GetCoinEvent : MonoBehaviour, IEventCollision
 {
-     ScoreManager m_scoreManager;
-
-    private void Awake()
+    public void CollisionEvent(EventSystemInGameScene eventSystem)
     {
-        gameObject.SetActive(true);
-        m_scoreManager = FindObjectOfType<ScoreManager>();
-        if (m_scoreManager == null)
-        {
-            Debug.LogError("ScoreManagerコンポーネントをアタッチされたGameObjectが存在しません");
-        }
-    }
-
-    /// <summary>
-    /// コイン獲得
-    /// </summary>
-    public void CollisionEvent()
-    {
-        Debug.Log("コイン獲得した！");
-        m_scoreManager.GetCoin();
+        eventSystem.ExecuteGetCoinEvent();
         gameObject.SetActive(false);
+        Debug.Log("コイン獲得");
     }
 }
