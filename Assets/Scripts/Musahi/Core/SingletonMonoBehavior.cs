@@ -9,7 +9,7 @@ using UnityEngine;
 /// シングルトンパターンを実装する抽象クラス
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T m_instance;
     public static T Instance
@@ -22,7 +22,7 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
                 m_instance = (T)FindObjectOfType(t);
                 if (m_instance == null)
                 {
-                    Debug.LogError(t + "をアタッチしているGameObjectはありません");
+                    Debug.LogWarning(t + "をアタッチしているGameObjectはありません");
                     return null;
                 }
             }

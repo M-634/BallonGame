@@ -10,13 +10,12 @@ using UnityEngine.UI;
 /// ゲーム中のタイマーの制御（カウントダウン）とそれに伴う
 /// ゲームシーンの状態（Start,Goal,GameOver）を監視するクラス
 /// </summary>
-[RequireComponent(typeof(ScoreManager), typeof(UISetActiveControl))]
+[RequireComponent(typeof(ScoreManager))]
 public class TimerInStage : MonoBehaviour
 {
     [SerializeField] Text m_timeLimitText;
     [SerializeField] float m_timeLimit = 300f;
 
-    UISetActiveControl m_UISetActiveControl;
     ScoreManager m_scoreManager;
 
     /// <summary>ゲーム中かどうか判定する </summary>
@@ -26,14 +25,11 @@ public class TimerInStage : MonoBehaviour
     private void Start()
     {
         m_scoreManager = GetComponent<ScoreManager>();
-        m_UISetActiveControl = GetComponent<UISetActiveControl>();
         //ステージを出現させる(ここシングルトンに依存しているから変える)
         if (StageParent.Instance)
         {
             StageParent.Instance.AppearanceStageObject();
         }
-        //各UIの表示を設定する
-        m_UISetActiveControl.InisitializeUISetAcitve();
     }
 
     // Update is called once per frame
@@ -72,14 +68,6 @@ public class TimerInStage : MonoBehaviour
     public void OnGoal()
     {
         InGame = false;
-        if (m_UISetActiveControl)
-        {
-            m_UISetActiveControl.UISetActiveWithGameClear();
-        }
-        else
-        {
-            Debug.LogError(" m_UISetActiveControl" + "はNullです");
-        }
         //残り時間をScoreManagerに渡す
         m_scoreManager.Result(Mathf.FloorToInt(m_timeLimit));
     }
@@ -90,15 +78,9 @@ public class TimerInStage : MonoBehaviour
     public void GameOver()
     {
         InGame = false;
-        if (m_UISetActiveControl)
-        {
-            m_UISetActiveControl.UISetActiveWithGameOver();
-        }
-        else
-        {
-            Debug.LogError(" m_UISetActiveControl" + "はNullです");
-        }
         //セレクト画面に戻る
         SceneLoader.Instance.LoadSelectSceneWithTap();
     }
+
+
 }

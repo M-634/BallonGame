@@ -16,7 +16,7 @@ public class StageData
 /// Jsonを使用したセーブ機能。
 /// </summary>
 #pragma warning disable IDE0063 // Use simple 'using' statement
-public class SaveAndLoadWithJSON
+public class SaveAndLoadWithJSON 
 {
     const string FolderName = "SaveData";
     const string EndOfFileName = "_HighScoreData.json";
@@ -129,6 +129,7 @@ public class SaveAndLoadWithJSON
         AssetDatabase.Refresh();
     }
 
+#if UNITY_EDITOR
     /// <summary>
     /// エディターでセーブデータを削除するデバック用の関数
     /// メニューバー＞M-634 ＞DeletSaveDataを押すと実行される
@@ -151,5 +152,6 @@ public class SaveAndLoadWithJSON
         Debug.Log("セーブデータを破棄しました！");
         AssetDatabase.Refresh();
     }
+#endif
 }
 #pragma warning restore IDE0063 // Use simple 'using' statement

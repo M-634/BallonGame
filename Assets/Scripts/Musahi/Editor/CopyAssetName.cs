@@ -5,9 +5,9 @@ using UnityEditor;
 using System.Linq;
 using System.IO;
 
-
 public class CopyFileName : MonoBehaviour
 {
+#if UNITY_EDITOR
     [MenuItem("Assets/Copy FileName",false)]
     static void  Execute()
     {
@@ -21,4 +21,5 @@ public class CopyFileName : MonoBehaviour
         GUIUtility.systemCopyBuffer = fileName;
         Debug.Log("Copy clipboard : \n" + fileName);
     }
+#endif
 }

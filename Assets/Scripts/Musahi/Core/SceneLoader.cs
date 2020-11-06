@@ -83,8 +83,8 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
         while (true)
         {
 #if UNITY_ANDROID
-            break;
-#else 
+            break;       
+#else
             if (Input.GetMouseButtonDown(0))
             {
                 m_tapToLoadText.gameObject.SetActive(false);
