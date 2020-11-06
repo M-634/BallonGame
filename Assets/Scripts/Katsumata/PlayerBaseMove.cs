@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerBaseMove : MonoBehaviour
 {
-    Rigidbody m_rb;
+    public static Rigidbody m_rb;
     /// <summary>全身する力。RigidBodyのAddForceで制御する </summary>
     public float forwardForce = 50;
     /// <summary>空気抵抗の比率 </summary>
