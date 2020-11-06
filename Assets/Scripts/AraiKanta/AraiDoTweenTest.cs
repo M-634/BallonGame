@@ -38,8 +38,8 @@ public class AraiDoTweenTest : MonoBehaviour
         if (roundTrip)
         {
             DOTween.Sequence()
-                .Append(this.transform.DOMove(startPos, travelT).SetRelative())
-                .Append(this.transform.DOMove(endPos, travelT).SetRelative())
+                .Append(this.transform.DOMove(startPos, traveTime).SetRelative())
+                .Append(this.transform.DOMove(endPos, traveTime).SetRelative())
                 .SetLoops(-1)
                 .Play();
         }
@@ -47,7 +47,7 @@ public class AraiDoTweenTest : MonoBehaviour
         {
             DOTween.Sequence()
                 .Append(this.transform.DOMove(passing0, 0f))
-                .Append(this.transform.DOPath(new Vector3[] { passing1, passing2, passing3, passing0 }, travelT, PathType.CatmullRom).SetEase(Ease.Linear))
+                .Append(this.transform.DOPath(new Vector3[] { passing1, passing2, passing3, passing0 }, traveTime, PathType.CatmullRom).SetEase(Ease.Linear))
                 .SetLoops(-1)
                 .Play();
         }
@@ -55,8 +55,8 @@ public class AraiDoTweenTest : MonoBehaviour
         {
             DOTween.Sequence()
                 
-                .Append(this.transform.DOMoveX(startPosX, travelT).SetDelay(delayTime))
-                .Append(this.transform.DOMoveX(endPosX, travelT).SetDelay(delayTime))
+                .Append(this.transform.DOMoveX(startPosX, traveTime).SetDelay(delayTime))
+                .Append(this.transform.DOMoveX(endPosX, traveTime).SetDelay(delayTime))
                 .SetLoops(-1)
                 .Play();
         }
