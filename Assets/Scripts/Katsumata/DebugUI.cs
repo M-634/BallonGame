@@ -8,9 +8,11 @@ public class DebugUI : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] Text playerSpeedText;
     [SerializeField] PlayerBaseMove playerBaseMove;
+    [SerializeField] PlayerGyroRotater playerGyroRotater;
     [SerializeField] Text XaxisSwipeDistanceText;
     [SerializeField] Text YaxisSwipeDistanceText;
     [SerializeField] Text swipe;
+    [SerializeField] Text gyroText;
 
     [SerializeField] Button debugButton;
     [SerializeField] Button backButton;
@@ -34,6 +36,7 @@ public class DebugUI : MonoBehaviour
     private void Start()
     {
         playerBaseMove = player.GetComponent<PlayerBaseMove>();
+        playerGyroRotater = player.GetComponent<PlayerGyroRotater>();
     }
     // Update is called once per frame
     void Update()
@@ -49,6 +52,8 @@ public class DebugUI : MonoBehaviour
         rotateBrakeCoefficientText.text = "回転減衰係数 : " + rotateBrakeCoefficient.value;
         maxSpeedText.text = "最大速度 : " + maxSpeedSlider.value;
         addAirBrakeText.text = "下スワイプしたときのブレーキの係数 : " + addAirBrakeSlider.value;
+        gyroText.text = "Gyro { x : " + playerGyroRotater.m_gyro.x + " y : "
+            + playerGyroRotater.m_gyro.y + " z : " + playerGyroRotater.m_gyro.z + " w : " + playerGyroRotater.m_gyro.w;
     }
 
     public void OnDebugButton()
