@@ -31,7 +31,7 @@ public class MaedaPendulum : MonoBehaviour
             vector3s.Add(vertex);
             radNatureNum += rad;
         }
-        for (int i = vector3s.Count - 2; i > 0; i--)
+        for (int i = vector3s.Count - 1; i > 0; i--)
         {
             vector3s.Add(vector3s[i]);
         }
