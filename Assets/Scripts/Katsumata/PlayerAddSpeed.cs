@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
 
 /// <summary>
 /// マリオカートのキノコダッシュを想定している
@@ -13,6 +12,7 @@ public class PlayerAddSpeed : MonoBehaviour
     [SerializeField] float addCoefficient = 1500;
     /// <summary>次に加速が始まるまでの待機時間 </summary>
     [SerializeField] float accelWaitTime = 2.5f;
+
     bool onAccelable = true;
     float waitTime = 0;
 
@@ -42,6 +42,4 @@ public class PlayerAddSpeed : MonoBehaviour
             onAccelable = false;
         }
     }
-
-
 }
