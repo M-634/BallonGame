@@ -8,7 +8,7 @@ public class DebugUI : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] Text playerSpeedText;
     [SerializeField] PlayerBaseMove playerBaseMove;
-    [SerializeField] PlayerGyroRotater playerGyroRotater;
+    [SerializeField] TestPlayerGyroRotater playerGyroRotater;
     [SerializeField] Text XaxisSwipeDistanceText;
     [SerializeField] Text YaxisSwipeDistanceText;
     [SerializeField] Text swipe;
@@ -36,15 +36,15 @@ public class DebugUI : MonoBehaviour
     private void Start()
     {
         playerBaseMove = player.GetComponent<PlayerBaseMove>();
-        playerGyroRotater = player.GetComponent<PlayerGyroRotater>();
+        playerGyroRotater = player.GetComponent<TestPlayerGyroRotater>();
     }
     // Update is called once per frame
     void Update()
     {
-        playerSpeedText.text = "velocity,magnitude : " + playerBaseMove.Speed;
-        XaxisSwipeDistanceText.text = "横方向にswipeした距離 : " + playerBaseMove.swipeDistance_x;
-        YaxisSwipeDistanceText.text = "縦方向にswipeした距離 : " + playerBaseMove.swipeDistance_y;
-        swipe.text = "swipe : " + playerBaseMove.swipe;
+        playerSpeedText.text = "velocity,magnitude : " + playerBaseMove.mp_Speed;
+        XaxisSwipeDistanceText.text = "横方向にswipeした距離 : " + playerBaseMove.m_swipeDistance_x;
+        YaxisSwipeDistanceText.text = "縦方向にswipeした距離 : " + playerBaseMove.m_swipeDistance_y;
+        swipe.text = "swipe : " + playerBaseMove.m_onSwipe;
         swipeCoefficientText.text = "horizontal : " + swipeCoefficient.value;
         forwardForceText.text = "forwardForce : " + forwardForce.value;
         forwardBrakeCoefficientText.text = "空気摩擦係数 : " + forwardBrakeCoefficient.value;
@@ -71,33 +71,33 @@ public class DebugUI : MonoBehaviour
     /// <summary>デバッグ用、SwipeCoefficientSliderのOnValueChangedで呼び出してる</summary>
     public void ChangeSwipeCoefficient()
     {
-        playerBaseMove.horizontalSpeed = swipeCoefficient.value;
+        playerBaseMove.m_horizontalSpeed = swipeCoefficient.value;
     }
 
     /// <summary>これもデバッグ用、FowrardForceSliderのOnValueChangedで呼び出してる</summary>
     public void ChangeForwardForce()
     {
-        playerBaseMove.forwardForce = forwardForce.value;
+        playerBaseMove.m_forwardForce = forwardForce.value;
     }
 
     /// <summary>これもデバッグ用、airBreakCoefficientSliderのOnValueChangedで呼び出してる</summary>
     public void ChangeForwardBrakeCoefficient()
     {
-        playerBaseMove.airBrekeCoefficient = forwardBrakeCoefficient.value;
+        playerBaseMove.m_airBrekeCoefficient = forwardBrakeCoefficient.value;
     }
     /// <summary>これもデバッグ用、RotateBrakeCoefficientSliderのOnValueChangedで呼び出してる</summary>
     public void ChangeRotateBrakeCoefficient()
     {
-        playerBaseMove.rotateBrekeCoefficient = rotateBrakeCoefficient.value;
+        playerBaseMove.m_rotateBrekeCoefficient = rotateBrakeCoefficient.value;
     }
     /// <summary>これもデバッグ用、MaxSpeedSliderのOnValueChangedで呼び出してる</summary>
     public void ChangeMaxSpeed()
     {
-        playerBaseMove.maxSpeed = maxSpeedSlider.value;
+        playerBaseMove.m_maxSpeed = maxSpeedSlider.value;
     }
     /// <summary>これもデバッグ用、MaxSpeedSliderのOnValueChangedで呼び出してる</summary>
     public void ChangeAddAirBrake()
     {
-        playerBaseMove.addAirBrake = addAirBrakeSlider.value;
+        playerBaseMove.m_addAirBrake = addAirBrakeSlider.value;
     }
 }
