@@ -36,7 +36,11 @@ public class DebugUI : MonoBehaviour
     private void Start()
     {
         playerBaseMove = player.GetComponent<PlayerBaseMove>();
-        playerGyroRotater = player.GetComponent<TestPlayerGyroRotater>();
+        if (playerGyroRotater != null)
+        {
+            playerGyroRotater = player.GetComponent<TestPlayerGyroRotater>();
+        }
+        
     }
     // Update is called once per frame
     void Update()
@@ -52,8 +56,12 @@ public class DebugUI : MonoBehaviour
         rotateBrakeCoefficientText.text = "回転減衰係数 : " + rotateBrakeCoefficient.value;
         maxSpeedText.text = "最大速度 : " + maxSpeedSlider.value;
         addAirBrakeText.text = "下スワイプしたときのブレーキの係数 : " + addAirBrakeSlider.value;
-        gyroText.text = "Gyro { x : " + playerGyroRotater.m_gyro.x + " y : "
+        if (playerGyroRotater != null)
+        {
+            gyroText.text = "Gyro { x : " + playerGyroRotater.m_gyro.x + " y : "
             + playerGyroRotater.m_gyro.y + " z : " + playerGyroRotater.m_gyro.z + " w : " + playerGyroRotater.m_gyro.w;
+        }
+        
     }
 
     public void OnDebugButton()
