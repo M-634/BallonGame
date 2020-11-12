@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerBaseMove : MonoBehaviour
 {
-    Rigidbody m_rb;
+    public static Rigidbody m_rb;
     /// <summary>全身する力。RigidBodyのAddForceで制御する </summary>
     public float forwardForce = 50;
     /// <summary>空気抵抗の比率 </summary>
@@ -52,10 +52,14 @@ public class PlayerBaseMove : MonoBehaviour
     /// <summary>進行方向とみてる方向の角度 </summary>
     public float forwardToLookAngle = 0;
 
+    /// <summary>調整する高さの位置。この値から一定値を超えてズレたらこの高さにプレイヤーの高さを調整する </summary>
+    Vector3 AdjustHeightPosition;
+
 
     private void Start()
     {
         m_rb = GetComponent<Rigidbody>();
+        AdjustHeightPosition = gameObject.transform.position;
     }
     // Update is called once per frame
     private void Update()
@@ -82,11 +86,16 @@ public class PlayerBaseMove : MonoBehaviour
         }
 
         AirBrake();
-        if (m_rb.velocity.magnitude > maxSpeed)
+        if (m_rb.velocity.magnitude > maxSpeed) //現在の速度が最大速度を超えていたら空気抵抗を上げる
         {
             SpeedLimit();
         }
         RotatePlayer();
+
+        if (Mathf.Abs(transform.position.y - AdjustHeightPosition.y) > 0.01f) //初期位置より一定値を超えて高さがズレていたら位置調整する
+        {
+            SetHeightAdjust();
+        }
     }
 
     private void OnCollisionExit(Collision collision)
@@ -137,7 +146,7 @@ public class PlayerBaseMove : MonoBehaviour
         {
             swipe = true;
 
-            swipeDistance_x = touch.deltaPosition.x / Screen.width; 
+            swipeDistance_x = touch.deltaPosition.x / Screen.width;
             swipeDistance_y = touch.deltaPosition.y / Screen.height;
         }
         if (touch.phase == TouchPhase.Ended)
@@ -212,6 +221,14 @@ public class PlayerBaseMove : MonoBehaviour
         nowAngle.x = 0;
         nowAngle.z = 0;
         transform.localRotation = nowAngle;
+    }
+
+    /// <summary>
+    /// 高さ調整の関数
+    /// </summary>
+    void SetHeightAdjust()
+    {
+        m_rb.AddForce(new Vector3(0, AdjustHeightPosition.y - transform.position.y, 0));
     }
 
     /// <summary>

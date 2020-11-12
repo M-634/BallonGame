@@ -982,7 +982,7 @@ GameObject:
   - component: {fileID: 784481863}
   m_Layer: 0
   m_Name: '[StageManager]'
-  m_TagString: Untagged
+  m_TagString: StageManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1062,6 +1062,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_timer: {fileID: 784481858}
   m_scoreManager: {fileID: 784481859}
+  m_UISetActiveControl: {fileID: 784481861}
 --- !u!114 &784481863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1160,8 +1161,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 784481858}
-        m_MethodName: StartGame
+      - m_Target: {fileID: 784481862}
+        m_MethodName: ExecuteGameStartEvent
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1226,7 +1227,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1072744229
 MonoBehaviour:
   m_ObjectHideFlags: 0
