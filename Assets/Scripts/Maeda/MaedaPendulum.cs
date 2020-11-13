@@ -24,6 +24,7 @@ public class MaedaPendulum : MonoBehaviour
         float rad = (2 * m_rad) / pathVertex;
         float radNatureNum = 1.5f - m_rad;
         List<Vector3> vector3s = new List<Vector3>();
+        List<Vector3> aftervec = new List<Vector3>();
         for (int i = 0; i < pathVertex; i++)
         {
             float radius = Mathf.PI * radNatureNum;
@@ -33,13 +34,15 @@ public class MaedaPendulum : MonoBehaviour
         }
         for (int i = vector3s.Count - 1; i > 0; i--)
         {
-            vector3s.Add(vector3s[i]);
+            aftervec.Add(vector3s[i]);
         }
         vector3s.RemoveAt(0);
-        Vector3[] vecArray = vector3s.ToArray();
+        Vector3[] beforeArray = vector3s.ToArray();
+        Vector3[] afterArray = aftervec.ToArray();
         DOTween.Sequence()
             .Append(transform.DOMove(vector3s[0], 0))
-            .Append(transform.DOPath(vecArray, interval, PathType.CatmullRom).SetEase(Ease.InOutQuart))
+            .Append(transform.DOPath(beforeArray, interval, PathType.CatmullRom).SetEase(Ease.InOutCubic))
+            .Append(transform.DOPath(afterArray, interval, PathType.CatmullRom).SetEase(Ease.InOutCubic))
             .SetLoops(-1)
             .Play();
     }
