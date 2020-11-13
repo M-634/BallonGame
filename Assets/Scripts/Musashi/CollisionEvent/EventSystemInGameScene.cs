@@ -20,7 +20,7 @@ public class EventSystemInGameScene : MonoBehaviour
     [Header("イベントのリスナー")]
     [SerializeField] TimerInStage m_timer;
     [SerializeField] ScoreManager m_scoreManager;
-    [SerializeField] UISetActiveControl m_UISetActiveControl;
+    //[SerializeField] UISetActiveControl m_UISetActiveControl;
 
     private void OnEnable()
     {
@@ -37,13 +37,13 @@ public class EventSystemInGameScene : MonoBehaviour
     {
         GetCoinEvent += m_scoreManager.GetCoin;
 
-        GameStartEvent += m_UISetActiveControl.InisitializeUISetAcitve;
+        //GameStartEvent += m_UISetActiveControl.InisitializeUISetAcitve;
 
-        GameClearEvent += m_UISetActiveControl.UISetActiveWithGameClear;
+        //GameClearEvent += m_UISetActiveControl.UISetActiveWithGameClear;
         GameClearEvent += m_timer.OnGoal;
 
         GameOverEvent += m_timer.GameOver;
-        GameOverEvent += m_UISetActiveControl.UISetActiveWithGameOver;
+       // GameOverEvent += m_UISetActiveControl.UISetActiveWithGameOver;
         Debug.Log("subscribe event....");
     }
 
@@ -52,13 +52,13 @@ public class EventSystemInGameScene : MonoBehaviour
     {
         GetCoinEvent -= m_scoreManager.GetCoin;
 
-        GameStartEvent -= m_UISetActiveControl.InisitializeUISetAcitve;
+        //GameStartEvent -= m_UISetActiveControl.InisitializeUISetAcitve;
 
         GameClearEvent -= m_timer.OnGoal;
-        GameClearEvent -= m_UISetActiveControl.UISetActiveWithGameClear;
+        //GameClearEvent -= m_UISetActiveControl.UISetActiveWithGameClear;
 
         GameOverEvent -= m_timer.GameOver;
-        GameOverEvent -= m_UISetActiveControl.UISetActiveWithGameOver;
+        //GameOverEvent -= m_UISetActiveControl.UISetActiveWithGameOver;
         Debug.Log("unSubscribe event....");
     }
 

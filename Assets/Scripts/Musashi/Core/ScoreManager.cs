@@ -17,14 +17,14 @@ public class ScoreManager : MonoBehaviour
     /// <summary>1コイン獲得時に得られるスコア</summary>
     [SerializeField] int m_getCoinScore = 100;
 
-    UISetActiveControl m_UISetActiveControl;
+    [SerializeField] UISetActiveControl m_UISetActiveControl;
     SaveAndLoadWithJSON m_json;
 
     // Start is called before the first frame update
     private void Start()
     {
-        m_UISetActiveControl = GetComponent<UISetActiveControl>();
-        m_UISetActiveControl.CurrentScoreText.text = "Score: ";
+        //m_UISetActiveControl = GetComponent<UISetActiveControl>();
+        //m_UISetActiveControl.CurrentScoreText.text = "Score: ";
 
         if (StageParent.Instance)
         {

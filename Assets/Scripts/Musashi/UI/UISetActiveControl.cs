@@ -6,12 +6,16 @@ using UnityEngine.UI;
 /// <summary>
 /// ゲームシーン内のUIのアクティブをコントロールするクラス
 /// </summary>
-public class UISetActiveControl : MonoBehaviour
+public class UISetActiveControl : EventReceiver<UISetActiveControl>
 {
     [Header("UI")]
     [SerializeField] Canvas m_gameSceneUI;
     [SerializeField] Canvas m_GameOverUI;
     [SerializeField] Canvas m_GameClearUI;
+
+    [Header("スタート時のカウントダウン")]
+    [SerializeField] Text m_startCountDown;
+    [SerializeField] int m_contDown = 3;
 
     [Header("スコアテキスト")]
     [SerializeField] Text m_currentScoreText;
@@ -44,6 +48,29 @@ public class UISetActiveControl : MonoBehaviour
         return text;
     }
 
+
+    private void Start()
+    {
+        InisitializeUISetAcitve();
+        //3,2,1スタート！！
+        StartCoroutine(StartCountDownCorutine());
+    }
+
+    IEnumerator StartCountDownCorutine()
+    {
+        while (m_contDown > 0)
+        {
+            m_startCountDown.text = m_contDown.ToString();
+            yield return new WaitForSeconds(1f);
+            m_contDown--;
+        }
+
+        m_startCountDown.text = "START!!";
+        yield return null;
+        m_startCountDown.gameObject.SetActive(false);
+        m_eventSystemInGameScene.ExecuteGameStartEvent();
+    }
+
     public void InisitializeUISetAcitve()
     {
         GameSceneUI.SetActive(true);
@@ -61,5 +88,17 @@ public class UISetActiveControl : MonoBehaviour
     {
         GameSceneUI.SetActive(false);
         GameClearUI.SetActive(true);
+    }
+
+    protected override void OnEnable()
+    {
+        m_eventSystemInGameScene.GameClearEvent += UISetActiveWithGameClear;
+        m_eventSystemInGameScene.GameOverEvent += UISetActiveWithGameOver;
+    }
+
+    protected override void OnDisable()
+    {
+        m_eventSystemInGameScene.GameClearEvent -= UISetActiveWithGameClear;
+        m_eventSystemInGameScene.GameOverEvent -= UISetActiveWithGameOver;
     }
 }

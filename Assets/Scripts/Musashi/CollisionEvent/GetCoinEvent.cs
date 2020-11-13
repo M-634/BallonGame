@@ -8,6 +8,8 @@ using UnityEngine.Events;
 /// </summary>
 public class GetCoinEvent : MonoBehaviour, IEventCollision
 {
+    /// <summary>コイン獲得時のスコア</summary>
+    [SerializeField] int m_getScore;
     public void CollisionEvent(EventSystemInGameScene eventSystem)
     {
         eventSystem.ExecuteGetCoinEvent();
