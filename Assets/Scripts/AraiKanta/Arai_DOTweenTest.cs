@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class AraiDoTweenTest : MonoBehaviour
+public class Arai_DOTweenTest : MonoBehaviour
 {
     /// <summary>this.transform.DOMoveの移動先の位置のX,Y,Z軸の変数</summary>
     [SerializeField] Vector3 startPos;
