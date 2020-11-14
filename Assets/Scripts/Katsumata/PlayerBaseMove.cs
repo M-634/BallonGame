@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 /// <summary>
 /// デフォルト状態のユーザー制御によるプレイヤーの動きを制御する
 /// ギミック等を受けた場合のプレイヤーが特殊な状態にある場合は別クラスに操作方法を書く
@@ -11,7 +12,7 @@ public class PlayerBaseMove : MonoBehaviour
     /// <summary>rigidbodyを格納する変数 </summary>
     public static Rigidbody m_rb;
     /// <summary>全身する力。RigidBodyのAddForceで制御する </summary>
-    public float m_forwardForce = 50;
+    public float m_forwardForce = 100;
     /// <summary>空気抵抗の比率 </summary>
     [SerializeField, Range(0, 1f)] public float m_airBrekeCoefficient = 0.995f;
     /// <summary>回転の減衰比率 </summary>
@@ -56,7 +57,6 @@ public class PlayerBaseMove : MonoBehaviour
 
     /// <summary>調整する高さの位置。この値から一定値を超えてズレたらこの高さにプレイヤーの高さを調整する </summary>
     Vector3 m_AdjustHeightPosition;
-
 
     private void Start()
     {
@@ -158,7 +158,7 @@ public class PlayerBaseMove : MonoBehaviour
     }
 
     /// <summary>
-    /// ユーザーのスワイプした距離をプレイヤーの回転を反映する関数
+    /// ユーザーのスワイプした距離をプレイヤーの回転に反映する関数
     /// </summary>
     void SetRotateSpeed()
     {
