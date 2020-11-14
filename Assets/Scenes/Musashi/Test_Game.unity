@@ -435,11 +435,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestStage1-1
       objectReference: {fileID: 0}
-    - target: {fileID: 6339817547022256655, guid: 7ff79ea4d1f1ec547ac81eded68f47ac,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ff79ea4d1f1ec547ac81eded68f47ac, type: 3}
 --- !u!1 &385690115
@@ -1123,7 +1118,7 @@ MonoBehaviour:
   m_contDown: 3
   m_currentScoreText: {fileID: 486207593}
   m_leftTimeScoreText: {fileID: 453699287}
-  m_getScoreText: {fileID: 1123416233}
+  m_getResulScoreText: {fileID: 1123416233}
   m_totalScoreText: {fileID: 774037300}
 --- !u!114 &784481862
 MonoBehaviour:
@@ -1137,8 +1132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95597e9e919ee0f4088f8a0c653bcc20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_timer: {fileID: 784481858}
-  m_scoreManager: {fileID: 784481859}
 --- !u!114 &784481863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1399,7 +1392,7 @@ GameObject:
   - component: {fileID: 1123416234}
   - component: {fileID: 1123416233}
   m_Layer: 5
-  m_Name: GetScoreText
+  m_Name: GetResultScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

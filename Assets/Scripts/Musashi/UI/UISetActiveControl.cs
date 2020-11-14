@@ -22,32 +22,16 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
 
     [Header("リザルトテキスト")]
     [SerializeField] Text m_leftTimeScoreText;
-    [SerializeField] Text m_getScoreText;
+    [SerializeField] Text m_getResulScoreText;
     [SerializeField] Text m_totalScoreText;
 
     public GameObject GameSceneUI { get => m_gameSceneUI.gameObject; }
     public GameObject GameOverUI { get => m_GameOverUI.gameObject; }
     public GameObject GameClearUI { get => m_GameClearUI.gameObject; }
-    public Text CurrentScoreText { get => SetActiveCanvasWithText(GameSceneUI, m_currentScoreText); }
-    public Text LeftTimeScoreText { get => SetActiveCanvasWithText(GameClearUI, m_leftTimeScoreText); }
-    public Text GetScoreText { get => SetActiveCanvasWithText(GameClearUI, m_getScoreText); }
-    public Text TotalScoreText { get => SetActiveCanvasWithText(GameClearUI, m_totalScoreText); }
-
-
-    private Text SetActiveCanvasWithText(GameObject canvas, Text text)
-    {
-        if (canvas.activeSelf == false)
-        {
-            canvas.SetActive(true);
-        }
-
-        if (text.gameObject.activeSelf == false)
-        {
-            text.gameObject.SetActive(true);
-        }
-        return text;
-    }
-
+    public Text CurrentScoreText { get => m_currentScoreText; }
+    public Text LeftTimeScoreText { get =>  m_leftTimeScoreText; }
+    public Text GetResulScoreText { get => m_getResulScoreText; }
+    public Text TotalScoreText { get => m_totalScoreText; }
 
     private void Start()
     {
@@ -67,8 +51,7 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
 
         m_startCountDown.text = "START!!";
         yield return null;
-        m_startCountDown.gameObject.SetActive(false);
-        m_eventSystemInGameScene.ExecuteGameStartEvent();
+        StartCoroutine(m_startCountDown.FadeOut(2f, () => m_eventSystemInGameScene.ExecuteGameStartEvent()));
     }
 
     public void InisitializeUISetAcitve()
@@ -76,6 +59,7 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
         GameSceneUI.SetActive(true);
         GameOverUI.SetActive(false);
         GameClearUI.SetActive(false);
+        CurrentScoreText.text = "Score:";
     }
 
     public void UISetActiveWithGameOver()

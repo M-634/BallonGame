@@ -11,7 +11,7 @@ using UnityEngine.UI;
 /// ゲームシーンの状態（Start,Goal,GameOver）を監視するクラス
 /// </summary>
 [RequireComponent(typeof(ScoreManager))]
-public class TimerInStage : MonoBehaviour
+public class TimerInStage : EventReceiver<TimerInStage>
 {
     [SerializeField] Text m_timeLimitText;
     [SerializeField] float m_timeLimit = 300f;
@@ -82,5 +82,17 @@ public class TimerInStage : MonoBehaviour
         SceneLoader.Instance.LoadSelectSceneWithTap();
     }
 
+    protected override void OnEnable()
+    {
+        m_eventSystemInGameScene.GameStartEvent += StartGame;
+        m_eventSystemInGameScene.GameClearEvent += OnGoal;
+        m_eventSystemInGameScene.GameOverEvent += GameOver;
+    }
 
+    protected override void OnDisable()
+    {
+        m_eventSystemInGameScene.GameStartEvent -= StartGame;
+        m_eventSystemInGameScene.GameClearEvent -= OnGoal;
+        m_eventSystemInGameScene.GameOverEvent -= GameOver;
+    }
 }

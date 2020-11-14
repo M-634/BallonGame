@@ -9,8 +9,7 @@ using Unity.Collections.LowLevel.Unsafe;
 /// <summary>
 ///ゲーム中のスコアを管理し、ゲームクリアしたらリザルトを表示する
 /// </summary>
-[RequireComponent(typeof(UISetActiveControl))]
-public class ScoreManager : MonoBehaviour
+public class ScoreManager : EventReceiver<ScoreManager>
 {
     private int m_highScore;
     private int m_currentScore;
@@ -44,9 +43,10 @@ public class ScoreManager : MonoBehaviour
     /// <summary>
     /// プレイヤーがコインに衝突したら呼ばれる関数
     /// </summary>
-    public void GetCoin()
+    public void GetCoin(int score)
     {
-        m_currentScore += m_getCoinScore;
+        m_currentScore += score;
+        //m_currentScore += m_getCoinScore;
         m_UISetActiveControl.CurrentScoreText.text = "Score: " + m_currentScore;
     }
 
@@ -63,7 +63,7 @@ public class ScoreManager : MonoBehaviour
         Sequence sequence = DOTween.Sequence();
         sequence.Append(
         DOTween.To(() => score, num => score = num, m_currentScore, 2f)
-            .OnUpdate(() => m_UISetActiveControl.GetScoreText.text = ("Score: " + score.ToString()))
+            .OnUpdate(() => m_UISetActiveControl.GetResulScoreText.text = ("Score: " + score.ToString()))
             .OnComplete(() => Debug.Log("")));
 
         int time = 0;
@@ -98,5 +98,15 @@ public class ScoreManager : MonoBehaviour
         {
             SceneLoader.Instance.LoadSelectSceneWithTap();
         }
+    }
+
+    protected override void OnEnable()
+    {
+        m_eventSystemInGameScene.GetCoinEvent += GetCoin;
+    }
+
+    protected override void OnDisable()
+    {
+        m_eventSystemInGameScene.GetCoinEvent -= GetCoin;
     }
 }
