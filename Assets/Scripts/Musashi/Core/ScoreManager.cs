@@ -12,7 +12,7 @@ using Unity.Collections.LowLevel.Unsafe;
 public class ScoreManager : EventReceiver<ScoreManager>
 {
     private int m_highScore;
-    private int m_currentScore;
+    private int m_currentScore = 0;
     /// <summary>1コイン獲得時に得られるスコア</summary>
     [SerializeField] int m_getCoinScore = 100;
 

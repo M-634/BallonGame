@@ -25,6 +25,12 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
     [SerializeField] float m_fadeInTime;
 
     private IEnumerator m_currentLoadCorutine;
+    /// <summary>
+    /// ゲームシーンロード後にFadeInしてからカウントダウンを
+    /// タイミングよくスタートさせる
+    /// </summary>
+    //public bool m_doCountDown { get; set; }
+
 
     protected override void Awake()
     {
@@ -54,11 +60,24 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
 
         while (async.progress < 0.99f)
         {
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
-        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime));
-        yield return new WaitForSeconds(m_fadeInTime);
-        m_loadCanvas.enabled = false;
+        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime, 
+            () => 
+            {
+                m_loadCanvas.enabled = false;
+                var countDownUI = GameObject.FindGameObjectWithTag("StageManager").GetComponent<UISetActiveControl>();
+                if (countDownUI)
+                {
+                    StartCoroutine(countDownUI.StartCountDownCorutine());
+                }
+                else
+                {
+                    Debug.LogError("StageMagerにUISetActiveControlコンポーネントがアタッチされていません！！");
+                }
+            })) ;
+        //yield return new WaitForSeconds(m_fadeInTime);
+        //m_loadCanvas.enabled = false;
     }
 
    
@@ -99,7 +118,7 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
 
         while (async.progress < 0.99f)
         {
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
         StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime));
         yield return new WaitForSeconds(m_fadeInTime);

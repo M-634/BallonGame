@@ -435,6 +435,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestStage1-1
       objectReference: {fileID: 0}
+    - target: {fileID: 6339817547022256655, guid: 7ff79ea4d1f1ec547ac81eded68f47ac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ff79ea4d1f1ec547ac81eded68f47ac, type: 3}
 --- !u!1 &385690115
@@ -1120,6 +1125,7 @@ MonoBehaviour:
   m_leftTimeScoreText: {fileID: 453699287}
   m_getResulScoreText: {fileID: 1123416233}
   m_totalScoreText: {fileID: 774037300}
+  m_debugGameScene: 0
 --- !u!114 &784481862
 MonoBehaviour:
   m_ObjectHideFlags: 0
