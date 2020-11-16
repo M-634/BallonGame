@@ -25,7 +25,7 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
     [SerializeField] float m_fadeInTime;
 
     private IEnumerator m_currentLoadCorutine;
-  
+
     protected override void Awake()
     {
         base.Awake();
@@ -82,12 +82,12 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
 
     private IEnumerator LoadWithTapCorutine(string loadSceneName)
     {
+        //ここ、Andoroidだと動かない！！
         m_loadCanvas.enabled = true;
         m_tapToLoadText.gameObject.SetActive(true);
 
         while (true)
         {
-#if UNITY_ANDROID     
             if (Input.touchCount > 0)
             {
                 var touch = Input.GetTouch(0);
@@ -96,13 +96,11 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
                     break;
                 }
             }
-#else
-            if (Input.GetMouseButtonDown(0))
+            else if (Input.GetMouseButtonDown(0))
             {
                 break;
             }
             yield return null;
-#endif
         }
         m_tapToLoadText.gameObject.SetActive(false);
         StartCoroutine(m_fadeImage.FadeIn(m_fadeOutTime));
@@ -113,7 +111,7 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
         {
             yield return null;
         }
-        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime,() => m_loadCanvas.enabled = false));
+        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime, () => m_loadCanvas.enabled = false));
     }
 
     public void LoadTitleScene()
@@ -121,7 +119,7 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
         m_currentLoadCorutine = LoadScene(m_loadTitleSceneName);
         StartCoroutine(m_currentLoadCorutine);
     }
-    
+
     public void LoadSelectScene()
     {
         m_currentLoadCorutine = LoadScene(m_loadSelectSceneName);

@@ -22,8 +22,10 @@ public class SaveAndLoadWithJSON
     const string EndOfFileName = "_HighScoreData.json";
 
 #if UNITY_ANDROID
-    static readonly string m_folderPath = Path.Combine(Application.streamingAssetsPath, FolderName);
-    static readonly string m_metaPath = Application.streamingAssetsPath + $"/{FolderName}.meta ";
+    //static readonly string m_folderPath = Path.Combine(Application.streamingAssetsPath, FolderName);
+    //static readonly string m_metaPath = Application.streamingAssetsPath + $"/{FolderName}.meta ";
+    static readonly string m_folderPath = Path.Combine(Application.persistentDataPath, FolderName);
+    static readonly string m_metaPath = Application.persistentDataPath + $"/{FolderName}.meta ";
 #elif UNITY_EDITOR
     static readonly string m_folderPath = Path.Combine(Application.dataPath, FolderName);
     static readonly string m_metaPath = Application.dataPath + $"/{FolderName}.meta ";

@@ -28,7 +28,7 @@ public class ScoreManager : EventReceiver<ScoreManager>
         if (StageParent.Instance)
         {
             //ステージの名前と天候状態でパスを分ける
-            string path = StageParent.Instance.StageName + "_" +StageParent.Instance.WeatherConditions.ToString();
+            string path = StageParent.Instance.StageName + "_" + StageParent.Instance.WeatherConditions.ToString();
             m_json = new SaveAndLoadWithJSON(path);
         }
         else
@@ -83,21 +83,16 @@ public class ScoreManager : EventReceiver<ScoreManager>
     {
         if (totalScore > m_highScore)
         {
-            m_json.SaveHighScore(totalScore,true);
+            //ここが原因！！
+            m_json.SaveHighScore(totalScore, true);
         }
 
         //ステージを非表示にする
-        if (StageParent.Instance)
-        {
-            StageParent.Instance.GetAppearanceStage.SetActive(false);
-            //ステージを初期化する
-            StageParent.Instance.Initialization();
-        }
+        StageParent.Instance.GetAppearanceStage.SetActive(false);
+        //ステージを初期化する
+        StageParent.Instance.Initialization();
         //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
-        if (SceneLoader.Instance)
-        {
-            SceneLoader.Instance.LoadSelectSceneWithTap();
-        }
+        SceneLoader.Instance.LoadSelectSceneWithTap();
     }
 
     protected override void OnEnable()
