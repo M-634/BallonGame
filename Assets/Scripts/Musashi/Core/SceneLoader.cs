@@ -80,13 +80,6 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
         //m_loadCanvas.enabled = false;
     }
 
-   
-    public void LoadTitleSceneWithTap()
-    {
-        m_currentLoadCorutine = LoadWithTapCorutine(m_loadTitleSceneName);
-        StartCoroutine(m_currentLoadCorutine);
-    }
-
     public void LoadSelectSceneWithTap()
     {
         m_currentLoadCorutine = LoadWithTapCorutine(m_loadSelectSceneName);
@@ -124,4 +117,31 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
         yield return new WaitForSeconds(m_fadeInTime);
         m_loadCanvas.enabled = false;
     }
+
+    public void LoadTitleScene()
+    {
+        m_currentLoadCorutine = LoadScene(m_loadTitleSceneName);
+        StartCoroutine(m_currentLoadCorutine);
+    }
+
+    /// <summary>
+    /// デフォルト
+    /// </summary>
+    /// <param name="loadSceneName"></param>
+    /// <returns></returns>
+    private IEnumerator LoadScene(string loadSceneName)
+    {
+        m_loadCanvas.enabled = true;
+        StartCoroutine(m_fadeImage.FadeIn(m_fadeOutTime));
+        yield return new WaitForSeconds(m_fadeOutTime);
+        AsyncOperation async = SceneManager.LoadSceneAsync(loadSceneName, LoadSceneMode.Single);
+
+        while (async.progress < 0.99f)
+        {
+            yield return null;
+        }
+        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime));
+    }
 }
+
+
