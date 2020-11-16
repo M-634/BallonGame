@@ -113,7 +113,7 @@ public class SaveAndLoadWithJSON
         }
     }
 
-    public void DeleteSaveData()
+    public static void DeleteSaveData()
     {
         if (!Directory.Exists(m_folderPath))
         {

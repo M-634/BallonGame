@@ -14,7 +14,7 @@ public class ScoreManager : EventReceiver<ScoreManager>
     private int m_highScore;
     private int m_currentScore = 0;
     /// <summary>1コイン獲得時に得られるスコア</summary>
-    [SerializeField] int m_getCoinScore = 100;
+    //[SerializeField] int m_getCoinScore = 100;
 
     [SerializeField] UISetActiveControl m_UISetActiveControl;
     SaveAndLoadWithJSON m_json;

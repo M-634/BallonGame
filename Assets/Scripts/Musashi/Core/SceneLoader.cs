@@ -25,13 +25,7 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
     [SerializeField] float m_fadeInTime;
 
     private IEnumerator m_currentLoadCorutine;
-    /// <summary>
-    /// ゲームシーンロード後にFadeInしてからカウントダウンを
-    /// タイミングよくスタートさせる
-    /// </summary>
-    //public bool m_doCountDown { get; set; }
-
-
+  
     protected override void Awake()
     {
         base.Awake();
@@ -62,8 +56,8 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
         {
             yield return null;
         }
-        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime, 
-            () => 
+        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime,
+            () =>
             {
                 m_loadCanvas.enabled = false;
                 var countDownUI = GameObject.FindGameObjectWithTag("StageManager").GetComponent<UISetActiveControl>();
@@ -75,7 +69,7 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
                 {
                     Debug.LogError("StageMagerにUISetActiveControlコンポーネントがアタッチされていません！！");
                 }
-            })) ;
+            }));
         //yield return new WaitForSeconds(m_fadeInTime);
         //m_loadCanvas.enabled = false;
     }
@@ -93,18 +87,24 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
 
         while (true)
         {
-#if UNITY_ANDROID
-            break;       
+#if UNITY_ANDROID     
+            if (Input.touchCount > 0)
+            {
+                var touch = Input.GetTouch(0);
+                if (touch.phase == TouchPhase.Began)
+                {
+                    break;
+                }
+            }
 #else
             if (Input.GetMouseButtonDown(0))
             {
-                m_tapToLoadText.gameObject.SetActive(false);
                 break;
             }
             yield return null;
 #endif
         }
-        
+        m_tapToLoadText.gameObject.SetActive(false);
         StartCoroutine(m_fadeImage.FadeIn(m_fadeOutTime));
         yield return new WaitForSeconds(m_fadeOutTime);
         AsyncOperation async = SceneManager.LoadSceneAsync(loadSceneName, LoadSceneMode.Single);
@@ -113,14 +113,18 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
         {
             yield return null;
         }
-        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime));
-        yield return new WaitForSeconds(m_fadeInTime);
-        m_loadCanvas.enabled = false;
+        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime,() => m_loadCanvas.enabled = false));
     }
 
     public void LoadTitleScene()
     {
         m_currentLoadCorutine = LoadScene(m_loadTitleSceneName);
+        StartCoroutine(m_currentLoadCorutine);
+    }
+    
+    public void LoadSelectScene()
+    {
+        m_currentLoadCorutine = LoadScene(m_loadSelectSceneName);
         StartCoroutine(m_currentLoadCorutine);
     }
 
@@ -140,7 +144,7 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
         {
             yield return null;
         }
-        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime));
+        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime, () => m_loadCanvas.enabled = false));
     }
 }
 
