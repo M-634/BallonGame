@@ -12,9 +12,9 @@ using Unity.Collections.LowLevel.Unsafe;
 public class ScoreManager : EventReceiver<ScoreManager>
 {
     private int m_highScore;
-    private int m_currentScore;
+    private int m_currentScore = 0;
     /// <summary>1コイン獲得時に得られるスコア</summary>
-    [SerializeField] int m_getCoinScore = 100;
+    //[SerializeField] int m_getCoinScore = 100;
 
     [SerializeField] UISetActiveControl m_UISetActiveControl;
     SaveAndLoadWithJSON m_json;
@@ -28,7 +28,7 @@ public class ScoreManager : EventReceiver<ScoreManager>
         if (StageParent.Instance)
         {
             //ステージの名前と天候状態でパスを分ける
-            string path = StageParent.Instance.StageName + "_" +StageParent.Instance.WeatherConditions.ToString();
+            string path = StageParent.Instance.StageName + "_" + StageParent.Instance.WeatherConditions.ToString();
             m_json = new SaveAndLoadWithJSON(path);
         }
         else
@@ -83,21 +83,16 @@ public class ScoreManager : EventReceiver<ScoreManager>
     {
         if (totalScore > m_highScore)
         {
-            m_json.SaveHighScore(totalScore,true);
+            //ここが原因！！
+            m_json.SaveHighScore(totalScore, true);
         }
 
         //ステージを非表示にする
-        if (StageParent.Instance)
-        {
-            StageParent.Instance.GetAppearanceStage.SetActive(false);
-            //ステージを初期化する
-            StageParent.Instance.Initialization();
-        }
+        StageParent.Instance.GetAppearanceStage.SetActive(false);
+        //ステージを初期化する
+        StageParent.Instance.Initialization();
         //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
-        if (SceneLoader.Instance)
-        {
-            SceneLoader.Instance.LoadSelectSceneWithTap();
-        }
+        SceneLoader.Instance.LoadSelectSceneWithTap();
     }
 
     protected override void OnEnable()
