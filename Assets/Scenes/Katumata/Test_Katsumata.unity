@@ -5189,6 +5189,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c296c2431ff7b83409eaf7fa676b14e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1704405185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704405178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe3593b6e5c6ab242b8063865a1156e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_addCoefficient: 1500
+  m_accelWaitTime: 2.5
+  m_accelTime: 2.5
 --- !u!1 &1763361444
 GameObject:
   m_ObjectHideFlags: 0
@@ -5420,11 +5435,9 @@ MonoBehaviour:
   player: {fileID: 1704405178}
   playerSpeedText: {fileID: 825916711}
   playerBaseMove: {fileID: 1704405179}
-  playerGyroRotater: {fileID: 0}
   XaxisSwipeDistanceText: {fileID: 1547726566}
   YaxisSwipeDistanceText: {fileID: 1297763019}
   swipe: {fileID: 2023337948}
-  gyroText: {fileID: 0}
   debugButton: {fileID: 1984653389}
   backButton: {fileID: 787397596}
   debugPannel: {fileID: 847472205}
@@ -6408,6 +6421,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_maxSpeed
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
+        type: 3}
+      propertyPath: m_mouthDebug
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3999297260338569818, guid: ab42b3ef5acd0694998a29df74156a0c,
         type: 3}

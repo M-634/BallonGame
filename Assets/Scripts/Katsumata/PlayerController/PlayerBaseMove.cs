@@ -58,6 +58,8 @@ public class PlayerBaseMove : MonoBehaviour
     /// <summary>調整する高さの位置。この値から一定値を超えてズレたらこの高さにプレイヤーの高さを調整する </summary>
     Vector3 m_AdjustHeightPosition;
 
+    [SerializeField] PlayerEventHandller m_playerEventHandller;
+
     private void Start()
     {
         m_rb = GetComponent<Rigidbody>();
@@ -70,10 +72,7 @@ public class PlayerBaseMove : MonoBehaviour
     }
     void FixedUpdate()
     {
-        //if (!GameState.Instance.InGame)
-        //{
-        //    return;
-        //}
+        if (!m_playerEventHandller.InGame) return;
 
 
         if (m_mouthDebug)

@@ -15,14 +15,16 @@ public class PlayerAddSpeed : MonoBehaviour
     [SerializeField] float m_accelWaitTime = 2.5f;
 
     bool m_onAccelable = true;
+    bool m_onAccel = false;
     float m_waitTime = 0;
+    [SerializeField] float m_accelTime = 2.5f;
 
     private void Start()
     {
         m_rb = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!m_onAccelable)
         {
@@ -34,6 +36,11 @@ public class PlayerAddSpeed : MonoBehaviour
             m_waitTime = 0;
         }
         Debug.Log("waittime : " + m_waitTime);
+
+        if (m_onAccel)
+        {
+
+        }
     }
     private void OnTriggerStay(Collider other)
     {
@@ -41,6 +48,7 @@ public class PlayerAddSpeed : MonoBehaviour
         {
             m_rb.AddForce(transform.forward * m_addCoefficient);
             m_onAccelable = false;
+            m_onAccel = true;
         }
     }
 }

@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1326,7 +1326,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8623ec8109e01c143a6359ea91a4edcd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4207,11 +4207,9 @@ MonoBehaviour:
   player: {fileID: 1126332625}
   playerSpeedText: {fileID: 228925618}
   playerBaseMove: {fileID: 1126332626}
-  playerGyroRotater: {fileID: 0}
   XaxisSwipeDistanceText: {fileID: 1581277145}
   YaxisSwipeDistanceText: {fileID: 1526293572}
   swipe: {fileID: 1143544526}
-  gyroText: {fileID: 433796654}
   debugButton: {fileID: 598982156}
   backButton: {fileID: 1396693731}
   debugPannel: {fileID: 1902131338}

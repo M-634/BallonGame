@@ -9,9 +9,12 @@ using UnityEngine;
 public abstract class EventReceiver<T> : MonoBehaviour where T :MonoBehaviour
 {
     protected EventSystemInGameScene m_eventSystemInGameScene;
+    /// <summary>勝又用：Playerの動きをテストしたいときはチェックしてね</summary>
+    public  bool m_doDebug;
 
     private void Awake()
     {
+        if (m_doDebug) return;
         m_eventSystemInGameScene = GameObject.FindGameObjectWithTag("StageManager").GetComponent<EventSystemInGameScene>();
     }
 
