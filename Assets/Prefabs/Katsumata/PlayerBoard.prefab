@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: 3999297260338569817}
   - component: {fileID: 3999297260338569822}
   - component: {fileID: 3999297260338569765}
+  - component: {fileID: -5596320109890394970}
   m_Layer: 0
   m_Name: PlayerBoard
   m_TagString: Player
@@ -313,12 +314,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c296c2431ff7b83409eaf7fa676b14e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardForce: 20
-  forwardBrekeCoefficient: 0.995
-  speed: 0
-  horizontalSpeed: 1
-  swipeDistance_x: 0
-  debugUIobj: {fileID: 0}
-  mouthDebug: 0
-  debugRotateForce: 0
-  rotateBrekeCoefficient: 0.9
+  m_forwardForce: 50
+  m_airBrekeCoefficient: 0.995
+  m_rotateBrekeCoefficient: 0.9
+  m_addAirBrake: 0.7
+  m_addAirBrakeStart: 1
+  m_maxSpeed: 50
+  m_maxSpeedExcessBrake: 0.9
+  m_horizontalSpeed: 0.5
+  m_swipeDistance_x: 0
+  m_swipeDistance_y: 0
+  m_maxSwipeDistance_y: 0.2
+  m_beginSwipeBrake: 0.05
+  m_mouthDebug: 0
+  m_onSwipe: 0
+  m_forwardToLookAngle: 0
+--- !u!114 &-5596320109890394970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3999297260338569823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 832b4b9d891cd8640ac107d901e37246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
