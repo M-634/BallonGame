@@ -15,7 +15,7 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
 
     [Header("スタート時のカウントダウン")]
     [SerializeField] Text m_startCountDown;
-    [SerializeField] int m_contDown = 3;
+    [SerializeField] int m_countDown = 3;
 
     [Header("スコアテキスト")]
     [SerializeField] Text m_currentScoreText;
@@ -29,24 +29,39 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
     public GameObject GameOverUI { get => m_GameOverUI.gameObject; }
     public GameObject GameClearUI { get => m_GameClearUI.gameObject; }
     public Text CurrentScoreText { get => m_currentScoreText; }
-    public Text LeftTimeScoreText { get =>  m_leftTimeScoreText; }
+    public Text LeftTimeScoreText { get => m_leftTimeScoreText; }
     public Text GetResulScoreText { get => m_getResulScoreText; }
     public Text TotalScoreText { get => m_totalScoreText; }
+
+    /// <summary> ゲームシーンのみデバックする時はチェックをいれる/// </summary>
+    [SerializeField] bool m_debugGameScene;
 
     private void Start()
     {
         InisitializeUISetAcitve();
-        //3,2,1スタート！！
-        StartCoroutine(StartCountDownCorutine());
+#if UNITY_EDITOR
+        if (m_debugGameScene)
+        {
+            //3,2,1スタート！！
+            StartCoroutine(StartCountDownCorutine());
+        }
+#endif
     }
 
-    IEnumerator StartCountDownCorutine()
+    /// <summary>
+    /// SceneLoaderから呼ばれる。
+    /// シーンがロードされ、FadeImageがフェードアウトした後に
+    /// カウントダウンが開始される。
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator StartCountDownCorutine()
     {
-        while (m_contDown > 0)
+        m_startCountDown.SetAlpha(1f);
+        while (m_countDown > 0)
         {
-            m_startCountDown.text = m_contDown.ToString();
+            m_startCountDown.text = m_countDown.ToString();
             yield return new WaitForSeconds(1f);
-            m_contDown--;
+            m_countDown--;
         }
 
         m_startCountDown.text = "START!!";
@@ -60,6 +75,7 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
         GameOverUI.SetActive(false);
         GameClearUI.SetActive(false);
         CurrentScoreText.text = "Score:";
+        m_startCountDown.SetAlpha(0f);
     }
 
     public void UISetActiveWithGameOver()

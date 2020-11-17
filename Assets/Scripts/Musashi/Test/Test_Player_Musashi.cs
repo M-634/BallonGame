@@ -30,7 +30,7 @@ public class Test_Player_Musashi : EventReceiver<Test_Player_Musashi>
         m_inGame = true;
     }
 
-    public void EndGaem()
+    public void EndGame()
     {
         m_inGame = false;
     }
@@ -38,14 +38,14 @@ public class Test_Player_Musashi : EventReceiver<Test_Player_Musashi>
     protected override void OnEnable()
     {
         m_eventSystemInGameScene.GameStartEvent += GameStart;
-        m_eventSystemInGameScene.GameClearEvent += EndGaem;
-        m_eventSystemInGameScene.GameOverEvent += EndGaem;
+        m_eventSystemInGameScene.GameClearEvent += EndGame;
+        m_eventSystemInGameScene.GameOverEvent += EndGame;
     }
 
     protected override void OnDisable()
     {
         m_eventSystemInGameScene.GameStartEvent -= GameStart;
-        m_eventSystemInGameScene.GameClearEvent -= EndGaem;
-        m_eventSystemInGameScene.GameOverEvent -= EndGaem;
+        m_eventSystemInGameScene.GameClearEvent -= EndGame;
+        m_eventSystemInGameScene.GameOverEvent -= EndGame;
     }
 }
