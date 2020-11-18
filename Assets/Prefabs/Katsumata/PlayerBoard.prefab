@@ -326,9 +326,10 @@ MonoBehaviour:
   m_swipeDistance_y: 0
   m_maxSwipeDistance_y: 0.2
   m_beginSwipeBrake: 0.05
-  m_mouthDebug: 0
+  m_mouthDebug: 1
   m_onSwipe: 0
   m_forwardToLookAngle: 0
+  m_playerEventHandller: {fileID: -5596320109890394970}
 --- !u!114 &-5596320109890394970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,3 +342,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 832b4b9d891cd8640ac107d901e37246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_doDebugPlayerMove: 0
