@@ -5,8 +5,16 @@ using UnityEngine;
 public class PlayerEventHandller : EventReceiver<Test_Player_Musashi>
 {
     public bool InGame { get; set; }
-    
 
+    //TO DO:川嶋が加えたよ playerの動きだけをテストしたい時にチェックをいれてね
+    [SerializeField] bool m_doDebugPlayerMove;
+
+    protected override void Awake()
+    {
+        if (m_doDebugPlayerMove) return;
+        base.Awake();
+    }
+    
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.TryGetComponent<IEventCollision>(out var eventCollision))
@@ -27,7 +35,7 @@ public class PlayerEventHandller : EventReceiver<Test_Player_Musashi>
 
     protected override void OnEnable()
     {
-        if (m_doDebug)
+        if (m_doDebugPlayerMove)
         {
             InGame = true;
             return;
@@ -39,7 +47,7 @@ public class PlayerEventHandller : EventReceiver<Test_Player_Musashi>
 
     protected override void OnDisable()
     {
-        if (m_doDebug) return;
+        if (m_doDebugPlayerMove) return;
         m_eventSystemInGameScene.GameStartEvent -= GameStart;
         m_eventSystemInGameScene.GameClearEvent -= EndGaem;
         m_eventSystemInGameScene.GameOverEvent -= EndGaem;
