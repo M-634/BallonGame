@@ -10,6 +10,7 @@ public class GetCoinEvent : MonoBehaviour, IEventCollision
 {
     /// <summary>コイン獲得時のスコアを設定してね</summary>
     [SerializeField] int m_getScore;
+
     public void CollisionEvent(EventSystemInGameScene eventSystem)
     {
         eventSystem.ExecuteGetCoinEvent(m_getScore);

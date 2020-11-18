@@ -15,9 +15,26 @@ public class PlayerEventHandller : EventReceiver<Test_Player_Musashi>
         base.Awake();
     }
     
+
+    /// <summary>
+    /// 障害物とか
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.TryGetComponent<IEventCollision>(out var eventCollision))
+        {
+            eventCollision.CollisionEvent(m_eventSystemInGameScene);
+        }
+    }
+
+    /// <summary>
+    /// コインとか
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.TryGetComponent<IEventCollision>(out var eventCollision))
         {
             eventCollision.CollisionEvent(m_eventSystemInGameScene);
         }
