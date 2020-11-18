@@ -94,9 +94,9 @@ public class StageParent : SingletonMonoBehavior<StageParent>
             if (item.gameObject.activeSelf == false)
             {
                 item.gameObject.SetActive(true);
-                //さらに子供が非表示なら表示する
-                AppearanceStageObject(item);
             }
+            //さらに子供が非表示なら表示する
+            AppearanceStageObject(item);
         }
         GetAppearanceStage.SetActive(true);
     }
