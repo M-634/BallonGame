@@ -28,7 +28,7 @@ public class TimerInStage : EventReceiver<TimerInStage>
         //ステージを出現させる
         if (StageParent.Instance)
         {
-            StageParent.Instance.AppearanceStageObject();
+            StageParent.Instance.AppearanceStageObject(StageParent.Instance.GetAppearanceStage.transform);
         }
     }
 
