@@ -54,18 +54,24 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
 
         while (async.progress < 0.99f)
         {
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
-        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime));
-        yield return new WaitForSeconds(m_fadeInTime);
-        m_loadCanvas.enabled = false;
-    }
-
-   
-    public void LoadTitleSceneWithTap()
-    {
-        m_currentLoadCorutine = LoadWithTapCorutine(m_loadTitleSceneName);
-        StartCoroutine(m_currentLoadCorutine);
+        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime,
+            () =>
+            {
+                m_loadCanvas.enabled = false;
+                var countDownUI = GameObject.FindGameObjectWithTag("StageManager").GetComponent<UISetActiveControl>();
+                if (countDownUI)
+                {
+                    StartCoroutine(countDownUI.StartCountDownCorutine());
+                }
+                else
+                {
+                    Debug.LogError("StageMagerにUISetActiveControlコンポーネントがアタッチされていません！！");
+                }
+            }));
+        //yield return new WaitForSeconds(m_fadeInTime);
+        //m_loadCanvas.enabled = false;
     }
 
     public void LoadSelectSceneWithTap()
@@ -76,33 +82,68 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
 
     private IEnumerator LoadWithTapCorutine(string loadSceneName)
     {
+        //ここ、Andoroidだと動かない！！
         m_loadCanvas.enabled = true;
         m_tapToLoadText.gameObject.SetActive(true);
 
         while (true)
         {
-#if UNITY_ANDROID
-            break;       
-#else
-            if (Input.GetMouseButtonDown(0))
+            if (Input.touchCount > 0)
             {
-                m_tapToLoadText.gameObject.SetActive(false);
+                var touch = Input.GetTouch(0);
+                if (touch.phase == TouchPhase.Began)
+                {
+                    break;
+                }
+            }
+            else if (Input.GetMouseButtonDown(0))
+            {
                 break;
             }
             yield return null;
-#endif
         }
-        
+        m_tapToLoadText.gameObject.SetActive(false);
         StartCoroutine(m_fadeImage.FadeIn(m_fadeOutTime));
         yield return new WaitForSeconds(m_fadeOutTime);
         AsyncOperation async = SceneManager.LoadSceneAsync(loadSceneName, LoadSceneMode.Single);
 
         while (async.progress < 0.99f)
         {
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
-        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime));
-        yield return new WaitForSeconds(m_fadeInTime);
-        m_loadCanvas.enabled = false;
+        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime, () => m_loadCanvas.enabled = false));
+    }
+
+    public void LoadTitleScene()
+    {
+        m_currentLoadCorutine = LoadScene(m_loadTitleSceneName);
+        StartCoroutine(m_currentLoadCorutine);
+    }
+
+    public void LoadSelectScene()
+    {
+        m_currentLoadCorutine = LoadScene(m_loadSelectSceneName);
+        StartCoroutine(m_currentLoadCorutine);
+    }
+
+    /// <summary>
+    /// デフォルト
+    /// </summary>
+    /// <param name="loadSceneName"></param>
+    /// <returns></returns>
+    private IEnumerator LoadScene(string loadSceneName)
+    {
+        m_loadCanvas.enabled = true;
+        StartCoroutine(m_fadeImage.FadeIn(m_fadeOutTime));
+        yield return new WaitForSeconds(m_fadeOutTime);
+        AsyncOperation async = SceneManager.LoadSceneAsync(loadSceneName, LoadSceneMode.Single);
+
+        while (async.progress < 0.99f)
+        {
+            yield return null;
+        }
+        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime, () => m_loadCanvas.enabled = false));
     }
 }
+
+

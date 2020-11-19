@@ -9,27 +9,26 @@ using Unity.Collections.LowLevel.Unsafe;
 /// <summary>
 ///ゲーム中のスコアを管理し、ゲームクリアしたらリザルトを表示する
 /// </summary>
-[RequireComponent(typeof(UISetActiveControl))]
-public class ScoreManager : MonoBehaviour
+public class ScoreManager : EventReceiver<ScoreManager>
 {
     private int m_highScore;
-    private int m_currentScore;
+    private int m_currentScore = 0;
     /// <summary>1コイン獲得時に得られるスコア</summary>
-    [SerializeField] int m_getCoinScore = 100;
+    //[SerializeField] int m_getCoinScore = 100;
 
-    UISetActiveControl m_UISetActiveControl;
+    [SerializeField] UISetActiveControl m_UISetActiveControl;
     SaveAndLoadWithJSON m_json;
 
     // Start is called before the first frame update
     private void Start()
     {
-        m_UISetActiveControl = GetComponent<UISetActiveControl>();
-        m_UISetActiveControl.CurrentScoreText.text = "Score: ";
+        //m_UISetActiveControl = GetComponent<UISetActiveControl>();
+        //m_UISetActiveControl.CurrentScoreText.text = "Score: ";
 
         if (StageParent.Instance)
         {
             //ステージの名前と天候状態でパスを分ける
-            string path = StageParent.Instance.StageName + "_" +StageParent.Instance.WeatherConditions.ToString();
+            string path = StageParent.Instance.StageName + "_" + StageParent.Instance.WeatherConditions.ToString();
             m_json = new SaveAndLoadWithJSON(path);
         }
         else
@@ -44,9 +43,10 @@ public class ScoreManager : MonoBehaviour
     /// <summary>
     /// プレイヤーがコインに衝突したら呼ばれる関数
     /// </summary>
-    public void GetCoin()
+    public void GetCoin(int score)
     {
-        m_currentScore += m_getCoinScore;
+        m_currentScore += score;
+        //m_currentScore += m_getCoinScore;
         m_UISetActiveControl.CurrentScoreText.text = "Score: " + m_currentScore;
     }
 
@@ -63,7 +63,7 @@ public class ScoreManager : MonoBehaviour
         Sequence sequence = DOTween.Sequence();
         sequence.Append(
         DOTween.To(() => score, num => score = num, m_currentScore, 2f)
-            .OnUpdate(() => m_UISetActiveControl.GetScoreText.text = ("Score: " + score.ToString()))
+            .OnUpdate(() => m_UISetActiveControl.GetResulScoreText.text = ("Score: " + score.ToString()))
             .OnComplete(() => Debug.Log("")));
 
         int time = 0;
@@ -83,20 +83,25 @@ public class ScoreManager : MonoBehaviour
     {
         if (totalScore > m_highScore)
         {
-            m_json.SaveHighScore(totalScore,true);
+            //ここが原因！！
+            m_json.SaveHighScore(totalScore, true);
         }
 
         //ステージを非表示にする
-        if (StageParent.Instance)
-        {
-            StageParent.Instance.GetAppearanceStage.SetActive(false);
-            //ステージを初期化する
-            StageParent.Instance.Initialization();
-        }
+        StageParent.Instance.GetAppearanceStage.SetActive(false);
+        //ステージを初期化する
+        StageParent.Instance.Initialization();
         //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
-        if (SceneLoader.Instance)
-        {
-            SceneLoader.Instance.LoadSelectSceneWithTap();
-        }
+        SceneLoader.Instance.LoadSelectSceneWithTap();
+    }
+
+    protected override void OnEnable()
+    {
+        m_eventSystemInGameScene.GetCoinEvent += GetCoin;
+    }
+
+    protected override void OnDisable()
+    {
+        m_eventSystemInGameScene.GetCoinEvent -= GetCoin;
     }
 }

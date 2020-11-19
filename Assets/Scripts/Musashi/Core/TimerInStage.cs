@@ -11,7 +11,7 @@ using UnityEngine.UI;
 /// ゲームシーンの状態（Start,Goal,GameOver）を監視するクラス
 /// </summary>
 [RequireComponent(typeof(ScoreManager))]
-public class TimerInStage : MonoBehaviour
+public class TimerInStage : EventReceiver<TimerInStage>
 {
     [SerializeField] Text m_timeLimitText;
     [SerializeField] float m_timeLimit = 300f;
@@ -25,10 +25,10 @@ public class TimerInStage : MonoBehaviour
     private void Start()
     {
         m_scoreManager = GetComponent<ScoreManager>();
-        //ステージを出現させる(ここシングルトンに依存しているから変える)
+        //ステージを出現させる
         if (StageParent.Instance)
         {
-            StageParent.Instance.AppearanceStageObject();
+            StageParent.Instance.AppearanceStageObject(StageParent.Instance.GetAppearanceStage.transform);
         }
     }
 
@@ -78,9 +78,32 @@ public class TimerInStage : MonoBehaviour
     public void GameOver()
     {
         InGame = false;
-        //セレクト画面に戻る
-        SceneLoader.Instance.LoadSelectSceneWithTap();
+        if (StageParent.Instance)
+        {
+            //ステージを非表示にする
+            StageParent.Instance.GetAppearanceStage.SetActive(false);
+            //ステージを初期化する
+            StageParent.Instance.Initialization();
+        }
+
+        if (SceneLoader.Instance)
+        {
+            //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
+            SceneLoader.Instance.LoadSelectSceneWithTap();
+        }
     }
 
+    protected override void OnEnable()
+    {
+        m_eventSystemInGameScene.GameStartEvent += StartGame;
+        m_eventSystemInGameScene.GameClearEvent += OnGoal;
+        m_eventSystemInGameScene.GameOverEvent += GameOver;
+    }
 
+    protected override void OnDisable()
+    {
+        m_eventSystemInGameScene.GameStartEvent -= StartGame;
+        m_eventSystemInGameScene.GameClearEvent -= OnGoal;
+        m_eventSystemInGameScene.GameOverEvent -= GameOver;
+    }
 }
