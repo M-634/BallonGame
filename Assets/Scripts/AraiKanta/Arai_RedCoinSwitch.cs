@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// レッドコイン出現に必要なswitchにつけるスクリプト
+/// </summary>
 public class Arai_RedCoinSwitch : MonoBehaviour
 {
     GameObject obj;
     [SerializeField] GameObject[] switchObj;
     void Start()
     {
-        obj = GameObject.Find("RedCoindasuSwitch");
+        obj = GameObject.Find("RedCoinPopUpSwitch");
     }
     private void OnCollisionEnter(Collision collision)
     {

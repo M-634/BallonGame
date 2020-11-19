@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+/// <summary>
+/// RedCoin の スクリプト
+/// </summary>
 public class Arai_RedCoin : MonoBehaviour
 {
     [SerializeField] private float rotationTime;
