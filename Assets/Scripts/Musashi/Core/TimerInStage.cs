@@ -26,7 +26,10 @@ public class TimerInStage : EventReceiver<TimerInStage>
     {
         m_scoreManager = GetComponent<ScoreManager>();
         //ステージを出現させる
-        StageParent.Instance.AppearanceStageObject();
+        if (StageParent.Instance)
+        {
+            StageParent.Instance.AppearanceStageObject(StageParent.Instance.GetAppearanceStage.transform);
+        }
     }
 
     // Update is called once per frame
@@ -75,12 +78,19 @@ public class TimerInStage : EventReceiver<TimerInStage>
     public void GameOver()
     {
         InGame = false;
-        //ステージを非表示にする
-        StageParent.Instance.GetAppearanceStage.SetActive(false);
-        //ステージを初期化する
-        StageParent.Instance.Initialization();
-        //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
-        SceneLoader.Instance.LoadSelectSceneWithTap();
+        if (StageParent.Instance)
+        {
+            //ステージを非表示にする
+            StageParent.Instance.GetAppearanceStage.SetActive(false);
+            //ステージを初期化する
+            StageParent.Instance.Initialization();
+        }
+
+        if (SceneLoader.Instance)
+        {
+            //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
+            SceneLoader.Instance.LoadSelectSceneWithTap();
+        }
     }
 
     protected override void OnEnable()

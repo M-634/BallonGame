@@ -10,7 +10,7 @@ public abstract class EventReceiver<T> : MonoBehaviour where T :MonoBehaviour
 {
     protected EventSystemInGameScene m_eventSystemInGameScene;
 
-    private void Awake()
+    virtual protected void Awake()
     {
         m_eventSystemInGameScene = GameObject.FindGameObjectWithTag("StageManager").GetComponent<EventSystemInGameScene>();
     }
