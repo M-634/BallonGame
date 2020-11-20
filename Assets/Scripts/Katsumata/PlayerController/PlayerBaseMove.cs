@@ -12,32 +12,32 @@ public class PlayerBaseMove : MonoBehaviour
     /// <summary>rigidbodyを格納する変数 </summary>
     public static Rigidbody m_rb;
     /// <summary>全身する力。RigidBodyのAddForceで制御する </summary>
-    public float m_forwardForce = 100;
+    public float m_forwardForce = 200;
     /// <summary>空気抵抗の比率 </summary>
     [SerializeField, Range(0, 1f)] public float m_airBrekeCoefficient = 0.995f;
     /// <summary>回転の減衰比率 </summary>
-    [SerializeField, Range(0, 1f)] public float m_rotateBrekeCoefficient = 0.9f;
+    [SerializeField, Range(0, 1f)] public float m_rotateBrekeCoefficient = 0.94f;
     /// <summary>横向いた時の追加速度の減衰比率 </summary>
-    [SerializeField, Range(0, 1f)] public float m_addAirBrake = 0.7f;
+    [SerializeField] public float m_addAirBrake = 50f;
     /// <summary>横向いた時の追加速度の減衰比率の角度(度数法) </summary>
-    [SerializeField] public float m_addAirBrakeStart = 1f;
+    //[SerializeField] public float m_addAirBrakeStart = 1f;
     /// <summary>速度を格納する。現状DebugUIに値を渡してる </summary>
     public float mp_Speed { get; private set; }
     /// <summary>速度制限をする。最大速度 </summary>
-    public float m_maxSpeed = 50;
+    public float m_maxSpeed = 100;
     /// <summary>最大速度を超過したときにかかるブレーキの係数 </summary>
     [SerializeField, Range(0, 1f)] public float m_maxSpeedExcessBrake = 0.9f;
     /// <summary>スワイプした時にどの程度指に付いてくるかの係数 </summary>
-    [SerializeField] public float m_horizontalSpeed = 0.5f;
+    [SerializeField] public float m_horizontalSpeed = 100f;
 
     /// <summary>touchを格納、画面タッチをしてる一本目の指を取得する。現状指一本 </summary>
     Touch m_touch;
     /// <summary>x軸のスワイプの動きを格納する</summary>
-    public float m_swipeDistance_x = 0;
+    [HideInInspector] public float m_swipeDistance_x = 0;
     /// <summary>y軸のスワイプの動きを格納する</summary>
-    public float m_swipeDistance_y = 0;
+    [HideInInspector] public float m_swipeDistance_y = 0;
     /// <summary>スワイプした距離の最大値</summary>
-    public float m_maxSwipeDistance_y = 0.2f;
+    public float m_maxBrakeSwipeDistance_y = 0.4f;
     /// <summary>ブレーキがかかるスワイプ距離</summary>
     public float m_beginSwipeBrake = 0.05f;
 
@@ -48,12 +48,12 @@ public class PlayerBaseMove : MonoBehaviour
     Vector3 m_mouthPosi;
 
     /// <summary>スワイプをしたかどうかのフラグ。回転力を加えるとき一回だけrotateForceに+=をしたい </summary>
-    public bool m_onSwipe = false;
+    [HideInInspector] public bool m_onSwipe = false;
     /// <summary> プレイヤーの回転速度</summary>
     public float mp_RotateSpeed { get; private set; }
 
     /// <summary>進行方向とみてる方向の角度 </summary>
-    public float m_forwardToLookAngle = 0;
+    [HideInInspector] public float m_forwardToLookAngle = 0;
 
     /// <summary>調整する高さの位置。この値から一定値を超えてズレたらこの高さにプレイヤーの高さを調整する </summary>
     Vector3 m_AdjustHeightPosition;
@@ -139,20 +139,21 @@ public class PlayerBaseMove : MonoBehaviour
         if (m_touch.phase == TouchPhase.Began)
         {
             //touchBeginPos = touch.position;
-            m_swipeDistance_x = 0;
-            m_swipeDistance_y = 0;
+            //m_swipeDistance_x = 0;
+            //m_swipeDistance_y = 0;
         }
-
-        if (m_touch.phase == TouchPhase.Moved)
+        else if (m_touch.phase == TouchPhase.Moved)
         {
             m_onSwipe = true;
 
             m_swipeDistance_x = m_touch.deltaPosition.x / Screen.width;
             m_swipeDistance_y = m_touch.deltaPosition.y / Screen.height;
         }
-        if (m_touch.phase == TouchPhase.Ended)
+        else if (m_touch.phase == TouchPhase.Ended)
         {
             m_onSwipe = false;
+            m_swipeDistance_x = 0;
+            m_swipeDistance_y = 0;
         }
     }
 
@@ -190,6 +191,7 @@ public class PlayerBaseMove : MonoBehaviour
     void SetAirBrake()
     {
         m_rb.velocity = m_rb.velocity * m_airBrekeCoefficient;
+        m_rb.drag = 0;
         //if (Mathf.Abs(forwardToLookAngle) > addAirBrakeStart) //横向いた時の追加ブレーキを判定する
         //{
         //    m_rb.velocity = m_rb.velocity * addAirBrake;
@@ -197,20 +199,20 @@ public class PlayerBaseMove : MonoBehaviour
 
         if (m_swipeDistance_y < -m_beginSwipeBrake)
         {
-            m_rb.velocity = m_rb.velocity * m_addAirBrake * GetSwipeYaxisRate();
+            //m_rb.velocity = m_rb.velocity * m_addAirBrake * GetSwipeYaxisRate();
+
+            m_rb.drag = m_addAirBrake * GetSwipeYaxisRate();
         }
 
         if (m_rb.velocity.magnitude < 0.01f)
         {
-            m_rb.velocity = m_rb.velocity * 0;
+            m_rb.velocity *= 0;
         }
     }
 
     float GetSwipeYaxisRate()
     {
-        float swipeYaxisRate = 0;
-        swipeYaxisRate = 1 - Mathf.InverseLerp(m_swipeDistance_y, m_maxSwipeDistance_y, swipeYaxisRate);
-        return swipeYaxisRate;
+        return Mathf.InverseLerp(0, m_maxBrakeSwipeDistance_y, -m_swipeDistance_y);
     }
 
     /// <summary>
