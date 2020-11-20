@@ -20,7 +20,7 @@ public class PlayerBaseMove : MonoBehaviour
     /// <summary>横向いた時の追加速度の減衰比率 </summary>
     [SerializeField, Range(0, 1f)] public float m_addAirBrake = 0.7f;
     /// <summary>横向いた時の追加速度の減衰比率の角度(度数法) </summary>
-    [SerializeField] public float m_addAirBrakeStart = 1f;
+    //[SerializeField] public float m_addAirBrakeStart = 1f;
     /// <summary>速度を格納する。現状DebugUIに値を渡してる </summary>
     public float mp_Speed { get; private set; }
     /// <summary>速度制限をする。最大速度 </summary>
@@ -139,20 +139,21 @@ public class PlayerBaseMove : MonoBehaviour
         if (m_touch.phase == TouchPhase.Began)
         {
             //touchBeginPos = touch.position;
-            m_swipeDistance_x = 0;
-            m_swipeDistance_y = 0;
+            //m_swipeDistance_x = 0;
+            //m_swipeDistance_y = 0;
         }
-
-        if (m_touch.phase == TouchPhase.Moved)
+        else if (m_touch.phase == TouchPhase.Moved)
         {
             m_onSwipe = true;
 
             m_swipeDistance_x = m_touch.deltaPosition.x / Screen.width;
             m_swipeDistance_y = m_touch.deltaPosition.y / Screen.height;
         }
-        if (m_touch.phase == TouchPhase.Ended)
+        else if (m_touch.phase == TouchPhase.Ended)
         {
             m_onSwipe = false;
+            m_swipeDistance_x = 0;
+            m_swipeDistance_y = 0;
         }
     }
 
