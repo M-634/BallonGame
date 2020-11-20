@@ -28,7 +28,7 @@ public class MaedaPendulum : MonoBehaviour
         for (int i = 0; i < pathVertex; i++)
         {
             float radius = Mathf.PI * radNatureNum;
-            Vector3 vertex = new Vector3(Mathf.Cos(radius) * x_amplitude + transform.position.x, Mathf.Sin(radius) * y_amplitude + transform.position.y, transform.position.z);
+            Vector3 vertex = new Vector3(Mathf.Cos(radius) * x_amplitude + pivot.transform.position.x, Mathf.Sin(radius) * y_amplitude + pivot.transform.position.y, pivot.transform.position.z);
             vector3s.Add(vertex);
             radNatureNum += rad;
         }
