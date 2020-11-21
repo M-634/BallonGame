@@ -48,6 +48,7 @@ public class PlayerEventHandller : EventReceiver<Test_Player_Musashi>
     public void EndGaem()
     {
         InGame = false;
+        GetComponent<PlayerBaseMove>().StopMove();
     }
 
     protected override void OnEnable()
