@@ -83,7 +83,7 @@ public class ScoreManager : EventReceiver<ScoreManager>
     {
         if (totalScore > m_highScore)
         {
-            //ここが原因！！
+            //コイン獲得０だとクリア判定ならないのはtotalScoreで０をかけてるから
             m_json.SaveHighScore(totalScore, true);
         }
 

@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 1170795492}
   m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -71,7 +71,7 @@ LightmapSettings:
     m_FinalGatherFiltering: 1
     m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
-    m_MixedBakeMode: 2
+    m_MixedBakeMode: 0
     m_BakeBackend: 1
     m_PVRSampling: 1
     m_PVRDirectSampleCount: 32
@@ -191,7 +191,7 @@ PrefabInstance:
     - target: {fileID: 6339817547022256655, guid: 7ff79ea4d1f1ec547ac81eded68f47ac,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ff79ea4d1f1ec547ac81eded68f47ac, type: 3}
@@ -385,7 +385,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1170040766}
-  m_LocalRotation: {x: -0.085989095, y: -0.000000026381539, z: 0.0000000032527117,
+  m_LocalRotation: {x: -0.085989095, y: -0.000000026381606, z: 0.0000000032534793,
     w: -0.9962961}
   m_LocalPosition: {x: 0, y: 9.999, z: -23}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -479,13 +479,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1170795491}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalRotation: {x: -0.3011456, y: -0.38491988, z: 0.7455064, w: -0.4531757}
+  m_LocalPosition: {x: 0, y: 4.98, z: -3.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 57.872, y: -1090.854, z: -123.424}
 --- !u!1001 &1605279246
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -493,36 +493,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
-        type: 3}
-      propertyPath: m_mouthDebug
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
-        type: 3}
-      propertyPath: m_onSwipe
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
-        type: 3}
-      propertyPath: m_rotateBrekeCoefficient
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3999297260338569765, guid: ab42b3ef5acd0694998a29df74156a0c,
-        type: 3}
-      propertyPath: m_horizontalSpeed
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 3999297260338569817, guid: ab42b3ef5acd0694998a29df74156a0c,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3999297260338569817, guid: ab42b3ef5acd0694998a29df74156a0c,
-        type: 3}
-      propertyPath: m_Size.z
-      value: 0.8
-      objectReference: {fileID: 0}
     - target: {fileID: 3999297260338569818, guid: ab42b3ef5acd0694998a29df74156a0c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -582,11 +552,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerBoard
-      objectReference: {fileID: 0}
-    - target: {fileID: 3999297260338569823, guid: ab42b3ef5acd0694998a29df74156a0c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab42b3ef5acd0694998a29df74156a0c, type: 3}
@@ -843,7 +808,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1957198800}
-  m_LocalRotation: {x: -0.085989095, y: -0.000000026381539, z: 0.0000000032527117,
+  m_LocalRotation: {x: -0.085989095, y: -0.000000026381606, z: 0.0000000032534793,
     w: -0.9962961}
   m_LocalPosition: {x: 0, y: 9.999, z: -23}
   m_LocalScale: {x: 1, y: 1, z: 1}
