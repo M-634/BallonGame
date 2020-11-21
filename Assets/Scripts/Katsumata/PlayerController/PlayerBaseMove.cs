@@ -58,12 +58,13 @@ public class PlayerBaseMove : MonoBehaviour
     /// <summary>調整する高さの位置。この値から一定値を超えてズレたらこの高さにプレイヤーの高さを調整する </summary>
     Vector3 m_AdjustHeightPosition;
 
-    [SerializeField] PlayerEventHandller m_playerEventHandller;
+    PlayerEventHandller m_playerEventHandller;
 
     private void Start()
     {
         m_rb = GetComponent<Rigidbody>();
         m_AdjustHeightPosition = gameObject.transform.position;
+        m_playerEventHandller = GetComponent<PlayerEventHandller>();
     }
     // Update is called once per frame
     private void Update()
@@ -73,6 +74,7 @@ public class PlayerBaseMove : MonoBehaviour
     void FixedUpdate()
     {
         if (!m_playerEventHandller.InGame) return;
+
 
 
         if (m_mouthDebug)
@@ -104,6 +106,10 @@ public class PlayerBaseMove : MonoBehaviour
         SetProgressAngle();
     }
 
+    public void StopMove()
+    {
+        m_rb.velocity = new Vector3(0, 0, 0);
+    }
 
     /// <summary>加減速を計算する</summary>
     void AddTouchMoveForce()
