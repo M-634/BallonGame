@@ -5,7 +5,9 @@ using Cinemachine;
 
 public class KatsumataPlayerCameraMove : MonoBehaviour
 {
+    [Header("基本のカメラの位置、挙動")]
     [SerializeField] CinemachineVirtualCamera cmVcamBase;
+    [Header("加速時のカメラの位置、挙動")]
     [SerializeField] CinemachineVirtualCamera cmVcamAddSpeed;
 
     /// <summary>
