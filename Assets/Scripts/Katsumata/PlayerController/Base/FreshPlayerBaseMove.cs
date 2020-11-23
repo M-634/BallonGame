@@ -32,9 +32,9 @@ public class FreshPlayerBaseMove : MonoBehaviour
     /// <summary>浮力 </summary>
     [SerializeField] Vector3 buoyancy = new Vector3(0, 8.0f, 0);
 
-    [Header("重心")]
-    /// <summary>重心を設定する。ここを中心にプレイヤーが傾く </summary>
-    [SerializeField] GameObject centerOfGravity;
+    //[Header("重心")]
+    ///// <summary>重心を設定する。ここを中心にプレイヤーが傾く </summary>
+    //[SerializeField] GameObject centerOfGravity;
 
     /// <summary>touchを格納、画面タッチをしてる一本目の指を取得する。現状指一本 </summary>
     Touch m_touch;
@@ -50,12 +50,11 @@ public class FreshPlayerBaseMove : MonoBehaviour
     [Header("回転の減衰比率")]
     /// <summary>回転の減衰比率 </summary>
     [SerializeField, Range(0, 1f)] public float m_rotateBrekeCoefficient = 0.94f;
-    Vector3 latestPos;
 
     /// <summary画面回転モードかどうか。画面回転でないときスワイプでプレイヤーが回転する </summary>
-    bool isScreenRotation = false;
-    float screenRotationWaitTime = 0;
-    float screenRotationLimitTime = 0;
+    //bool isScreenRotation = false;
+    //float screenRotationWaitTime = 0;
+    //float screenRotationLimitTime = 0;
 
     [Header("スワイプ時のプレイヤーの回転感度")]
     /// <summary>スワイプした時にどの程度指に付いてくるかの係数 </summary>
@@ -95,7 +94,6 @@ public class FreshPlayerBaseMove : MonoBehaviour
             GetSwipeDistance();
         }
 
-        IsCheckScreenOperations();
 
         SetRotateSpeed();
     }
@@ -129,18 +127,18 @@ public class FreshPlayerBaseMove : MonoBehaviour
 
 
 
-    void IsCheckScreenOperations()
-    {
-        if (m_touch.phase == TouchPhase.Stationary)
-        {
-            screenRotationWaitTime += Time.deltaTime;
-            if (screenRotationWaitTime > screenRotationLimitTime) isScreenRotation = true;
-        }
-        else
-        {
-            screenRotationWaitTime = 0;
-        }
-    }
+    //void IsCheckScreenOperations()
+    //{
+    //    if (m_touch.phase == TouchPhase.Stationary)
+    //    {
+    //        screenRotationWaitTime += Time.deltaTime;
+    //        if (screenRotationWaitTime > screenRotationLimitTime) isScreenRotation = true;
+    //    }
+    //    else
+    //    {
+    //        screenRotationWaitTime = 0;
+    //    }
+    //}
 
     /// <summary>
     /// ユーザーのスワイプした距離をプレイヤーの回転に反映する関数
