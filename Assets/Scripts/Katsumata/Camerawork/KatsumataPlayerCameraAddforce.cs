@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class KatsumataPlayerCameraMove : MonoBehaviour
+public class KatsumataPlayerCameraAddforce : MonoBehaviour
 {
     [Header("基本のカメラの位置、挙動")]
     [SerializeField] CinemachineVirtualCamera cmVcamBase;

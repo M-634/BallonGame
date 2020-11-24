@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(KatsumataPlayerCameraMove))]
+[RequireComponent(typeof(KatsumataPlayerCameraAddforce))]
 /// <summary>
 /// 物理的加速、マリオカートのキノコダッシュを想定している
 /// </summary>
@@ -16,7 +16,7 @@ public class PlayerAddSpeed : MonoBehaviour
     /// <summary>次に加速が始まるまでの待機時間 </summary>
     //[SerializeField] float m_accelWaitTime = 2.5f;
 
-    KatsumataPlayerCameraMove cameraMove;
+    KatsumataPlayerCameraAddforce cameraMove;
 
     [HideInInspector] public bool m_onAccel = false;
     //bool m_onAccel = false;
@@ -26,7 +26,7 @@ public class PlayerAddSpeed : MonoBehaviour
     private void Start()
     {
         m_rb = GetComponent<Rigidbody>();
-        cameraMove = GetComponent<KatsumataPlayerCameraMove>();
+        cameraMove = GetComponent<KatsumataPlayerCameraAddforce>();
     }
 
     private void FixedUpdate()
