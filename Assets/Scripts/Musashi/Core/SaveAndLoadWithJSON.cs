@@ -5,7 +5,8 @@ using System.IO;
 using UnityEngine;
 using UnityEditor;
 
-[System.Serializable]
+
+[Serializable]
 public class StageData
 {
     public int HighScore;
@@ -21,15 +22,9 @@ public class SaveAndLoadWithJSON
     const string FolderName = "SaveData";
     const string EndOfFileName = "_HighScoreData.json";
 
-#if UNITY_ANDROID
-    //static readonly string m_folderPath = Path.Combine(Application.streamingAssetsPath, FolderName);
-    //static readonly string m_metaPath = Application.streamingAssetsPath + $"/{FolderName}.meta ";
     static readonly string m_folderPath = Path.Combine(Application.persistentDataPath, FolderName);
     static readonly string m_metaPath = Application.persistentDataPath + $"/{FolderName}.meta ";
-#elif UNITY_EDITOR
-    static readonly string m_folderPath = Path.Combine(Application.dataPath, FolderName);
-    static readonly string m_metaPath = Application.dataPath + $"/{FolderName}.meta ";
-#endif
+
     readonly string m_filepath;
 
     StageData m_StageData = new StageData();
@@ -73,9 +68,6 @@ public class SaveAndLoadWithJSON
             //writer.Close();
             Debug.Log("Saving HighScore.....");
         }
-#if UNITY_EDITOR
-        AssetDatabase.Refresh();
-#endif
     }
 
     public int LoadHighScore()
@@ -130,10 +122,6 @@ public class SaveAndLoadWithJSON
             File.Delete(m_metaPath);//Unityではメタファイルを消すことが重要である。
         }
         Debug.Log("セーブデータを破棄しました！");
-
-#if UNITY_EDITOR
-        AssetDatabase.Refresh();
-#endif
     }
 
 #if UNITY_EDITOR
@@ -157,7 +145,6 @@ public class SaveAndLoadWithJSON
             File.Delete(m_metaPath);//Unityではメタファイルを消すことが重要である。
         }
         Debug.Log("セーブデータを破棄しました！");
-        AssetDatabase.Refresh();
     }
 #endif
 }
