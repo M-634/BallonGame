@@ -12,7 +12,7 @@ public class KatsumataPlayerCameraLookPoint : MonoBehaviour
     [SerializeField] GameObject onObject;
     Vector3 v_lastHitPosi;
     [SerializeField] GameObject g_lastHitPosi;
-    bool existlastHitPosi = false;
+    //bool existlastHitPosi = false;
     private void Start()
     {
         int layer = LayerMask.NameToLayer("Drag");

@@ -10,8 +10,12 @@ using UnityEngine;
 /// </summary>
 public class TouchForcePlayerMove : MonoBehaviour
 {
-    /// <summary>rigidbodyを格納する変数 </summary>
-    public static Rigidbody m_rb;
+    /// <summary>pivotのrigidbodyを格納する変数 </summary>
+    public Rigidbody m_rb;
+    /// <summary>キャラクターのrigidbodyを格納する変数 </summary>
+    //public Rigidbody m_playerChararb;
+    ///// <summary>ピボットに対してプレイヤーの受ける力の比率 </summary>
+    //[SerializeField] float forceRatio = 0.95f;
     [Header("開始速度")]
     [SerializeField] float startSpeed = 5;
 
@@ -25,12 +29,11 @@ public class TouchForcePlayerMove : MonoBehaviour
     //Vector3 gravity = new Vector3(0, -9.81f, 0);
     [Header("浮力")]
     /// <summary>浮力 </summary>
-    [SerializeField] Vector3 buoyancy = new Vector3(0, 8.0f, 0);
+    [SerializeField] float buoyancy = 8.0f;
 
     [Header("推進力")]
-    /// <summary>全身する力。RigidBodyのAddForceで制御する </summary>
+    /// <summary>前進する力。RigidBodyのAddForceで制御する </summary>
     public float m_forwardForce = 200;
-    [SerializeField] GameObject m_camera;
 
     /// <summary>touchを格納、画面タッチをしてる一本目の指を取得する。現状指一本 </summary>
     Touch m_touch;
@@ -43,6 +46,8 @@ public class TouchForcePlayerMove : MonoBehaviour
 
     /// <summary> プレイヤーの回転速度</summary>
     Vector3 m_rotateSpeed;
+
+    Vector3 m_rotateForce;
     //[Header("回転の減衰比率")]
     /// <summary>回転の減衰比率 </summary>
     //[SerializeField, Range(0, 1f)] public float m_rotateBrekeCoefficient = 0.94f;
@@ -69,7 +74,7 @@ public class TouchForcePlayerMove : MonoBehaviour
         m_playerEventHandller = GetComponent<PlayerEventHandller>();
 
         m_rb.velocity = transform.forward * startSpeed;
-
+        //m_playerChararb.velocity = transform.forward * startSpeed;
     }
 
     // Update is called once per frame
@@ -79,9 +84,10 @@ public class TouchForcePlayerMove : MonoBehaviour
 
         if (m_rb.velocity.z < maxForwardSpeed) AddTouchMoveForce();
         AdjustFallingForce();
-        SetRotateSpeed();
 
-        //Debug.Log("m_rb.velocity.x :" + m_rb.velocity.x + "m_rb.velocity.y :" + m_rb.velocity.y + "m_rb.velocity.z :" + m_rb.velocity.z);
+
+        //Debug.Log("m_pivotrb.velocity.x :" + m_rb.velocity.x + "m_pivotrb.velocity.y :"
+        //    + m_rb.velocity.y + "m_pivotrb.velocity.z :" + m_rb.velocity.z);
         if (m_mouthDebug)
         {
             SetMouthAim();
@@ -92,7 +98,7 @@ public class TouchForcePlayerMove : MonoBehaviour
         }
 
 
-        //SetRotateSpeed();
+        SetRotateSpeed();
         SetProgressAngle();
     }
 
@@ -146,12 +152,12 @@ public class TouchForcePlayerMove : MonoBehaviour
         //        m_rotateSpeed.x = 0;
         //    }
         //}
-        Vector3 rotateForce = Vector3.Scale(m_camera.transform.forward, new Vector3(1, 0, 1));
-        if (rotateForce != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(rotateForce);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime);
-        }
+        m_rotateForce = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 1, 1)); //Vector3.Scaleはベクトル同士の掛け算。この場合x,z軸以外は0にする処理になる
+        Quaternion targetRotation = Quaternion.LookRotation(m_rotateForce);
+        targetRotation.x = 0;
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime);
+        //m_rotateForce = Vector3.Lerp(transform.rotation, rotateForce, Time.deltaTime);
+        //transform.LookAt(m_rotateForce);
     }
 
     /// <summary>加減速を計算する</summary>
@@ -164,7 +170,8 @@ public class TouchForcePlayerMove : MonoBehaviour
             {
                 if (!m_onSwipe) //前のフレームでスワイプしていなかったとき指を離したら加速する。
                 {
-                    m_rb.AddForce(m_camera.transform.forward * m_forwardForce);
+                    m_rb.AddForce(Camera.main.transform.forward * m_forwardForce);
+                    //m_playerChararb.AddForce(Camera.main.transform.forward * m_forwardForce * forceRatio);
                 }
             }
         }
@@ -172,9 +179,11 @@ public class TouchForcePlayerMove : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                m_rb.AddForce(m_camera.transform.forward * m_forwardForce);
+                m_rb.AddForce(Camera.main.transform.forward * m_forwardForce);
+                //m_playerChararb.AddForce(Camera.main.transform.forward * m_forwardForce * forceRatio);
             }
         }
+
     }
 
     /// <summary>
@@ -196,11 +205,14 @@ public class TouchForcePlayerMove : MonoBehaviour
         if (m_rb.velocity.y < -maxFallSpeed)
         {
             m_rb.useGravity = false;
+            //m_playerChararb.useGravity = false;
         }
         else
         {
             m_rb.useGravity = true;
-            m_rb.AddForce(buoyancy);
+            m_rb.AddForce(Vector3.up * buoyancy);
+            //m_playerChararb.useGravity = true;
+            //m_playerChararb.AddForce(buoyancy);
         }
     }
 
@@ -210,9 +222,10 @@ public class TouchForcePlayerMove : MonoBehaviour
     void SetProgressAngle()
     {
         Quaternion nowAngle = transform.rotation;
-        //nowAngle.x = 0;
+        nowAngle.x = 0;
         nowAngle.z = 0;
-        transform.localRotation = nowAngle;
+        nowAngle.y = 0;
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, nowAngle, Time.deltaTime);
     }
     ///// <summary>
     ///// 前進速度の最高速度を制限する
