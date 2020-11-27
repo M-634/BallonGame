@@ -92,7 +92,10 @@ public class TouchForcePlayerMove : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!m_playerEventHandller.InGame) return;
+        if (!m_playerEventHandller.InGame)
+        {
+            return;
+        }
 
         if (m_rb.velocity.z < maxForwardSpeed) AddTouchMoveForce();
         AdjustFallingForce();
