@@ -18,7 +18,7 @@
             HLSLPROGRAM
              
             //#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/SurfaceInput.hlsl"
-            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+            //#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl" 
             #pragma shader_feature RAW_OUTLINE
             #pragma shader_feature POSTERIZE

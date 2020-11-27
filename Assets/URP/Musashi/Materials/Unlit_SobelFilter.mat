@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Unlit_SobelFilter
   m_Shader: {fileID: 4800000, guid: 5dac0860ad31d0e479c9c2dc6be575a2, type: 3}
-  m_ShaderKeywords: POSTERIZE
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -24,8 +24,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Delta: 0.00218
-    - _Poseterize: 1
-    - _PosterizationCount: 8
+    - _Delta: 0.0023
+    - _Poseterize: 0
+    - _PosterizationCount: 5.7
     - _Raw: 0
     m_Colors: []
