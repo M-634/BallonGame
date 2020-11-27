@@ -10,7 +10,7 @@ Material:
   m_Name: Mat_Diamond
   m_Shader: {fileID: -6465566751694194690, guid: d1960e423d586ab4595382b44a3210e8,
     type: 3}
-  m_ShaderKeywords: FRESNEL_ON
+  m_ShaderKeywords: FRESNEL_ON _FRESNEL_ON _SPECULAR_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -69,14 +69,16 @@ Material:
     - _Cutoff: 0.5
     - _DstBlend: 0
     - _EnvironmentReflections: 1
+    - _FRESNEL: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Metallic: 0
+    - _Metallic: 1
     - _OcclusionStrength: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RimStrength: 0.25
+    - _SPECULAR: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
