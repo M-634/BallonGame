@@ -38,6 +38,9 @@ public class SlantPlayer : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// 揺れを実装する機能の本体
+    /// </summary>
     void SetSlant()
     {
         Quaternion targetRotation = Quaternion.LookRotation(m_anchor.transform.position - transform.position,Vector3.back);
@@ -47,13 +50,18 @@ public class SlantPlayer : MonoBehaviour
     }
 
     
-
+    /// <summary>
+    /// アンカー本体の動き
+    /// </summary>
     void SetAnchorPosi()
     {
         m_anchorRb.velocity = m_parentRb.velocity * moveRatio; //アンカーはやや遅れてついてくるようにする
         AdjustAnchorPosi();
     }
 
+    /// <summary>
+    /// アンカーが、アンカーの中心からの移動範囲を制限する
+    /// </summary>
     void AdjustAnchorPosi()
     {
         Vector3 anchorPosi = m_anchor.transform.position;

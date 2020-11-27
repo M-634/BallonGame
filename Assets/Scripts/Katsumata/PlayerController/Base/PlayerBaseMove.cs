@@ -16,7 +16,7 @@ public class PlayerBaseMove : MonoBehaviour
     /// <summary>空気抵抗の比率 </summary>
     [SerializeField, Range(0, 1f)] public float m_airBrekeCoefficient = 0.995f;
     /// <summary>回転の減衰比率 </summary>
-    [SerializeField, Range(0, 1f)] public float m_rotateBrekeCoefficient = 0.94f;
+    [SerializeField, Range(0, 1f)] public float m_rotateBrakeCoefficient = 0.94f;
     /// <summary>横向いた時の追加速度の減衰比率 </summary>
     [SerializeField] public float m_addAirBrake = 50f;
     /// <summary>横向いた時の追加速度の減衰比率の角度(度数法) </summary>
@@ -180,7 +180,7 @@ public class PlayerBaseMove : MonoBehaviour
         }
         else
         {
-            mp_RotateSpeed *= m_rotateBrekeCoefficient;
+            mp_RotateSpeed *= m_rotateBrakeCoefficient;
             if (Mathf.Abs(mp_RotateSpeed) <= 0.01f)
             {
                 mp_RotateSpeed = 0;

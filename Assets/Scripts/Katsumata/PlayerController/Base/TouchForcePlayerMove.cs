@@ -60,11 +60,23 @@ public class TouchForcePlayerMove : MonoBehaviour
     [Header("スワイプ時のプレイヤーの回転感度")]
     /// <summary>スワイプした時にどの程度指に付いてくるかの係数 </summary>
     [SerializeField] public float m_horizontalSpeed = 100f;
+    /// <summary>スワイプした時にどの程度指に付いてくるかの係数 </summary>
+    [SerializeField] public float m_varticalSpeed = 100f;
     /// <summary>unity上でマウスを使ってデバッグを行う時にフラグをオンにする </summary>
     [SerializeField] bool m_mouthDebug;
     Vector3 m_mouthPosi;
 
     PlayerEventHandller m_playerEventHandller;
+
+    /// <summary> カメラの横軸回転速度</summary>
+    public float m_RotateHorizontalSpeed;
+    /// <summary> カメラの縦軸回転速度</summary>
+    public float m_RotateVarticalSpeed;
+    /// <summary>横回転の減衰比率 </summary>
+    [SerializeField, Range(0, 1f)] public float m_rotateHorizontalBrake = 0.94f;
+    /// <summary>縦回転の減衰比率 </summary>
+    [SerializeField, Range(0, 1f)] public float m_rotateVarticalBrake = 0.94f;
+    [SerializeField] GameObject playerChar;
 
 
     // Start is called before the first frame update
@@ -84,6 +96,8 @@ public class TouchForcePlayerMove : MonoBehaviour
 
         if (m_rb.velocity.z < maxForwardSpeed) AddTouchMoveForce();
         AdjustFallingForce();
+
+        if(m_rb.velocity.z<maxForwardSpeed) m_rb.AddForce(transform.forward * m_forwardForce);
 
 
         //Debug.Log("m_pivotrb.velocity.x :" + m_rb.velocity.x + "m_pivotrb.velocity.y :"
@@ -142,22 +156,25 @@ public class TouchForcePlayerMove : MonoBehaviour
 
         if (m_onSwipe || m_mouthDebug)
         {
-            m_rotateSpeed.x = m_horizontalSpeed * m_swipeDistance_x;
-            m_rotateSpeed.y = m_horizontalSpeed * m_swipeDistance_y;
+            m_RotateHorizontalSpeed = m_horizontalSpeed * m_swipeDistance_x;
+            m_RotateVarticalSpeed = m_varticalSpeed * m_swipeDistance_y;
+            
         }
-        //else
-        //{
-        //    if (Mathf.Abs(m_rotateSpeed.x) <= 0.01f)
-        //    {
-        //        m_rotateSpeed.x = 0;
-        //    }
-        //}
-        //m_rotateForce = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 1, 1)); //Vector3.Scaleはベクトル同士の掛け算。この場合x,z軸以外は0にする処理になる
-        Quaternion targetRotation = Quaternion.LookRotation(Camera.main.transform.forward - transform.position);
-        //targetRotation.x = 0;
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime);
-        //m_rotateForce = Vector3.Lerp(transform.rotation, rotateForce, Time.deltaTime);
-        //transform.LookAt(m_rotateForce);
+        else
+        {
+            m_RotateHorizontalSpeed *= m_rotateHorizontalBrake;
+            m_RotateVarticalSpeed *= m_rotateVarticalBrake;
+            if (Mathf.Abs(m_RotateHorizontalSpeed) <= 0.01f)
+            {
+                m_RotateHorizontalSpeed = 0;
+            }
+
+            if (Mathf.Abs(m_RotateVarticalSpeed) <= 0.01f)
+            {
+                m_RotateVarticalSpeed = 0;
+            }
+        }
+        playerChar.transform.Rotate(m_RotateVarticalSpeed, m_RotateHorizontalSpeed, 0,Space.World);
     }
 
     /// <summary>加減速を計算する</summary>
