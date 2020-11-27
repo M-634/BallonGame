@@ -98,8 +98,8 @@ public class TouchForcePlayerMove : MonoBehaviour
         }
 
 
-        SetRotateSpeed();
-        SetProgressAngle();
+        //SetRotateSpeed();
+        //SetProgressAngle();
     }
 
     /// <summary>
@@ -152,9 +152,9 @@ public class TouchForcePlayerMove : MonoBehaviour
         //        m_rotateSpeed.x = 0;
         //    }
         //}
-        m_rotateForce = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 1, 1)); //Vector3.Scaleはベクトル同士の掛け算。この場合x,z軸以外は0にする処理になる
-        Quaternion targetRotation = Quaternion.LookRotation(m_rotateForce);
-        targetRotation.x = 0;
+        //m_rotateForce = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 1, 1)); //Vector3.Scaleはベクトル同士の掛け算。この場合x,z軸以外は0にする処理になる
+        Quaternion targetRotation = Quaternion.LookRotation(Camera.main.transform.forward - transform.position);
+        //targetRotation.x = 0;
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime);
         //m_rotateForce = Vector3.Lerp(transform.rotation, rotateForce, Time.deltaTime);
         //transform.LookAt(m_rotateForce);
