@@ -13,8 +13,6 @@ public class ScoreManager : EventReceiver<ScoreManager>
 {
     private int m_highScore;
     private int m_currentScore = 0;
-    /// <summary>1コイン獲得時に得られるスコア</summary>
-    //[SerializeField] int m_getCoinScore = 100;
 
     [SerializeField] UISetActiveControl m_UISetActiveControl;
     SaveAndLoadWithJSON m_json;
@@ -22,9 +20,6 @@ public class ScoreManager : EventReceiver<ScoreManager>
     // Start is called before the first frame update
     private void Start()
     {
-        //m_UISetActiveControl = GetComponent<UISetActiveControl>();
-        //m_UISetActiveControl.CurrentScoreText.text = "Score: ";
-
         if (StageParent.Instance)
         {
             //ステージの名前と天候状態でパスを分ける
@@ -46,7 +41,6 @@ public class ScoreManager : EventReceiver<ScoreManager>
     public void GetCoin(int score)
     {
         m_currentScore += score;
-        //m_currentScore += m_getCoinScore;
         m_UISetActiveControl.CurrentScoreText.text = "Score: " + m_currentScore;
     }
 
@@ -83,7 +77,7 @@ public class ScoreManager : EventReceiver<ScoreManager>
     {
         if (totalScore > m_highScore)
         {
-            //ここが原因！！
+            //コイン獲得０だとクリア判定ならないのはtotalScoreで０をかけてるから
             m_json.SaveHighScore(totalScore, true);
         }
 
