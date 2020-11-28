@@ -25,7 +25,7 @@ public class SlantPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_parentRb = transform.parent.GetComponent<TouchForcePlayerMove>().m_rb;
+        m_parentRb = transform.parent.GetComponent<ForcePlayerMove>().m_rb;
         m_anchorRb = m_anchor.GetComponent<Rigidbody>();
     }
 
@@ -45,7 +45,7 @@ public class SlantPlayer : MonoBehaviour
     {
         Quaternion targetRotation = Quaternion.LookRotation(m_anchor.transform.position - transform.position,Vector3.back);
 
-        Debug.Log("targetRotationのQuaternion x:" + targetRotation.x + " y:" + targetRotation.y + " z:" + targetRotation.z + " w:" + targetRotation.w);
+        //Debug.Log("targetRotationのQuaternion x:" + targetRotation.x + " y:" + targetRotation.y + " z:" + targetRotation.z + " w:" + targetRotation.w);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime);
     }
 
