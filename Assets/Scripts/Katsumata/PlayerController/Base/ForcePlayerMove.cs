@@ -25,36 +25,42 @@ public class ForcePlayerMove : MonoBehaviour
     [Header("推進力")]
     public float m_forwardForce = 200;
 
-    /// <summary>touchした指の情報を格納。画面タッチをしてる一本目の指を取得する。 </summary>
-    Touch m_touch;
-    /// <summary>x軸のスワイプの動きを格納する</summary>
-    [HideInInspector] public float m_swipeDistance_x = 0;
-    /// <summary>y軸のスワイプの動きを格納する</summary>
-    [HideInInspector] public float m_swipeDistance_y = 0;
-    /// <summary>スワイプをしたかどうかのフラグ。回転力を加えるとき一回だけrotateForceに+=をしたい </summary>
-    [HideInInspector] public bool m_onSwipe = false;
+    ///// <summary>touchした指の情報を格納。画面タッチをしてる一本目の指を取得する。 </summary>
+    //Touch m_touch;
+    ///// <summary>x軸のスワイプの動きを格納する</summary>
+    //[HideInInspector] public float m_swipeDistance_x = 0;
+    ///// <summary>y軸のスワイプの動きを格納する</summary>
+    //[HideInInspector] public float m_swipeDistance_y = 0;
+    ///// <summary>スワイプをしたかどうかのフラグ。回転力を加えるとき一回だけrotateForceに+=をしたい </summary>
+    //[HideInInspector] public bool m_onSwipe = false;
 
     [Header("スワイプ時のプレイヤーの回転感度")]
     /// <summary>スワイプした時にどの程度指に付いてくるかの係数 </summary>
     [SerializeField] public float m_horizontalSpeed = 100f;
-    /// <summary>スワイプした時にどの程度指に付いてくるかの係数 </summary>
-    [SerializeField] public float m_varticalSpeed = 100f;
+    ///// <summary>スワイプした時にどの程度指に付いてくるかの係数 </summary>
+    //[SerializeField] public float m_varticalSpeed = 100f;
+
+    [Header("最大の横移動の速さ")]
+    [SerializeField] float maxHorizontalSpeed = 10;
+
+    [SerializeField] GameObject floatJoystickHorizontal;
+    FloatingJoystick floatingJoystick;
 
     /// <summary>unity上でマウスを使ってデバッグを行う時にフラグをオンにする </summary>
     [SerializeField] bool m_mouthDebug;
-    Vector3 m_mouthPosi;
+    //Vector3 m_mouthPosi;
 
     PlayerEventHandller m_playerEventHandller;
 
-    /// <summary> カメラの横軸回転速度</summary>
-    public float m_RotateHorizontalSpeed;
-    /// <summary> カメラの縦軸回転速度</summary>
-    public float m_RotateVarticalSpeed;
-    /// <summary>横回転の減衰比率 </summary>
-    [SerializeField, Range(0, 1f)] public float m_rotateHorizontalBrake = 0.94f;
-    /// <summary>縦回転の減衰比率 </summary>
-    [SerializeField, Range(0, 1f)] public float m_rotateVarticalBrake = 0.94f;
-    [SerializeField] GameObject playerChar;
+    ///// <summary> カメラの横軸回転速度</summary>
+    //public float m_RotateHorizontalSpeed;
+    ///// <summary> カメラの縦軸回転速度</summary>
+    //public float m_RotateVarticalSpeed;
+    ///// <summary>横回転の減衰比率 </summary>
+    //[SerializeField, Range(0, 1f)] public float m_rotateHorizontalBrake = 0.94f;
+    ///// <summary>縦回転の減衰比率 </summary>
+    //[SerializeField, Range(0, 1f)] public float m_rotateVarticalBrake = 0.94f;
+    //[SerializeField] GameObject playerChar;
 
 
     // Start is called before the first frame update
@@ -64,7 +70,7 @@ public class ForcePlayerMove : MonoBehaviour
         m_playerEventHandller = GetComponent<PlayerEventHandller>();
 
         m_rb.velocity = transform.forward * startSpeed;
-        //m_playerChararb.velocity = transform.forward * startSpeed;
+        floatingJoystick = floatJoystickHorizontal.GetComponent<FloatingJoystick>();
     }
 
     // Update is called once per frame
@@ -75,50 +81,51 @@ public class ForcePlayerMove : MonoBehaviour
             return;
         }
 
+        SetHorizontalMove();
         AdjustForwardForce();
         AdjustFallingForce();
 
 
-        //Debug.Log("m_rb.velocity.x :" + m_rb.velocity.x + "m_rb.velocity.y :"
-        //    + m_rb.velocity.y + "m_rb.velocity.z :" + m_rb.velocity.z);
-        if (m_mouthDebug)
-        {
-            SetMouthAim();
-        }
-        else
-        {
-            GetSwipeDistance();
-        }
+        Debug.Log("m_rb.velocity.x :" + m_rb.velocity.x + "m_rb.velocity.y :"
+            + m_rb.velocity.y + "m_rb.velocity.z :" + m_rb.velocity.z);
+        //if (m_mouthDebug)
+        //{
+        //    SetMouthAim();
+        //}
+        //else
+        //{
+        //    GetSwipeDistance();
+        //}
         SetRotateSpeed();
         //SetProgressAngle();
     }
 
-    /// <summary>
-    /// スワイプした距離を測る関数
-    /// </summary>
-    void GetSwipeDistance()
-    {
-        // 画面タッチが行われたら
-        if (m_touch.phase == TouchPhase.Began)
-        {
-            //touchBeginPos = touch.position;
-            //m_swipeDistance_x = 0;
-            //m_swipeDistance_y = 0;
-        }
-        else if (m_touch.phase == TouchPhase.Moved)
-        {
-            m_onSwipe = true;
+    ///// <summary>
+    ///// スワイプした距離を測る関数
+    ///// </summary>
+    //void GetSwipeDistance()
+    //{
+    //    // 画面タッチが行われたら
+    //    if (m_touch.phase == TouchPhase.Began)
+    //    {
+    //        //touchBeginPos = touch.position;
+    //        //m_swipeDistance_x = 0;
+    //        //m_swipeDistance_y = 0;
+    //    }
+    //    else if (m_touch.phase == TouchPhase.Moved)
+    //    {
+    //        m_onSwipe = true;
 
-            m_swipeDistance_x = m_touch.deltaPosition.x / Screen.width;
-            m_swipeDistance_y = m_touch.deltaPosition.y / Screen.height;
-        }
-        else if (m_touch.phase == TouchPhase.Ended)
-        {
-            m_onSwipe = false;
-            m_swipeDistance_x = 0;
-            m_swipeDistance_y = 0;
-        }
-    }
+    //        m_swipeDistance_x = m_touch.deltaPosition.x / Screen.width;
+    //        m_swipeDistance_y = m_touch.deltaPosition.y / Screen.height;
+    //    }
+    //    else if (m_touch.phase == TouchPhase.Ended)
+    //    {
+    //        m_onSwipe = false;
+    //        m_swipeDistance_x = 0;
+    //        m_swipeDistance_y = 0;
+    //    }
+    //}
 
     /// <summary>
     /// ユーザーのスワイプした距離をプレイヤーの回転に反映する関数
@@ -154,41 +161,41 @@ public class ForcePlayerMove : MonoBehaviour
         //playerChar.transform.Rotate(m_RotateVarticalSpeed, m_RotateHorizontalSpeed, 0,Space.World);
     }
 
-    /// <summary>加減速を計算する</summary>
-    void AddTouchMoveForce()
-    {
-        if (Input.touchCount > 0)
-        {
-            m_touch = Input.GetTouch(0);
-            if (m_touch.phase == TouchPhase.Ended)
-            {
-                if (!m_onSwipe) //前のフレームでスワイプしていなかったとき指を離したら加速する。
-                {
-                    m_rb.AddForce(Camera.main.transform.forward * m_forwardForce);
-                    //m_playerChararb.AddForce(Camera.main.transform.forward * m_forwardForce * forceRatio);
-                }
-            }
-        }
-        else
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                m_rb.AddForce(Camera.main.transform.forward * m_forwardForce);
-                //m_playerChararb.AddForce(Camera.main.transform.forward * m_forwardForce * forceRatio);
-            }
-        }
+    ///// <summary>加減速を計算する</summary>
+    //void AddTouchMoveForce()
+    //{
+    //    if (Input.touchCount > 0)
+    //    {
+    //        m_touch = Input.GetTouch(0);
+    //        if (m_touch.phase == TouchPhase.Ended)
+    //        {
+    //            if (!m_onSwipe) //前のフレームでスワイプしていなかったとき指を離したら加速する。
+    //            {
+    //                m_rb.AddForce(Camera.main.transform.forward * m_forwardForce);
+    //                //m_playerChararb.AddForce(Camera.main.transform.forward * m_forwardForce * forceRatio);
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (Input.GetMouseButtonDown(0))
+    //        {
+    //            m_rb.AddForce(Camera.main.transform.forward * m_forwardForce);
+    //            //m_playerChararb.AddForce(Camera.main.transform.forward * m_forwardForce * forceRatio);
+    //        }
+    //    }
 
-    }
+    //}
 
-    /// <summary>
-    /// デバッグ用。マウスの位置を取得する
-    /// </summary>
-    void SetMouthAim()
-    {
-        m_mouthPosi = Input.mousePosition;
-        m_swipeDistance_x = m_mouthPosi.x / Screen.width;
-        m_swipeDistance_y = m_mouthPosi.y / Screen.height;
-    }
+    ///// <summary>
+    ///// デバッグ用。マウスの位置を取得する
+    ///// </summary>
+    //void SetMouthAim()
+    //{
+    //    m_mouthPosi = Input.mousePosition;
+    //    m_swipeDistance_x = m_mouthPosi.x / Screen.width;
+    //    m_swipeDistance_y = m_mouthPosi.y / Screen.height;
+    //}
 
     /// <summary>
     /// 自然に落ちたり進んだり進む方向
@@ -224,5 +231,11 @@ public class ForcePlayerMove : MonoBehaviour
     void AdjustForwardForce()
     {
         if (m_rb.velocity.z < maxForwardSpeed) m_rb.AddForce(transform.forward * m_forwardForce);
+    }
+
+    void SetHorizontalMove()
+    {
+        Vector3 force = new Vector3(floatingJoystick.Horizontal * m_horizontalSpeed, 0, 0);
+        if (Mathf.Abs(m_rb.velocity.x) < maxHorizontalSpeed) m_rb.AddForce(force);
     }
 }
