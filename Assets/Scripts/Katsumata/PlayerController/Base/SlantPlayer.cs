@@ -32,7 +32,7 @@ public class SlantPlayer : MonoBehaviour
 
     void FixedUpdate()
     {
-        SetSlant();
+        //SetSlant();
         SetAnchorPosi();
         //Debug.Log("AnchorとCenterOfAnchorの距離：" + Vector3.Distance(m_anchor.transform.position, m_centerOfAnchor.transform.position));
         
@@ -56,7 +56,7 @@ public class SlantPlayer : MonoBehaviour
     void SetAnchorPosi()
     {
         m_anchorRb.velocity = m_parentRb.velocity * moveRatio; //アンカーはやや遅れてついてくるようにする
-        AdjustAnchorPosi();
+        //AdjustAnchorPosi();
     }
 
     /// <summary>

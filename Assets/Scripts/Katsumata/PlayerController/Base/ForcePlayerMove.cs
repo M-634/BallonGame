@@ -21,9 +21,11 @@ public class ForcePlayerMove : MonoBehaviour
     /// <summary>浮力 </summary>
     [Header("浮力")]
     [SerializeField] float buoyancy = 8.0f;
+    Vector3 upDirection = Vector3.up;
     /// <summary>前進する力。RigidBodyのAddForceで制御する </summary>
     [Header("推進力")]
     public float m_forwardForce = 200;
+    Vector3 fowardDirection = Vector3.forward;
 
     ///// <summary>touchした指の情報を格納。画面タッチをしてる一本目の指を取得する。 </summary>
     //Touch m_touch;
@@ -97,7 +99,7 @@ public class ForcePlayerMove : MonoBehaviour
         //    GetSwipeDistance();
         //}
         SetRotateSpeed();
-        //SetProgressAngle();
+        SetProgressAngle();
     }
 
     ///// <summary>
@@ -203,6 +205,7 @@ public class ForcePlayerMove : MonoBehaviour
     /// </summary>
     void AdjustFallingForce()
     {
+        m_rb.AddForce(upDirection * buoyancy);
         if (m_rb.velocity.y < -maxFallSpeed)
         {
             m_rb.useGravity = false;
@@ -210,7 +213,7 @@ public class ForcePlayerMove : MonoBehaviour
         else
         {
             m_rb.useGravity = true;
-            m_rb.AddForce(Vector3.up * buoyancy);
+            //m_rb.AddForce(upDirection * buoyancy);
         }
     }
 
@@ -223,14 +226,15 @@ public class ForcePlayerMove : MonoBehaviour
         nowAngle.x = 0;
         nowAngle.z = 0;
         nowAngle.y = 0;
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, nowAngle, Time.deltaTime);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, nowAngle, Time.deltaTime);
+        transform.rotation = nowAngle;
     }
     /// <summary>
     /// 前進速度の最高速度を制限する
     /// </summary>
     void AdjustForwardForce()
     {
-        if (m_rb.velocity.z < maxForwardSpeed) m_rb.AddForce(transform.forward * m_forwardForce);
+        if (m_rb.velocity.z < maxForwardSpeed) m_rb.AddForce(fowardDirection * m_forwardForce);
     }
 
     void SetHorizontalMove()
