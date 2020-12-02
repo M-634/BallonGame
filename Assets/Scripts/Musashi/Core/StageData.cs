@@ -1,21 +1,66 @@
 ﻿
 ///*********
 /// memo : stageに持たせるべき情報
-/// ハイスコア、クリア情報、天候情報、
+/// masterData : 天候情報、タイムリミット,ステージPrefab,ステージの動画,セーブのPath
+/// saveData : ハイスコア、クリアタイム、クリアしたかどうかの判定、
 ///*********
 
 using System;
+using UnityEngine;
 
 [Serializable]
 public class StageData
 {
-    public int HighScore;
-    public bool IsStageClear;
+    #region Master Data
+    [SerializeField] GameObject m_stagePrefab;
+    [SerializeField] WeatherConditons m_weatherConditons;
+    [SerializeField] float m_timeLimit = 300f;
+    #endregion
 
-    public enum WeatherConditons 
+    #region Master Data Property
+    public GameObject StagePrefab { get => m_stagePrefab; }
+    public WeatherConditons Conditons { get => m_weatherConditons; }
+    public float SetTimeLimit { get => m_timeLimit; }
+    public string GetStagePath { get => m_stagePrefab.name; }
+  
+    #endregion
+
+    #region Save Data
+    private int m_highScore;
+    private int m_clearTime;
+    private bool m_isStageClear;
+    #endregion
+
+    #region SaveDataProperty
+    public int HighScore { get=> m_highScore;}
+    public int ClearTime { get => m_clearTime;}
+    public bool IsStageClear { get => m_isStageClear; }
+    #endregion
+
+    #region Method
+    public void InitializeStageData()
+    {
+        m_highScore = 0;
+        m_clearTime = 0;
+        m_isStageClear = false;
+    }
+
+    public void Save(int score, int claerTime)
+    {
+        if (score > m_highScore)
+        {
+            m_highScore = score;
+        }
+        m_clearTime = claerTime;
+        m_isStageClear = true;
+
+        var json = new SaveAndLoadWithJSON();
+        json.SaveStageData(this);
+    }
+    #endregion 
+    public enum WeatherConditons
     {
         Initialize, Sunny, ThunderStorm, Hurricane
     }
-
 }
 

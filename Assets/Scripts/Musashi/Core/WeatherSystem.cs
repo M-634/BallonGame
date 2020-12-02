@@ -5,6 +5,10 @@ using UnityEngine;
 //Sunny,
 //ThunderStorm,
 //Hurricane
+/// <summary>
+/// ゲームシーンでの天候（skybox）をセットする。
+/// 天候に応じて、ステージギミック、Shadr等を制御するクラス
+/// </summary>
 public class WeatherSystem : MonoBehaviour
 {
     [Header("SkyBoxをアサインしてね！")]
@@ -17,22 +21,22 @@ public class WeatherSystem : MonoBehaviour
         //skyBoxをセットする
         if (StageParent.Instance)
         {
-            //switch (StageParent.Instance.WeatherConditions)
-            //{
-            //    case WeatherConditions.Initialize:
-            //        break;
-            //    case WeatherConditions.Sunny:
-            //        RenderSettings.skybox = m_sunnySkyBox;
-            //        break;
-            //    case WeatherConditions.ThunderStorm:
-            //        RenderSettings.skybox = m_thunderStormSkyBox;
-            //        break;
-            //    case WeatherConditions.Hurricane:
-            //        RenderSettings.skybox = m_hurricaneSkybox;
-            //        break;
-            //    default:
-            //        break;
-            //}
+            switch (StageParent.Instance.GetAppearanceStageData.Conditons)
+            {
+                case StageData.WeatherConditons.Initialize:
+                    break;
+                case StageData.WeatherConditons.Sunny:
+                    RenderSettings.skybox = m_sunnySkyBox;
+                    break;
+                case StageData.WeatherConditons.ThunderStorm:
+                    RenderSettings.skybox = m_thunderStormSkyBox;
+                    break;
+                case StageData.WeatherConditons.Hurricane:
+                    RenderSettings.skybox = m_hurricaneSkybox;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

@@ -20,36 +20,36 @@ public class SelectGameSceneButton : MonoBehaviour
     Button m_nextButton;
 
     //このままだと、m_json.CheakStageClear()が繰り返し呼ばれてしまうので修正する必要がある
-    private void Start()
-    {
-        //まだ解放されていないステージのセレクトボタンならStart関数の処理を辞める
-        if (!GetComponent<Button>().interactable)
-            return;
+    //private void Start()
+    //{
+    //    //まだ解放されていないステージのセレクトボタンならStart関数の処理を辞める
+    //    if (!GetComponent<Button>().interactable)
+    //        return;
    
-        if (m_nextSceneButton && m_nextButton != this)
-        {
-            m_nextButton = m_nextSceneButton.GetComponent<Button>();
-            m_nextButton.interactable = false;
-        }
+    //    if (m_nextSceneButton && m_nextButton != this)
+    //    {
+    //        m_nextButton = m_nextSceneButton.GetComponent<Button>();
+    //        m_nextButton.interactable = false;
+    //    }
 
-        //string path = m_stagePrefab.name + "_" + m_conditions.ToString();
-        //m_json = new SaveAndLoadWithJSON(path);
+    //    //string path = m_stagePrefab.name + "_" + m_conditions.ToString();
+    //    //m_json = new SaveAndLoadWithJSON(path);
 
-        if (m_json.CheakStageClear())
-        {
-            m_stageClearText.text = "Clear!!";
-            //ステージ解放
-            if (m_nextButton)
-            {
-                m_nextButton.interactable = true;
-            }
-        }
+    //    if (m_json.CheakStageClear())
+    //    {
+    //        m_stageClearText.text = "Clear!!";
+    //        //ステージ解放
+    //        if (m_nextButton)
+    //        {
+    //            m_nextButton.interactable = true;
+    //        }
+    //    }
 
-        GetComponent<Button>().onClick.AddListener(() => SetStageInfo());
-    }
+    //    GetComponent<Button>().onClick.AddListener(() => SetStageInfo());
+    //}
 
-    public void SetStageInfo()
-    {
-        //StageParent.Instance.SetStageInfo(m_stagePrefab, m_conditions);
-    }
+    //public void SetStageInfo()
+    //{
+    //    //StageParent.Instance.SetStageInfo(m_stagePrefab, m_conditions);
+    //}
 }
