@@ -17,7 +17,7 @@ public class StageParent : SingletonMonoBehavior<StageParent>
     /// <summary>出現させるステージ </summary>
     public GameObject GetAppearanceStage { get; private set; }
     /// <summary>ステージの天候状態</summary>
-    public WeatherConditions WeatherConditions { get; set; }
+   // public WeatherConditions WeatherConditions { get; set; }
     /// <summary>ステージ名</summary>
     public string StageName { get; set; }
 
@@ -43,14 +43,14 @@ public class StageParent : SingletonMonoBehavior<StageParent>
     public void Initialization()
     {
         GetAppearanceStage = null;
-        WeatherConditions = WeatherConditions.Initialize;
+       // WeatherConditions = WeatherConditions.Initialize;
     }
 
     /// <summary>
     /// ステージセレクトボタンを押した時に、次のゲームシーンで出現させる
     /// ステージ情報を確定させる
     /// </summary>
-    public void SetStageInfo(GameObject stage, WeatherConditions conditions)
+    public void SetStageInfo(GameObject stage)
     {
         if (stage == null)
         {
@@ -78,7 +78,7 @@ public class StageParent : SingletonMonoBehavior<StageParent>
         //stageをセットする
         GetAppearanceStage = m_stageDateList[index];
         //天候をセットする
-        WeatherConditions = conditions;
+       // WeatherConditions = conditions;
         //名前をセットする
         StageName = stage.name;
         //ゲームシーンをロード

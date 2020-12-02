@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEditor;
-
-
-[Serializable]
-public class StageData
-{
-    public int HighScore;
-    public bool IsStageClear;
-}
 
 /// <summary>
 /// Jsonを使用したセーブ機能。

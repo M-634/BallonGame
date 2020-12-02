@@ -23,8 +23,8 @@ public class ScoreManager : EventReceiver<ScoreManager>
         if (StageParent.Instance)
         {
             //ステージの名前と天候状態でパスを分ける
-            string path = StageParent.Instance.StageName + "_" + StageParent.Instance.WeatherConditions.ToString();
-            m_json = new SaveAndLoadWithJSON(path);
+            //string path = StageParent.Instance.StageName + "_" + StageParent.Instance.WeatherConditions.ToString();
+            //m_json = new SaveAndLoadWithJSON(path);
         }
         else
         {

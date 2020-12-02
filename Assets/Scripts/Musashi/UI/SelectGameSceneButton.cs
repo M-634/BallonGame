@@ -11,7 +11,7 @@ public class SelectGameSceneButton : MonoBehaviour
     /// <summary>projectからPrefabをアサインすること</summary>
     [SerializeField] GameObject m_stagePrefab;
     /// <summary>天候状態をセットする</summary>
-    [SerializeField] WeatherConditions m_conditions;
+    //[SerializeField] WeatherConditions m_conditions;
     /// <summary>クリアテキスト</summary>
     [SerializeField] Text m_stageClearText;
     /// <summary>次のセレクトボタン</summary>
@@ -32,8 +32,8 @@ public class SelectGameSceneButton : MonoBehaviour
             m_nextButton.interactable = false;
         }
 
-        string path = m_stagePrefab.name + "_" + m_conditions.ToString();
-        m_json = new SaveAndLoadWithJSON(path);
+        //string path = m_stagePrefab.name + "_" + m_conditions.ToString();
+        //m_json = new SaveAndLoadWithJSON(path);
 
         if (m_json.CheakStageClear())
         {
@@ -50,6 +50,6 @@ public class SelectGameSceneButton : MonoBehaviour
 
     public void SetStageInfo()
     {
-        StageParent.Instance.SetStageInfo(m_stagePrefab, m_conditions);
+        //StageParent.Instance.SetStageInfo(m_stagePrefab, m_conditions);
     }
 }

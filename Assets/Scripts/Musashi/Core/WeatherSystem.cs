@@ -17,22 +17,22 @@ public class WeatherSystem : MonoBehaviour
         //skyBoxをセットする
         if (StageParent.Instance)
         {
-            switch (StageParent.Instance.WeatherConditions)
-            {
-                case WeatherConditions.Initialize:
-                    break;
-                case WeatherConditions.Sunny:
-                    RenderSettings.skybox = m_sunnySkyBox;
-                    break;
-                case WeatherConditions.ThunderStorm:
-                    RenderSettings.skybox = m_thunderStormSkyBox;
-                    break;
-                case WeatherConditions.Hurricane:
-                    RenderSettings.skybox = m_hurricaneSkybox;
-                    break;
-                default:
-                    break;
-            }
+            //switch (StageParent.Instance.WeatherConditions)
+            //{
+            //    case WeatherConditions.Initialize:
+            //        break;
+            //    case WeatherConditions.Sunny:
+            //        RenderSettings.skybox = m_sunnySkyBox;
+            //        break;
+            //    case WeatherConditions.ThunderStorm:
+            //        RenderSettings.skybox = m_thunderStormSkyBox;
+            //        break;
+            //    case WeatherConditions.Hurricane:
+            //        RenderSettings.skybox = m_hurricaneSkybox;
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
     }
 }
