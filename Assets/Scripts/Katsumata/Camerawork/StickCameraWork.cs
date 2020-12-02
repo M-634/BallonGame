@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FloatStickCameraWork : MonoBehaviour
+public class StickCameraWork : MonoBehaviour
 {
     /// <summary>
     /// カメラの動きとなる元のスクリプト
     /// </summary>
     [SerializeField] GameObject floatingJoystickobj;
-    FloatingJoystick floatingJoystick;
+    VariableJoystick variableJoystick;
 
     /// <summary>横軸の回転係数 </summary>
     [Header("横の回転の速さ")]
@@ -26,7 +26,7 @@ public class FloatStickCameraWork : MonoBehaviour
 
     private void Start()
     {
-        floatingJoystick = floatingJoystickobj.GetComponent<FloatingJoystick>();
+        variableJoystick = floatingJoystickobj.GetComponent<VariableJoystick>();
         centerPosition = transform.localPosition;
     }
 
@@ -45,8 +45,8 @@ public class FloatStickCameraWork : MonoBehaviour
         
         if (Vector2.Distance(myPosi, centerPosition) < radius)
         {
-            transform.Translate(floatingJoystick.Horizontal * horizontalCoefficient
-                , floatingJoystick.Vertical * verticalCoefficient, 0);
+            transform.Translate(variableJoystick.Horizontal * horizontalCoefficient
+                , variableJoystick.Vertical * verticalCoefficient, 0);
         }
         else
         {

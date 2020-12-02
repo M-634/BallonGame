@@ -45,8 +45,8 @@ public class ForcePlayerMove : MonoBehaviour
     [Header("最大の横移動の速さ")]
     [SerializeField] float maxHorizontalSpeed = 10;
 
-    [SerializeField] GameObject floatJoystickHorizontal;
-    FloatingJoystick floatingJoystick;
+    [SerializeField] GameObject variableJoystickHorizontal;
+    VariableJoystick variableJoystick;
 
     /// <summary>unity上でマウスを使ってデバッグを行う時にフラグをオンにする </summary>
     [SerializeField] bool m_mouthDebug;
@@ -72,7 +72,7 @@ public class ForcePlayerMove : MonoBehaviour
         m_playerEventHandller = GetComponent<PlayerEventHandller>();
 
         m_rb.velocity = transform.forward * startSpeed;
-        floatingJoystick = floatJoystickHorizontal.GetComponent<FloatingJoystick>();
+        variableJoystick = variableJoystickHorizontal.GetComponent<VariableJoystick>();
     }
 
     // Update is called once per frame
@@ -239,7 +239,7 @@ public class ForcePlayerMove : MonoBehaviour
 
     void SetHorizontalMove()
     {
-        Vector3 force = new Vector3(floatingJoystick.Horizontal * m_horizontalSpeed, 0, 0);
+        Vector3 force = new Vector3(variableJoystick.Horizontal * m_horizontalSpeed, 0, 0);
         if (Mathf.Abs(m_rb.velocity.x) < maxHorizontalSpeed) m_rb.AddForce(force);
     }
 }
