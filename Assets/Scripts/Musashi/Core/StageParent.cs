@@ -5,9 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// ステージ情報を管理する
-/// セレクト画面でボタンを押した時に確定させ、
-/// 次のゲームシーンで参照させる
+/// ステージ情報を管理するクラス
 /// </summary>
 public class StageParent : SingletonMonoBehavior<StageParent>
 {
@@ -102,7 +100,10 @@ public class StageParent : SingletonMonoBehavior<StageParent>
         Debug.LogError("該当するStagePrefabがStageDataに存在しません");
     }
 
-
+    /// <summary>
+    /// ゲームシーンで出すStagePrefabのアクティブをtrueにする
+    /// </summary>
+    /// <param name="stageParent"></param>
     public void AppearanceStageObject(Transform stageParent)
     {
         //ステージの非表示な子オブジェクトを表示する

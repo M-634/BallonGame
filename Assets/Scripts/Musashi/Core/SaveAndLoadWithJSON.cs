@@ -6,8 +6,6 @@ using UnityEditor;
 
 /// <summary>
 /// Jsonを使用したセーブ機能。
-/// TODo： セーブするタイミングは ScoreManagerでゲームクリア時のみ！
-/// 修正したらもう少しスマートに書けるはず
 /// </summary>
 #pragma warning disable IDE0063 // Use simple 'using' statement
 public class SaveAndLoadWithJSON 

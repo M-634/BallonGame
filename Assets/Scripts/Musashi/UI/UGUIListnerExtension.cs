@@ -22,6 +22,7 @@ public static class UGUIListnerExtension
         float seconds = time - minute * 60;
         timerText.text = minute.ToString("00") + ":" + ((int)seconds).ToString("00");
     }
+
     public static void Show(this CanvasGroup canvasGroup)
     {
         canvasGroup.interactable = true;
