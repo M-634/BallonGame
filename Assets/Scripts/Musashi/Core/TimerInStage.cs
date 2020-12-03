@@ -30,10 +30,6 @@ public class TimerInStage : EventReceiver<TimerInStage>
             StageParent.Instance.AppearanceStageObject(StageParent.Instance.GetAppearanceStagePrefab.transform);
             //制限時間をセットする
             m_timeLimit = StageParent.Instance.GetAppearanceStageData.SetTimeLimit;
-            if (m_timeLimit == 0)
-            {
-                m_timeLimit = 300f;
-            }
         }
     }
 

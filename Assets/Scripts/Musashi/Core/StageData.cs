@@ -11,6 +11,8 @@ using UnityEngine;
 [Serializable]
 public class StageData
 {
+    //memo; Master Dataもシリアライズされる......さして問題が、別にシリアライズする必要が無いからなぁ～。
+    //将来的に内部クラスでも持たせて、そいつだけシリアライズする方針を検討中
     #region Master Data
     [SerializeField] GameObject m_stagePrefab;
     [SerializeField] WeatherConditons m_weatherConditons;
@@ -26,13 +28,16 @@ public class StageData
     #endregion
 
     #region Save Data
-    private int m_highScore;
-    private int m_clearTime;
-    private bool m_isStageClear;
+    [SerializeField,HideInInspector]
+    private int m_highScore = 0;
+    [SerializeField,HideInInspector]
+    private int m_clearTime = 0;
+    [SerializeField,HideInInspector]
+    private bool m_isStageClear = false;
     #endregion
 
     #region SaveDataProperty
-    public int HighScore { get=> m_highScore;}
+    public int HighScore { get => m_highScore; }
     public int ClearTime { get => m_clearTime;}
     public bool IsStageClear { get => m_isStageClear; }
     #endregion

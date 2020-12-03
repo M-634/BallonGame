@@ -11,6 +11,17 @@ using UnityEngine.UI;
 /// </summary>
 public static class UGUIListnerExtension 
 {
+    /// <summary>
+    /// 時間を00:00形式でUIに表示する拡張クラス
+    /// </summary>
+    /// <param name="timerText"></param>
+    /// <param name="time"></param>
+    public static void TimerInfo(this Text timerText, int time) 
+    {
+        int minute = time / 60;
+        float seconds = time - minute * 60;
+        timerText.text = minute.ToString("00") + ":" + ((int)seconds).ToString("00");
+    }
     public static void Show(this CanvasGroup canvasGroup)
     {
         canvasGroup.interactable = true;

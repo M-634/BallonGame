@@ -26,7 +26,7 @@ public class StageParent : SingletonMonoBehavior<StageParent>
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
+    public void ReLoadStageData()
     {
         var json = new SaveAndLoadWithJSON();
         for (int i = 0; i < m_stageDatas.Length; i++)
@@ -34,8 +34,11 @@ public class StageParent : SingletonMonoBehavior<StageParent>
             //各ステージデータをロードする
             m_stageDatas[i] = json.LoadStageData(m_stageDatas[i]);
         }
+    }
 
-
+    private void Start()
+    {
+        ReLoadStageData();
         //最初のダミーシーンでステージを生成して、アクティブを非表示にする
         foreach (var data in m_stageDatas)
         {
@@ -54,6 +57,23 @@ public class StageParent : SingletonMonoBehavior<StageParent>
     }
 
     /// <summary>
+    /// 各ステージセレクトボタンにアタッチされている
+    /// SelectGameSceneButtonにStageDataを渡す
+    /// </summary>
+    public StageData SendStageData(GameObject stagePrefab)
+    {
+        //stageDataを検索
+        foreach (var data in m_stageDatas)
+        {
+            if (data.StagePrefab == stagePrefab)
+            {
+                return data;
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
     /// ステージセレクトボタンを押した時に、次のゲームシーンで出現させる
     /// ステージ情報を確定させる
     /// </summary>
@@ -68,7 +88,7 @@ public class StageParent : SingletonMonoBehavior<StageParent>
         //stageを検索
         for (int i = 0; i < m_stagePrefabList.Count(); i++)
         {
-            if (m_stagePrefabList[i].Equals(stage))
+            if (m_stageDatas[i].StagePrefab.Equals(stage))
             {
                 //stageをセットする
                 GetAppearanceStageData = m_stageDatas[i];

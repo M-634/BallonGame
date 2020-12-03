@@ -43,7 +43,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c879e843a4fd57144bcad342174ae596, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_dontDestroyOnLoad: 1
-  m_stagePrefabs:
-  - {fileID: 6339817547022256655, guid: 7ff79ea4d1f1ec547ac81eded68f47ac, type: 3}
-  - {fileID: 9087401732524288658, guid: ede2a8f3285b3dc42bd9381e6191f13d, type: 3}
+  m_stageDatas:
+  - m_stagePrefab: {fileID: 9087401732524288658, guid: 180242eaff5c731479ef2e68fb3f24f0,
+      type: 3}
+    m_weatherConditons: 1
+    m_timeLimit: 100
+  - m_stagePrefab: {fileID: 9087401732524288658, guid: aa8ef7371839020488f4121546f07d8b,
+      type: 3}
+    m_weatherConditons: 2
+    m_timeLimit: 300
+  - m_stagePrefab: {fileID: 9087401732524288658, guid: 4e2053ef6b04b3f4bafa4c1b7f56e86e,
+      type: 3}
+    m_weatherConditons: 3
+    m_timeLimit: 250
+  - m_stagePrefab: {fileID: 9087401732524288658, guid: badaf7b8bd214d74b83ed7f9316ada40,
+      type: 3}
+    m_weatherConditons: 1
+    m_timeLimit: 200

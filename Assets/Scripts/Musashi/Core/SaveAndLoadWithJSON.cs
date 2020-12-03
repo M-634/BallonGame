@@ -47,7 +47,6 @@ public class SaveAndLoadWithJSON
     {
         m_filepath = Path.Combine(m_folderPath, stageData.GetStagePath + EndOfFileName);
 
-        //ファイルが存在しないらNullを返す
         if (!File.Exists(m_filepath))
         {
             Debug.Log("Initialize file.....");
@@ -79,6 +78,8 @@ public class SaveAndLoadWithJSON
             File.Delete(m_metaPath);//Unityではメタファイルを消すことが重要である。
         }
         Debug.Log("セーブデータを破棄しました！");
+
+        StageParent.Instance.ReLoadStageData();
     }
 
 #if UNITY_EDITOR
@@ -102,6 +103,7 @@ public class SaveAndLoadWithJSON
             File.Delete(m_metaPath);//Unityではメタファイルを消すことが重要である。
         }
         Debug.Log("セーブデータを破棄しました！");
+        StageParent.Instance.ReLoadStageData();
     }
 #endif
 }
