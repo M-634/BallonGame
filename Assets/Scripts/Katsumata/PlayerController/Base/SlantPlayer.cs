@@ -25,14 +25,14 @@ public class SlantPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_parentRb = transform.parent.GetComponent<TouchForcePlayerMove>().m_rb;
+        m_parentRb = transform.parent.GetComponent<ForcePlayerMove>().m_rb;
         m_anchorRb = m_anchor.GetComponent<Rigidbody>();
     }
 
 
     void FixedUpdate()
     {
-        SetSlant();
+        //SetSlant();
         SetAnchorPosi();
         //Debug.Log("AnchorとCenterOfAnchorの距離：" + Vector3.Distance(m_anchor.transform.position, m_centerOfAnchor.transform.position));
         
@@ -45,7 +45,7 @@ public class SlantPlayer : MonoBehaviour
     {
         Quaternion targetRotation = Quaternion.LookRotation(m_anchor.transform.position - transform.position,Vector3.back);
 
-        Debug.Log("targetRotationのQuaternion x:" + targetRotation.x + " y:" + targetRotation.y + " z:" + targetRotation.z + " w:" + targetRotation.w);
+        //Debug.Log("targetRotationのQuaternion x:" + targetRotation.x + " y:" + targetRotation.y + " z:" + targetRotation.z + " w:" + targetRotation.w);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime);
     }
 
@@ -56,7 +56,7 @@ public class SlantPlayer : MonoBehaviour
     void SetAnchorPosi()
     {
         m_anchorRb.velocity = m_parentRb.velocity * moveRatio; //アンカーはやや遅れてついてくるようにする
-        AdjustAnchorPosi();
+        //AdjustAnchorPosi();
     }
 
     /// <summary>
