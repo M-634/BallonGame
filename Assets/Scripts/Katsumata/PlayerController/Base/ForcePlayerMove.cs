@@ -36,9 +36,9 @@ public class ForcePlayerMove : MonoBehaviour
     ///// <summary>スワイプをしたかどうかのフラグ。回転力を加えるとき一回だけrotateForceに+=をしたい </summary>
     //[HideInInspector] public bool m_onSwipe = false;
 
-    [Header("スワイプ時のプレイヤーの回転感度")]
+    [Header("プレイヤーの横移動力")]
     /// <summary>スワイプした時にどの程度指に付いてくるかの係数 </summary>
-    [SerializeField] public float m_horizontalSpeed = 100f;
+    [SerializeField] public float m_horizontalForce = 100f;
     ///// <summary>スワイプした時にどの程度指に付いてくるかの係数 </summary>
     //[SerializeField] public float m_varticalSpeed = 100f;
 
@@ -239,7 +239,7 @@ public class ForcePlayerMove : MonoBehaviour
 
     void SetHorizontalMove()
     {
-        Vector3 force = new Vector3(variableJoystick.Horizontal * m_horizontalSpeed, 0, 0);
+        Vector3 force = new Vector3(variableJoystick.Horizontal * m_horizontalForce, 0, 0);
         if (Mathf.Abs(m_rb.velocity.x) < maxHorizontalSpeed) m_rb.AddForce(force);
     }
 }
