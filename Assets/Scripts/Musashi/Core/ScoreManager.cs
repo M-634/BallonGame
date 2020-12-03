@@ -11,29 +11,8 @@ using Unity.Collections.LowLevel.Unsafe;
 /// </summary>
 public class ScoreManager : EventReceiver<ScoreManager>
 {
-    private int m_highScore;
     private int m_currentScore = 0;
-
     [SerializeField] UISetActiveControl m_UISetActiveControl;
-    SaveAndLoadWithJSON m_json;
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-        if (StageParent.Instance)
-        {
-            //ステージの名前と天候状態でパスを分ける
-            string path = StageParent.Instance.StageName + "_" + StageParent.Instance.WeatherConditions.ToString();
-            m_json = new SaveAndLoadWithJSON(path);
-        }
-        else
-        {
-            m_json = new SaveAndLoadWithJSON();//test
-        }
-
-        m_highScore = m_json.LoadHighScore();
-        Debug.Log("HighScore: " + m_highScore);
-    }
 
     /// <summary>
     /// プレイヤーがコインに衝突したら呼ばれる関数
@@ -70,23 +49,27 @@ public class ScoreManager : EventReceiver<ScoreManager>
         sequence.Append(
             DOTween.To(() => total, num => total = num, totalScore, 2f))
             .OnUpdate(() => m_UISetActiveControl.TotalScoreText.text = ("TotalScore:" + total.ToString()))
-            .OnComplete(() => SaveAndLoad(totalScore));
+            .OnComplete(() => SaveAndLoad(totalScore, leftTime));
     }
 
-    private void SaveAndLoad(int totalScore)
+
+    private void SaveAndLoad(int totalScore, int leftTime)
     {
-        if (totalScore > m_highScore)
+        if (StageParent.Instance)
         {
-            //コイン獲得０だとクリア判定ならないのはtotalScoreで０をかけてるから
-            m_json.SaveHighScore(totalScore, true);
+            //ステージデータをセーブ
+            StageParent.Instance.GetAppearanceStageData.Save(totalScore, leftTime);
+            //ステージを非表示にする
+            StageParent.Instance.GetAppearanceStagePrefab.SetActive(false);
+            //ステージを初期化する
+            StageParent.Instance.Initialization();
         }
 
-        //ステージを非表示にする
-        StageParent.Instance.GetAppearanceStage.SetActive(false);
-        //ステージを初期化する
-        StageParent.Instance.Initialization();
-        //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
-        SceneLoader.Instance.LoadSelectSceneWithTap();
+        if (SceneLoader.Instance)
+        {
+            //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
+            SceneLoader.Instance.LoadSelectSceneWithTap();
+        }
     }
 
     protected override void OnEnable()

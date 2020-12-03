@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEditor;
-
-
-[Serializable]
-public class StageData
-{
-    public int HighScore;
-    public bool IsStageClear;
-}
 
 /// <summary>
 /// Jsonを使用したセーブ機能。
@@ -25,32 +16,12 @@ public class SaveAndLoadWithJSON
     static readonly string m_folderPath = Path.Combine(Application.persistentDataPath, FolderName);
     static readonly string m_metaPath = Application.persistentDataPath + $"/{FolderName}.meta ";
 
-    readonly string m_filepath;
+    private string m_filepath;
+    public static bool IsFolderPath { get => Directory.Exists(m_folderPath);}
 
-    StageData m_StageData = new StageData();
-
-    /// <summary>
-    /// test用のコンストラクター
-    /// </summary>
-    public SaveAndLoadWithJSON()
+    public void SaveStageData(StageData stageData)
     {
-        m_filepath = Path.Combine(m_folderPath, "Test" + EndOfFileName);
-    }
-
-    /// <summary>
-    /// パスを指定するコンストラクター
-    /// </summary>
-    /// <param name="path">ステージ名 ＋ 天候状態の名前</param>
-    public SaveAndLoadWithJSON(string path)
-    {
-        m_filepath = Path.Combine(m_folderPath, path + EndOfFileName);
-    }
-
-    public void SaveHighScore(int score, bool isClear)
-    {
-        m_StageData.IsStageClear = isClear;
-        m_StageData.HighScore = score;
-        string json = JsonUtility.ToJson(m_StageData, true);
+        string json = JsonUtility.ToJson(stageData, true);
         Debug.Log("シリアライズされた JSONデータ" + json);
 
         //SaveDataフォルダーがないなら作成する
@@ -60,50 +31,33 @@ public class SaveAndLoadWithJSON
             Debug.Log("Initialize folder.....");
         }
 
+        m_filepath = Path.Combine(m_folderPath, stageData.GetStagePath + EndOfFileName);
+
         //ハイスコアを上書きする。ファイルがなかったら作成して保存する
         using (StreamWriter writer = new StreamWriter(m_filepath, false))
         {
             writer.Write(json);
-            //writer.Flush();
-            //writer.Close();
             Debug.Log("Saving HighScore.....");
         }
     }
 
-    public int LoadHighScore()
+    public StageData LoadStageData(StageData stageData)
     {
-        //ファイルが存在しないか、テスト用のファイルパスを指定していたらハイスコアを０でセーブして値を返す
-        if (!File.Exists(m_filepath) || m_filepath == Path.Combine(m_folderPath, "Test" + EndOfFileName))
-        {
-            //make file
-            SaveHighScore(0, false);
-            Debug.Log("Initialize file.....");
-            return 0;
-        }
+        m_filepath = Path.Combine(m_folderPath, stageData.GetStagePath + EndOfFileName);
 
-        using (StreamReader reader = new StreamReader(m_filepath))
-        {
-            string json = reader.ReadToEnd();
-            //reader.Close();
-            m_StageData = JsonUtility.FromJson<StageData>(json);
-            Debug.Log("Loading HighScore.....");
-            return m_StageData.HighScore;
-        }
-    }
-
-    public bool CheakStageClear()
-    {
         if (!File.Exists(m_filepath))
         {
-            return false;
+            Debug.Log("Initialize file.....");
+            stageData.InitializeStageData();
+            return stageData;
         }
 
         using (StreamReader reader = new StreamReader(m_filepath))
         {
             string json = reader.ReadToEnd();
-            //reader.Close();
-            m_StageData = JsonUtility.FromJson<StageData>(json);
-            return m_StageData.IsStageClear;
+            stageData = JsonUtility.FromJson<StageData>(json);
+            Debug.Log("Loading HighScore.....");
+            return stageData;
         }
     }
 
@@ -122,6 +76,8 @@ public class SaveAndLoadWithJSON
             File.Delete(m_metaPath);//Unityではメタファイルを消すことが重要である。
         }
         Debug.Log("セーブデータを破棄しました！");
+
+        StageParent.Instance.ReLoadStageData();
     }
 
 #if UNITY_EDITOR
@@ -145,6 +101,7 @@ public class SaveAndLoadWithJSON
             File.Delete(m_metaPath);//Unityではメタファイルを消すことが重要である。
         }
         Debug.Log("セーブデータを破棄しました！");
+        StageParent.Instance.ReLoadStageData();
     }
 #endif
 }
