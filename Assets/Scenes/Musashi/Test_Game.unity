@@ -215,7 +215,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &591157553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,7 +385,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1170040766}
-  m_LocalRotation: {x: -0.085989095, y: -0.000000026381619, z: 0.000000003253627,
+  m_LocalRotation: {x: -0.085989095, y: -0.000000026381619, z: 0.0000000032536338,
     w: -0.9962961}
   m_LocalPosition: {x: 0, y: 9.999, z: -23}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -552,6 +552,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerBoard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999297260338569823, guid: ab42b3ef5acd0694998a29df74156a0c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab42b3ef5acd0694998a29df74156a0c, type: 3}
@@ -808,7 +813,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1957198800}
-  m_LocalRotation: {x: -0.085989095, y: -0.000000026381619, z: 0.000000003253627,
+  m_LocalRotation: {x: -0.085989095, y: -0.000000026381619, z: 0.0000000032536338,
     w: -0.9962961}
   m_LocalPosition: {x: 0, y: 9.999, z: -23}
   m_LocalScale: {x: 1, y: 1, z: 1}

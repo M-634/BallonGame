@@ -121,18 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &145443684 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2071846451, guid: e77715370d3b1b042835341a8a6e2d4c,
-    type: 3}
-  m_PrefabInstance: {fileID: 9165772762480731321}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dc51574259dc3e40b628d49a5ba9da1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &188810012
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,15 +287,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6638159838311558370, guid: 8c4c953ca4e48de4794807cb3e0ab8a9,
+        type: 3}
+      propertyPath: m_stageDatas.Array.data[0].m_highScore
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6638159838311558371, guid: 8c4c953ca4e48de4794807cb3e0ab8a9,
         type: 3}
       propertyPath: m_Name
       value: StageParent
-      objectReference: {fileID: 0}
-    - target: {fileID: 6638159838311558371, guid: 8c4c953ca4e48de4794807cb3e0ab8a9,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c4c953ca4e48de4794807cb3e0ab8a9, type: 3}
@@ -880,18 +868,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2071846452, guid: e77715370d3b1b042835341a8a6e2d4c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 145443684}
-    - target: {fileID: 2071846452, guid: e77715370d3b1b042835341a8a6e2d4c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadTitleScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 2071846452, guid: e77715370d3b1b042835341a8a6e2d4c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 9165772761766530219, guid: e77715370d3b1b042835341a8a6e2d4c,
         type: 3}
       propertyPath: m_Name
