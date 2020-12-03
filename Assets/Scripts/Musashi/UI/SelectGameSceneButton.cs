@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Video;
 using UnityEngine.EventSystems;
 
 /// <summary>
@@ -11,8 +12,10 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(Button))]
 public class SelectGameSceneButton : MonoBehaviour, IPointerEnterHandler
 {
-    [Header("StagePrefabをアサインしてね！")]
+    [Header("field")]
     [SerializeField] GameObject m_stagePrefab;
+    [SerializeField] VideoClip m_videoClip;
+    [SerializeField] VideoPlayer m_videoPlayer;
 
     [Header("各テキストUI")]
     [SerializeField] Text m_stageClearText;
@@ -50,9 +53,16 @@ public class SelectGameSceneButton : MonoBehaviour, IPointerEnterHandler
 
     private void ShowStageInfo()
     {
+        //各種UIへ情報をセットする
         m_stageNameText.text = StageData.StagePrefab.name;
         m_clearScoreText.text = StageData.HighScore.ToString();
         m_clearTimeText.TimerInfo(StageData.ClearTime);
+
+        //動画再生
+        m_videoPlayer.source = VideoSource.VideoClip;
+        m_videoPlayer.clip = m_videoClip;
+        m_videoPlayer.isLooping = true;
+        m_videoPlayer.Play();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

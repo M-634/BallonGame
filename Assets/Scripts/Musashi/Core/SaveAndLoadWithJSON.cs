@@ -17,7 +17,7 @@ public class SaveAndLoadWithJSON
     static readonly string m_metaPath = Application.persistentDataPath + $"/{FolderName}.meta ";
 
     private string m_filepath;
-
+    public static bool IsFolderPath { get => Directory.Exists(m_folderPath);}
 
     public void SaveStageData(StageData stageData)
     {

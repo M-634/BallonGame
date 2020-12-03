@@ -12,6 +12,9 @@ public class SelectButtons : MonoBehaviour
     /// <summary>ステージ解放フラグ </summary>
     bool m_doReleaseStage = true;//初めのステージは必ず解放する
 
+    /// <summary>
+    /// 各ボタンにステージ情報を送り,ステージを解放するかどうかを決める
+    /// </summary>
     private void Start()
     {
         foreach (var btn in m_buttons)
