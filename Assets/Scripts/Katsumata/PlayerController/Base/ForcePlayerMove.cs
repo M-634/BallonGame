@@ -11,7 +11,7 @@ using UnityEngine;
 public class ForcePlayerMove : MonoBehaviour
 {
     /// <summary>pivotのrigidbodyを格納する変数 </summary>
-    public Rigidbody m_rb;
+    [HideInInspector] public Rigidbody m_rb;
     [Header("開始速度")]
     [SerializeField] float startSpeed = 5;
     [Header("最大落下速度")]
