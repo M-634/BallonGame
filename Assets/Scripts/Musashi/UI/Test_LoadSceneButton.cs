@@ -11,20 +11,20 @@ public class Test_LoadSceneButton : MonoBehaviour
         SceneLoader.Instance.LoadTitleScene();
     }
 
-    /// <summary>
-    /// はじめから（SaveDataを消す）
-    /// </summary>
-    public void LoadSelectScene()
-    {
-        SaveAndLoadWithJSON.DeleteSaveData();
-        SceneLoader.Instance.LoadSelectScene();
-    }
+    ///// <summary>
+    ///// はじめから（SaveDataを消す）
+    ///// </summary>
+    //public void LoadSelectScene()
+    //{
+    //    SaveAndLoadWithJSON.DeleteSaveData();
+    //    SceneLoader.Instance.LoadSelectScene();
+    //}
 
-    /// <summary>
-    /// 続きから
-    /// </summary>
-    public void LoadSelectSceneWithContinue()
-    {
-        SceneLoader.Instance.LoadSelectScene();
-    }
+    ///// <summary>
+    ///// 続きから
+    ///// </summary>
+    //public void LoadSelectSceneWithContinue()
+    //{
+    //    SceneLoader.Instance.LoadSelectScene();
+    //}
 }

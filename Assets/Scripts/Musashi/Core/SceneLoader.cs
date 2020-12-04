@@ -82,7 +82,6 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
 
     private IEnumerator LoadWithTapCorutine(string loadSceneName)
     {
-        //ここ、Andoroidだと動かない！！
         m_loadCanvas.enabled = true;
         m_tapToLoadText.gameObject.SetActive(true);
 
