@@ -25,6 +25,14 @@ public class Test_Player_Musashi : EventReceiver<Test_Player_Musashi>
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.TryGetComponent<IEventCollision>(out var eventCollision))
+        {
+            eventCollision.CollisionEvent(m_eventSystemInGameScene);
+        }
+    }
+
     public void GameStart()
     {
         m_inGame = true;

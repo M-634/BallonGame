@@ -14,8 +14,7 @@ using UnityEngine.UI;
 public class TimerInStage : EventReceiver<TimerInStage>
 {
     [SerializeField] Text m_timeLimitText;
-    [SerializeField] float m_timeLimit = 300f;
-
+    float m_timeLimit;
     ScoreManager m_scoreManager;
 
     /// <summary>ゲーム中かどうか判定する </summary>
@@ -25,10 +24,12 @@ public class TimerInStage : EventReceiver<TimerInStage>
     private void Start()
     {
         m_scoreManager = GetComponent<ScoreManager>();
-        //ステージを出現させる
         if (StageParent.Instance)
         {
-            StageParent.Instance.AppearanceStageObject(StageParent.Instance.GetAppearanceStage.transform);
+            //ステージを出現させる
+            StageParent.Instance.AppearanceStageObject(StageParent.Instance.GetAppearanceStagePrefab.transform);
+            //制限時間をセットする
+            m_timeLimit = StageParent.Instance.GetAppearanceStageData.SetTimeLimit;
         }
     }
 
@@ -53,7 +54,7 @@ public class TimerInStage : EventReceiver<TimerInStage>
         if (m_timeLimit <= 0)
         {
             m_timeLimit = 0;
-            GameOver();
+            m_eventSystemInGameScene.ExecuteGameOverEvent();
         }
     }
 
@@ -81,7 +82,7 @@ public class TimerInStage : EventReceiver<TimerInStage>
         if (StageParent.Instance)
         {
             //ステージを非表示にする
-            StageParent.Instance.GetAppearanceStage.SetActive(false);
+            StageParent.Instance.GetAppearanceStagePrefab.SetActive(false);
             //ステージを初期化する
             StageParent.Instance.Initialization();
         }

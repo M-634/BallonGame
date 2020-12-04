@@ -11,34 +11,8 @@ using Unity.Collections.LowLevel.Unsafe;
 /// </summary>
 public class ScoreManager : EventReceiver<ScoreManager>
 {
-    private int m_highScore;
     private int m_currentScore = 0;
-    /// <summary>1コイン獲得時に得られるスコア</summary>
-    //[SerializeField] int m_getCoinScore = 100;
-
     [SerializeField] UISetActiveControl m_UISetActiveControl;
-    SaveAndLoadWithJSON m_json;
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-        //m_UISetActiveControl = GetComponent<UISetActiveControl>();
-        //m_UISetActiveControl.CurrentScoreText.text = "Score: ";
-
-        if (StageParent.Instance)
-        {
-            //ステージの名前と天候状態でパスを分ける
-            string path = StageParent.Instance.StageName + "_" + StageParent.Instance.WeatherConditions.ToString();
-            m_json = new SaveAndLoadWithJSON(path);
-        }
-        else
-        {
-            m_json = new SaveAndLoadWithJSON();//test
-        }
-
-        m_highScore = m_json.LoadHighScore();
-        Debug.Log("HighScore: " + m_highScore);
-    }
 
     /// <summary>
     /// プレイヤーがコインに衝突したら呼ばれる関数
@@ -46,7 +20,6 @@ public class ScoreManager : EventReceiver<ScoreManager>
     public void GetCoin(int score)
     {
         m_currentScore += score;
-        //m_currentScore += m_getCoinScore;
         m_UISetActiveControl.CurrentScoreText.text = "Score: " + m_currentScore;
     }
 
@@ -76,23 +49,27 @@ public class ScoreManager : EventReceiver<ScoreManager>
         sequence.Append(
             DOTween.To(() => total, num => total = num, totalScore, 2f))
             .OnUpdate(() => m_UISetActiveControl.TotalScoreText.text = ("TotalScore:" + total.ToString()))
-            .OnComplete(() => SaveAndLoad(totalScore));
+            .OnComplete(() => SaveAndLoad(totalScore, leftTime));
     }
 
-    private void SaveAndLoad(int totalScore)
+
+    private void SaveAndLoad(int totalScore, int leftTime)
     {
-        if (totalScore > m_highScore)
+        if (StageParent.Instance)
         {
-            //ここが原因！！
-            m_json.SaveHighScore(totalScore, true);
+            //ステージデータをセーブ
+            StageParent.Instance.GetAppearanceStageData.Save(totalScore, leftTime);
+            //ステージを非表示にする
+            StageParent.Instance.GetAppearanceStagePrefab.SetActive(false);
+            //ステージを初期化する
+            StageParent.Instance.Initialization();
         }
 
-        //ステージを非表示にする
-        StageParent.Instance.GetAppearanceStage.SetActive(false);
-        //ステージを初期化する
-        StageParent.Instance.Initialization();
-        //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
-        SceneLoader.Instance.LoadSelectSceneWithTap();
+        if (SceneLoader.Instance)
+        {
+            //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
+            SceneLoader.Instance.LoadSelectSceneWithTap();
+        }
     }
 
     protected override void OnEnable()

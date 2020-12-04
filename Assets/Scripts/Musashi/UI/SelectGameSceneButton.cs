@@ -1,55 +1,75 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Video;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// セレクト画面のボタンにアタッチするクラス
+/// ハイライト時に、ステージの動画とクリアスコア、クリアタイム,ステージの名前
+/// を表示する
 /// </summary>
 [RequireComponent(typeof(Button))]
-public class SelectGameSceneButton : MonoBehaviour
+public class SelectGameSceneButton : MonoBehaviour, IPointerEnterHandler
 {
-    /// <summary>projectからPrefabをアサインすること</summary>
+    [Header("field")]
     [SerializeField] GameObject m_stagePrefab;
-    /// <summary>天候状態をセットする</summary>
-    [SerializeField] WeatherConditions m_conditions;
-    /// <summary>クリアテキスト</summary>
+    [SerializeField] VideoClip m_videoClip;
+    [SerializeField] VideoPlayer m_videoPlayer;
+
+    [Header("各テキストUI")]
     [SerializeField] Text m_stageClearText;
-    /// <summary>次のセレクトボタン</summary>
-    [SerializeField] SelectGameSceneButton m_nextSceneButton;
-    SaveAndLoadWithJSON m_json;
-    Button m_nextButton;
+    [SerializeField] Text m_clearTimeText;
+    [SerializeField] Text m_clearScoreText;
+    [SerializeField] Text m_stageNameText;
 
-    //このままだと、m_json.CheakStageClear()が繰り返し呼ばれてしまうので修正する必要がある
-    private void Start()
+    public Text ClearText { get => m_stageClearText; }
+    public StageData StageData { get; set; }
+    public GameObject StagePrefab { get => m_stagePrefab; }
+    private Button m_button;
+    public Button SelectButton
     {
-        //まだ解放されていないステージのセレクトボタンならStart関数の処理を辞める
-        if (!GetComponent<Button>().interactable)
-            return;
-   
-        if (m_nextSceneButton && m_nextButton != this)
+        get
         {
-            m_nextButton = m_nextSceneButton.GetComponent<Button>();
-            m_nextButton.interactable = false;
-        }
-
-        string path = m_stagePrefab.name + "_" + m_conditions.ToString();
-        m_json = new SaveAndLoadWithJSON(path);
-
-        if (m_json.CheakStageClear())
-        {
-            m_stageClearText.text = "Clear!!";
-            //ステージ解放
-            if (m_nextButton)
+            if (m_button == null)
             {
-                m_nextButton.interactable = true;
+                m_button = GetComponent<Button>();
+                return m_button;
             }
+            return m_button;
         }
-
-        GetComponent<Button>().onClick.AddListener(() => SetStageInfo());
     }
 
-    public void SetStageInfo()
+    private void Start()
     {
-        StageParent.Instance.SetStageInfo(m_stagePrefab, m_conditions);
+        SelectButton.onClick.AddListener(() => SetStageInfo());
+    }
+
+    private void SetStageInfo()
+    {
+        if (StageParent.Instance)
+            StageParent.Instance.SetStageInfo(m_stagePrefab);
+    }
+
+    private void ShowStageInfo()
+    {
+        //各種UIへ情報をセットする
+        m_stageNameText.text = StageData.StagePrefab.name;
+        m_clearScoreText.text = StageData.HighScore.ToString();
+        m_clearTimeText.TimerInfo(StageData.ClearTime);
+
+        //動画再生
+        m_videoPlayer.source = VideoSource.VideoClip;
+        m_videoPlayer.clip = m_videoClip;
+        m_videoPlayer.isLooping = true;
+        m_videoPlayer.Play();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (SelectButton.interactable)
+        {
+            ShowStageInfo();
+        }
     }
 }

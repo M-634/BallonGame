@@ -8,10 +8,13 @@ public class PlayerEventHandller : EventReceiver<Test_Player_Musashi>
 
     //TO DO:川嶋が加えたよ playerの動きだけをテストしたい時にチェックをいれてね
     [SerializeField] bool m_doDebugPlayerMove;
+    ForcePlayerMove m_playerMove;
 
     protected override void Awake()
     {
         if (m_doDebugPlayerMove) return;
+        m_playerMove = GetComponent<ForcePlayerMove>();
+        m_playerMove.m_rb.constraints = RigidbodyConstraints.FreezePosition;
         base.Awake();
     }
     
@@ -42,12 +45,15 @@ public class PlayerEventHandller : EventReceiver<Test_Player_Musashi>
 
     public void GameStart()
     {
+        m_playerMove.m_rb.constraints = RigidbodyConstraints.None;
         InGame = true;
+        
     }
 
     public void EndGaem()
     {
         InGame = false;
+        GetComponent<PlayerBaseMove>().StopMove();
     }
 
     protected override void OnEnable()
