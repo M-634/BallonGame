@@ -83,7 +83,7 @@ public class BaseMoveDebugUIManager : MonoBehaviour
     /// <summary>これもデバッグ用、RotateBrakeCoefficientSliderのOnValueChangedで呼び出してる</summary>
     public void ChangeRotateBrakeCoefficient()
     {
-        playerBaseMove.m_rotateBrekeCoefficient = rotateBrakeCoefficient.value;
+        playerBaseMove.m_rotateBrakeCoefficient = rotateBrakeCoefficient.value;
     }
     /// <summary>これもデバッグ用、MaxSpeedSliderのOnValueChangedで呼び出してる</summary>
     public void ChangeMaxSpeed()
