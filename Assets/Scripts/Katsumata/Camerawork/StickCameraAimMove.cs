@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StickCameraWork : MonoBehaviour
+public class StickCameraAimMove : MonoBehaviour
 {
     /// <summary>
     /// カメラの動きとなる元のスクリプト
     /// </summary>
-    [SerializeField] GameObject floatingJoystickobj;
+    [SerializeField] GameObject variableJoystickobj;
     VariableJoystick variableJoystick;
 
     /// <summary>横軸の回転係数 </summary>
@@ -26,7 +26,7 @@ public class StickCameraWork : MonoBehaviour
 
     private void Start()
     {
-        variableJoystick = floatingJoystickobj.GetComponent<VariableJoystick>();
+        variableJoystick = variableJoystickobj.GetComponent<VariableJoystick>();
         centerPosition = transform.localPosition;
     }
 

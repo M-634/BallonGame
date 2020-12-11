@@ -11,7 +11,7 @@ using UnityEngine;
 public class ForcePlayerMove : MonoBehaviour
 {
     /// <summary>pivotのrigidbodyを格納する変数 </summary>
-    public Rigidbody m_rb;
+    [HideInInspector] public Rigidbody m_rb;
     [Header("開始速度")]
     [SerializeField] float startSpeed = 5;
     [Header("最大落下速度")]
@@ -45,6 +45,10 @@ public class ForcePlayerMove : MonoBehaviour
     [Header("最大の横移動の速さ")]
     [SerializeField] float maxHorizontalSpeed = 10;
 
+    [Header("横移動の摩擦力")]
+    [SerializeField] float dragHorizontal = 0.98f;
+
+    [Header("横移動のコントローラーUIPrefabの格納")]
     [SerializeField] GameObject variableJoystickHorizontal;
     VariableJoystick variableJoystick;
 
@@ -84,6 +88,7 @@ public class ForcePlayerMove : MonoBehaviour
         }
 
         SetHorizontalMove();
+        AddHorizontalDrag();
         AdjustForwardForce();
         AdjustFallingForce();
 
@@ -241,5 +246,18 @@ public class ForcePlayerMove : MonoBehaviour
     {
         Vector3 force = new Vector3(variableJoystick.Horizontal * m_horizontalForce, 0, 0);
         if (Mathf.Abs(m_rb.velocity.x) < maxHorizontalSpeed) m_rb.AddForce(force);
+    }
+
+    /// <summary>
+    /// 横移動にの空気抵抗
+    /// </summary>
+    void AddHorizontalDrag()
+    {
+        if (variableJoystick.Horizontal == 0)
+        {
+            Vector3 newHorizontalSpeed = m_rb.velocity;
+            newHorizontalSpeed.x *= dragHorizontal;
+            m_rb.velocity = newHorizontalSpeed;
+        }
     }
 }
