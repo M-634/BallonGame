@@ -11,11 +11,14 @@ public class CameraPosition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        tracePosi = trackingObj.transform.position;
+        tracePosi.y = trackingObj.transform.position.y + adjustYposi;
+        tracePosi.z = trackingObj.transform.position.z + adjustZposi;
+        transform.position = tracePosi;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         tracePosi.y = trackingObj.transform.position.y + adjustYposi;
         tracePosi.z = trackingObj.transform.position.z + adjustZposi;
