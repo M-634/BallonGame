@@ -169,7 +169,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &211845367
 Animator:
   serializedVersion: 3
@@ -301,12 +301,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4044717213e31446939f7bd49c896ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
+  m_TrackedObjectOffset: {x: 0, y: 0.74, z: 0}
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 10
   m_LookaheadIgnoreY: 0
-  m_HorizontalDamping: 0.5
-  m_VerticalDamping: 0.5
+  m_HorizontalDamping: 0
+  m_VerticalDamping: 0
   m_ScreenX: 0.5
   m_ScreenY: 0.5
   m_DeadZoneWidth: 0
@@ -438,8 +438,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_LookAt: {fileID: 1982676756}
+  m_Follow: {fileID: 1917133420}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 10
@@ -462,8 +462,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 544938680}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.744496, y: 37.14322, z: -3.331571}
+  m_LocalRotation: {x: 0.30911505, y: 0.56692684, z: -0.24198005, w: 0.72421515}
+  m_LocalPosition: {x: -1.0300002, y: 52.77, z: 9.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 251472561}
@@ -841,7 +841,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1133528750}
-  m_LocalRotation: {x: 0.0000000012710132, y: 0.9974289, z: -0.07166319, w: 0.000000017690331}
+  m_LocalRotation: {x: -0.0000000012710132, y: 0.9974289, z: -0.07166319, w: -0.000000017690331}
   m_LocalPosition: {x: -0.1, y: 51.899998, z: 10.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1011,8 +1011,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362193846}
-  m_LocalRotation: {x: 5.985327e-10, y: 0.9994552, z: -0.033004846, w: 0.000000017690331}
-  m_LocalPosition: {x: -0.1, y: 53.68, z: 49.710003}
+  m_LocalRotation: {x: 0.30911505, y: 0.56692684, z: -0.24198005, w: 0.72421515}
+  m_LocalPosition: {x: -1.0300002, y: 52.77, z: 9.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1278,6 +1278,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1917133420}
   - component: {fileID: 1917133419}
+  - component: {fileID: 1917133421}
   m_Layer: 0
   m_Name: DollyTrack1
   m_TagString: Untagged
@@ -1301,9 +1302,27 @@ MonoBehaviour:
   m_Appearance:
     pathColor: {r: 0, g: 1, b: 0, a: 1}
     inactivePathColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    width: 0.2
-  m_Looped: 0
-  m_Waypoints: []
+    width: 0.25
+  m_Looped: 1
+  m_Waypoints:
+  - position: {x: 4, y: 1, z: -5}
+    roll: 0
+  - position: {x: 5, y: 0.8, z: -4}
+    roll: 0
+  - position: {x: 6, y: 0.6, z: -5}
+    roll: 0
+  - position: {x: 5, y: 0.4, z: -6}
+    roll: 0
+  - position: {x: 4, y: 0.2, z: -5}
+    roll: 0
+  - position: {x: 5, y: 0, z: -4}
+    roll: 0
+  - position: {x: 6, y: -0.2, z: -5}
+    roll: 0
+  - position: {x: 5, y: -0.4, z: -6}
+    roll: 0
+  - position: {x: 4, y: -0.6, z: -5}
+    roll: 0
 --- !u!4 &1917133420
 Transform:
   m_ObjectHideFlags: 0
@@ -1312,12 +1331,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917133418}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.744496, y: 37.14322, z: -3.331571}
+  m_LocalPosition: {x: -5.03, y: 51.77, z: 14.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1917133421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917133418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c41b0f793d12e4e8c8787c49c66af6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  virtualCamera: {fileID: 544938681}
+  cycleTime: 20
 --- !u!1001 &1982676755
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1488,7 +1521,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2098647841}
-  m_LocalRotation: {x: -5.5986166e-10, y: 0.9994552, z: -0.03300487, w: -0.00000001695377}
+  m_LocalRotation: {x: -5.5936494e-10, y: 0.9994552, z: -0.03300487, w: -0.000000016940014}
   m_LocalPosition: {x: -0.1, y: 53.68, z: 49.710003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
