@@ -92,7 +92,7 @@ public class StageParent : SingletonMonoBehavior<StageParent>
                 GetAppearanceStageData = m_stageDatas[i];
                 GetAppearanceStagePrefab = m_stagePrefabList[i];
                 //ゲームシーンをロード
-                SceneLoader.Instance.LoadGameScene();
+                //SceneLoader.Instance.LoadGameScene();
                 return;
             }
         }

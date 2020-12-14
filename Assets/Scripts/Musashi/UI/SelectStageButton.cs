@@ -10,9 +10,9 @@ using UnityEngine.EventSystems;
 /// を表示する
 /// </summary>
 [RequireComponent(typeof(Button))]
-public class SelectGameSceneButton : MonoBehaviour, IPointerEnterHandler
+public class SelectStageButton : MonoBehaviour, IPointerEnterHandler
 {
-    [Header("field")]
+    [Header("フィールド")]
     [SerializeField] GameObject m_stagePrefab;
     [SerializeField] VideoClip m_videoClip;
     [SerializeField] VideoPlayer m_videoPlayer;
@@ -22,6 +22,7 @@ public class SelectGameSceneButton : MonoBehaviour, IPointerEnterHandler
     [SerializeField] Text m_clearTimeText;
     [SerializeField] Text m_clearScoreText;
     [SerializeField] Text m_stageNameText;
+
 
     public Text ClearText { get => m_stageClearText; }
     public StageData StageData { get; set; }
@@ -40,10 +41,11 @@ public class SelectGameSceneButton : MonoBehaviour, IPointerEnterHandler
         }
     }
 
-    private void Start()
-    {
-        SelectButton.onClick.AddListener(() => SetStageInfo());
-    }
+
+    //private void Start()
+    //{
+    //    SelectButton.onClick.AddListener(() => SetStageInfo());
+    //}
 
     private void SetStageInfo()
     {
@@ -63,6 +65,9 @@ public class SelectGameSceneButton : MonoBehaviour, IPointerEnterHandler
         m_videoPlayer.clip = m_videoClip;
         m_videoPlayer.isLooping = true;
         m_videoPlayer.Play();
+
+        //ステージ情報をセットする
+        SetStageInfo();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
