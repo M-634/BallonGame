@@ -165,8 +165,8 @@ GameObject:
   - component: {fileID: 778437796475740382}
   - component: {fileID: 778437796475740381}
   - component: {fileID: 778437796475740380}
-  - component: {fileID: 778437796475740383}
   - component: {fileID: 8699206471128988562}
+  - component: {fileID: 1171534151298506407}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -235,19 +235,6 @@ MonoBehaviour:
   maxHorizontalSpeed: 5
   variableJoystickHorizontal: {fileID: 0}
   m_mouthDebug: 0
---- !u!114 &778437796475740383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 778437796475740377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 832b4b9d891cd8640ac107d901e37246, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_doDebugPlayerMove: 1
 --- !u!136 &8699206471128988562
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -262,6 +249,19 @@ CapsuleCollider:
   m_Height: 8.5
   m_Direction: 1
   m_Center: {x: 0, y: -2.8, z: 0}
+--- !u!114 &1171534151298506407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778437796475740377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f49948858c0956a468cf1daa38302093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_doDebugPlayerMove: 0
 --- !u!1 &778437796614284459
 GameObject:
   m_ObjectHideFlags: 0
