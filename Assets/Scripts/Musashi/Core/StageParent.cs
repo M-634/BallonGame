@@ -17,10 +17,12 @@ public class StageParent : SingletonMonoBehavior<StageParent>
     public StageData GetAppearanceStageData { get; private set; }
     /// <summary>出現させるステージプレハブ</summary>
     public GameObject GetAppearanceStagePrefab { get; private set; }
+    public GameClearState GameClearState { get; set; }
 
     protected override void Awake()
     {
         base.Awake();
+        GameClearState = GameClearState.None;
         DontDestroyOnLoad(gameObject);
     }
 

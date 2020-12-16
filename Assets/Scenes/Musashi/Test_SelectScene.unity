@@ -158,6 +158,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 950960722, guid: 6c32049e33b529e44806f3f89e9b0528, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257582170, guid: 6c32049e33b529e44806f3f89e9b0528, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3537571228798796408, guid: 6c32049e33b529e44806f3f89e9b0528,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -309,18 +317,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9820d3357526c41419a1873485a22a18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1369213021 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2997988604347636729, guid: e77715370d3b1b042835341a8a6e2d4c,
-    type: 3}
-  m_PrefabInstance: {fileID: 9165772762480731321}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1595677726
@@ -721,16 +717,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIVolumeConfigCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 309331034877384778, guid: 84d04a7cc99a90e4fa9b05a6b0f14eb2,
-        type: 3}
-      propertyPath: m_Alpha
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 309331034877384780, guid: 84d04a7cc99a90e4fa9b05a6b0f14eb2,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 309331034877384781, guid: 84d04a7cc99a90e4fa9b05a6b0f14eb2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -838,39 +824,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7563253340051581498, guid: 84d04a7cc99a90e4fa9b05a6b0f14eb2,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7563253340051581498, guid: 84d04a7cc99a90e4fa9b05a6b0f14eb2,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7563253340051581498, guid: 84d04a7cc99a90e4fa9b05a6b0f14eb2,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7563253340051581498, guid: 84d04a7cc99a90e4fa9b05a6b0f14eb2,
-        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1788274706}
-    - target: {fileID: 7563253340051581498, guid: 84d04a7cc99a90e4fa9b05a6b0f14eb2,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: SetActive
-      objectReference: {fileID: 0}
-    - target: {fileID: 7563253340051581498, guid: 84d04a7cc99a90e4fa9b05a6b0f14eb2,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 7563253340051581498, guid: 84d04a7cc99a90e4fa9b05a6b0f14eb2,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84d04a7cc99a90e4fa9b05a6b0f14eb2, type: 3}
 --- !u!1001 &9165772762480731321
@@ -880,20 +836,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2071846451, guid: e77715370d3b1b042835341a8a6e2d4c, type: 3}
-      propertyPath: m_stageNameText
-      value: 
-      objectReference: {fileID: 1369213021}
-    - target: {fileID: 4597505844958123794, guid: e77715370d3b1b042835341a8a6e2d4c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadGameScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 8713893080263136824, guid: e77715370d3b1b042835341a8a6e2d4c,
-        type: 3}
-      propertyPath: m_stageNameText
-      value: 
-      objectReference: {fileID: 1369213021}
     - target: {fileID: 9165772761766530219, guid: e77715370d3b1b042835341a8a6e2d4c,
         type: 3}
       propertyPath: m_Name
