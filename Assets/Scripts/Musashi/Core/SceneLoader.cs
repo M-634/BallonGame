@@ -48,28 +48,30 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
     private IEnumerator LoadGameSceneWithCorutine()
     {
         m_loadCanvas.enabled = true;
-        StartCoroutine(m_fadeImage.FadeIn(m_fadeOutTime));
-        yield return new WaitForSeconds(m_fadeOutTime);
+        //StartCoroutine(m_fadeImage.FadeIn(m_fadeOutTime));
         AsyncOperation async = SceneManager.LoadSceneAsync(m_loadGameSceneName, LoadSceneMode.Single);
 
-        while (async.progress < 0.99f)
+        while (async.progress < 0.99f && m_fadeImage.color.a < 1f)
         {
             yield return null;
+            Debug.Log(m_fadeImage.color.a);
         }
-        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime,
-            () =>
-            {
-                m_loadCanvas.enabled = false;
-                var countDownUI = GameObject.FindGameObjectWithTag("StageManager").GetComponent<UISetActiveControl>();
-                if (countDownUI)
-                {
-                    StartCoroutine(countDownUI.StartCountDownCorutine());
-                }
-                else
-                {
-                    Debug.LogError("StageMagerにUISetActiveControlコンポーネントがアタッチされていません！！");
-                }
-            }));
+
+        //test
+        //StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime,
+        //    () =>
+        //    {
+        //        m_loadCanvas.enabled = false;
+        //        var countDownUI = GameObject.FindGameObjectWithTag("StageManager").GetComponent<UISetActiveControl>();
+        //        if (countDownUI)
+        //        {
+        //            StartCoroutine(countDownUI.StartCountDownCorutine());
+        //        }
+        //        else
+        //        {
+        //            Debug.LogError("StageMagerにUISetActiveControlコンポーネントがアタッチされていません！！");
+        //        }
+        //    }));
         //yield return new WaitForSeconds(m_fadeInTime);
         //m_loadCanvas.enabled = false;
     }
@@ -102,15 +104,15 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
             yield return null;
         }
         m_tapToLoadText.gameObject.SetActive(false);
-        StartCoroutine(m_fadeImage.FadeIn(m_fadeOutTime));
-        yield return new WaitForSeconds(m_fadeOutTime);
+        //StartCoroutine(m_fadeImage.FadeIn(m_fadeOutTime));
+        //yield return new WaitForSeconds(m_fadeOutTime);
         AsyncOperation async = SceneManager.LoadSceneAsync(loadSceneName, LoadSceneMode.Single);
 
         while (async.progress < 0.99f)
         {
             yield return null;
         }
-        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime, () => m_loadCanvas.enabled = false));
+       //StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime, () => m_loadCanvas.enabled = false));
     }
 
     public void LoadTitleScene()
@@ -133,15 +135,15 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
     private IEnumerator LoadScene(string loadSceneName)
     {
         m_loadCanvas.enabled = true;
-        StartCoroutine(m_fadeImage.FadeIn(m_fadeOutTime));
-        yield return new WaitForSeconds(m_fadeOutTime);
+        //StartCoroutine(m_fadeImage.FadeIn(m_fadeOutTime));
+        //yield return new WaitForSeconds(m_fadeOutTime);
         AsyncOperation async = SceneManager.LoadSceneAsync(loadSceneName, LoadSceneMode.Single);
 
         while (async.progress < 0.99f)
         {
             yield return null;
         }
-        StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime, () => m_loadCanvas.enabled = false));
+        //StartCoroutine(m_fadeImage.FadeOut(m_fadeInTime, () => m_loadCanvas.enabled = false));
     }
 }
 
