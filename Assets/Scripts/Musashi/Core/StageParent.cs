@@ -11,18 +11,33 @@ public class StageParent : SingletonMonoBehavior<StageParent>
 {
     /// <summary>ステージデータ</summary>
     [SerializeField] StageData[] m_stageDatas;
-    /// <summary>インスタンス化したstagePrefabが入ったリスト(Hierarchy上に生成されたプレハブ)</summary>
+    /// <summary>Hierarchy上に生成されたステージプレハブ</summary>
     private readonly List<GameObject> m_stagePrefabList = new List<GameObject>();
     /// <summary>出現させるステージデータ </summary>
     public StageData GetAppearanceStageData { get; private set; }
     /// <summary>出現させるステージプレハブ</summary>
     public GameObject GetAppearanceStagePrefab { get; private set; }
+    /// <summary>ステージをクリアしたかどうかの状態を伝える</summary>
     public GameClearState GameClearState { get; set; }
 
+    /// <summary>stageDatasからstagePrefabだけ取り出す</summary>
+    ///<remarks>
+    ///Instantiate関数の引数がオリジナルなGameObject型変数を指定しないとエラーが起こるため,
+    ///この配列を用意した。
+    ///58行目のコメントアウトを参照してください
+    ///</remarks> 
+    private GameObject[] m_stageObjs;
+ 
     protected override void Awake()
     {
         base.Awake();
         GameClearState = GameClearState.None;
+
+        m_stageObjs = new GameObject[m_stageDatas.Length];
+        for (int i = 0; i < m_stageDatas.Length; i++)
+        {
+            m_stageObjs[i] = m_stageDatas[i].StagePrefab;
+        }
         DontDestroyOnLoad(gameObject);
     }
 
@@ -40,9 +55,16 @@ public class StageParent : SingletonMonoBehavior<StageParent>
     {
         ReLoadStageData();
         //最初のダミーシーンでステージを生成して、アクティブを非表示にする
-        foreach (var data in m_stageDatas)
+        //foreach (var data in m_stageDatas)
+        //{
+        //    var go = Instantiate(data.StagePrefab);//invalidCastException: Specified cast is not valid.
+        //    go.transform.SetParent(this.transform);
+        //    go.SetActive(false);
+        //    m_stagePrefabList.Add(go);
+        //}
+        for (int i = 0; i < m_stageDatas.Length; i++)
         {
-            var go = Instantiate(data.StagePrefab);
+            var go = Instantiate(m_stageObjs[i]);
             go.transform.SetParent(this.transform);
             go.SetActive(false);
             m_stagePrefabList.Add(go);
@@ -63,11 +85,18 @@ public class StageParent : SingletonMonoBehavior<StageParent>
     public StageData SendStageData(GameObject stagePrefab)
     {
         //stageDataを検索
-        foreach (var data in m_stageDatas)
+        //foreach (var data in m_stageDatas)
+        //{
+        //    if (data.StagePrefab == stagePrefab)
+        //    {
+        //        return data;
+        //    }
+        //}
+        for (int i = 0; i < m_stageDatas.Length; i++)
         {
-            if (data.StagePrefab == stagePrefab)
+            if (m_stageObjs[i] == stagePrefab)
             {
-                return data;
+                return m_stageDatas[i];
             }
         }
         return null;
@@ -86,9 +115,10 @@ public class StageParent : SingletonMonoBehavior<StageParent>
         }
 
         //stageを検索
-        for (int i = 0; i < m_stagePrefabList.Count(); i++)
+        for (int i = 0; i < m_stageDatas.Length; i++)
         {
-            if (m_stageDatas[i].StagePrefab.Equals(stage))
+           //if (m_stageDatas[i].StagePrefab.Equals(stage))
+            if(m_stageObjs[i] == stage)
             {
                 //stageをセットする
                 GetAppearanceStageData = m_stageDatas[i];
