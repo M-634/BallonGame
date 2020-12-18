@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Shader Graphs_Water
-  m_Shader: {fileID: -6465566751694194690, guid: 33dd6d7ce9f7aad4abebaeef90ec308f,
+  m_Shader: {fileID: -6465566751694194690, guid: f7534241453c158408e5788601ee386a,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -27,6 +27,15 @@ Material:
     m_Floats:
     - Vector1_8F14BFCC: 111.82
     - Vector1_9FB78394: 0
+    - _DepthDistance: 0.87
+    - _DepthStrength: 4
+    - _Displace_Strength: 1
+    - _NormalStrength: 1
+    - _NormalTiling: 100
+    - _PanSpeed: 0.5
+    - _RefractStrength: 1
     - _Tiling: 50
     m_Colors:
     - Color_D01B69AE: {r: 2.670157, g: 2.670157, b: 2.670157, a: 0}
+    - _Buttom_Color: {r: 0.32694015, g: 0.6523218, b: 0.8773585, a: 0}
+    - _Top_Color: {r: 0, g: 0.9245283, b: 0.9245283, a: 0}

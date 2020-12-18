@@ -14,15 +14,15 @@ public class Arai_MoveWall : MonoBehaviour
     [SerializeField] private float endPosX;
     /// <summary>this.transform.DOMoveの移動時間の変数</summary>
     [SerializeField] private float traveTime;
-    /// <summary>this.transform.DOMoveXの遅延時間の変数</summary>
+    /// <summary>this.transform.DOMoveX & DOScale の遅延時間の変数</summary>
     [SerializeField] private float delayTime;
 
     void Start()
     {
         DOTween.Sequence()
-            .Append(this.transform.DOMoveX(startPosX, traveTime).SetDelay(delayTime))
-            .Append(this.transform.DOMoveX(endPosX, traveTime).SetDelay(delayTime))
-            .SetLoops(-1)
-            .Play();
+             .Append(this.transform.DOMoveX(startPosX, traveTime).SetDelay(delayTime))
+             .Append(this.transform.DOMoveX(endPosX, traveTime).SetDelay(delayTime))
+             .SetLoops(-1)
+             .Play();
     }
 }
