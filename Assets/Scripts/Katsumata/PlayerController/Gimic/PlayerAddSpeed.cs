@@ -1,73 +1,93 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(KatsumataPlayerCameraAddforce))]
 /// <summary>
-/// 物理的加速、マリオカートのキノコダッシュを想定している
+/// 加速ギミックに取り付ける。プレイヤーを指定した高さに上げたり下げたりする。
 /// </summary>
 public class PlayerAddSpeed : MonoBehaviour
 {
-    Rigidbody m_rb;
-    [Header("追加の加速度")]
-    /// <summary>加速する係数 </summary>
-    [SerializeField] float m_addCoefficient = 50;
-    /// <summary>次に加速が始まるまでの待機時間 </summary>
-    //[SerializeField] float m_accelWaitTime = 2.5f;
+    //Rigidbody m_rb;
+    //[Header("追加の加速度")]
+    ///// <summary>加速する係数 </summary>
+    //[SerializeField] float m_addCoefficient = 50;
+
+    //[Header("加速ギミック(気流)を抜けた直後のy軸空気摩擦")]
+    ///// <summary>加速ギミックを抜けた後のy軸空気摩擦 </summary>
+    //[SerializeField] float m_afterAccelDrag = 0.9f;
+
+    [Header("加速ギミック(気流)後のy軸空気摩擦のかかる時間")]
+    /// <summary>加速ギミックを抜けた後の特別な空気摩擦が生じる時間 </summary>
+    [SerializeField] float m_moveTime = 1.0f;
+
+    //[Header("加速ギミックを抜けた後のY軸の速さ")]
+    ///// <summary>
+    ///// 加速ギミックを抜けた後のY軸の速さ
+    ///// m_afterAccelDragTimeの時間をかけてm_afterAccelDragの力をかけてこの速さにする
+    ///// </summary>
+    //[SerializeField] Vector3 m_afterAccelSpeed;
+
+    [Header("上がる又は下がる高さ")]
+    /// <summary>
+    /// 上がる又は下がる高さ
+    /// </summary>
+    [SerializeField] float amountMovement = 20.0f;
+
+    [Header("動くときの緩急")]
+    [SerializeField] Ease moveMethod = Ease.InOutFlash;
 
     KatsumataPlayerCameraAddforce cameraMove;
 
-    bool m_onAccel = false;
-    [SerializeField] float accelMaxSpeed = 20.0f;
+    [HideInInspector] public bool m_onDGMove = false;
 
-    private void Start()
-    {
-        m_rb = GetComponent<Rigidbody>();
-        cameraMove = GetComponent<KatsumataPlayerCameraAddforce>();
-    }
 
-    private void FixedUpdate()
-    {
-        //if (!m_onAccelable) //次の加速までのインターバルを計算する
-        //{
-        //    m_waitTime += Time.deltaTime; //タイムスケールを0にすると計算は止まる
-        //    if (m_waitTime > m_accelWaitTime)
-        //    {
-        //        m_onAccelable = true;
-        //        cameraMove.ChangeBaseCamera();
-        //    }
-        //    else
-        //    {
-        //        m_onAccelable = false;
-        //    }
-        //}
-        //Debug.Log("waittime : " + m_waitTime);
-    }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "acceleration")
+        if (other.tag == "Player")
         {
-            m_onAccel = true;
+            cameraMove = other.gameObject.GetComponent<KatsumataPlayerCameraAddforce>();
             cameraMove.ChangeAddSpeedCamera();
+            MovePoint(other.gameObject);
+            m_onDGMove = true;
         }
-        
+
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "acceleration"&& m_rb.velocity.magnitude < accelMaxSpeed)
-        {
-            m_rb.AddForce(other.transform.forward * m_addCoefficient); //ローカル座標でのforward
-        }
+        //if (other.tag == "acceleration" && m_rb.velocity.magnitude < accelMaxSpeed)
+        //{
+        //    m_rb.AddForce(other.transform.forward * m_addCoefficient); //ローカル座標でのforward
+        //}
 
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "acceleration")
-        {
-            m_onAccel = false;
-            cameraMove.ChangeBaseCamera();
-        }
+        //if (other.tag == "acceleration")
+        //{
+        //    //m_onHeightDrag = true;
+        //    cameraMove.ChangeBaseCamera();
+
+        //}
+    }
+
+    void MovePoint(GameObject player)
+    {
+        //var currentPosition = transform.position;
+        Debug.Log("MovePoint!");
+        player.transform.DOLocalMoveY(amountMovement, m_moveTime)
+            .SetRelative(true)
+            .SetEase(moveMethod)
+            .OnComplete(() => cameraMove.ChangeBaseCamera())
+            .OnComplete(() => m_onDGMove = false);
+        //DOTween.To(
+        //    () => currentPosition,
+        //    (x) => transform.position = x,
+        //    moveGoalPosi,
+        //    m_moveTime)
+        //    .SetEase(moveMethod)
+        //    .OnComplete(() => cameraMove.ChangeBaseCamera())
+        //    .OnComplete(() => m_onDGMove = false);
     }
 }

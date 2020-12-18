@@ -2855,12 +2855,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1030785963}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1054083209 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1844989767621920919, guid: 4e9ef074a49f7a646bbf6bf68aa6f4e5,
-    type: 3}
-  m_PrefabInstance: {fileID: 3190479966403847101}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1062755574
 GameObject:
   m_ObjectHideFlags: 0
@@ -4299,24 +4293,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1538872206 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3864937818083935500, guid: f6ba84b604f94644d9b10e96f16b587b,
-    type: 3}
-  m_PrefabInstance: {fileID: 778437797278900290}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1538872207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1538872206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7bf8e85cf04ec740b0316e5fd1b4181, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1545144958
 GameObject:
   m_ObjectHideFlags: 0
@@ -5976,31 +5952,6 @@ PrefabInstance:
       propertyPath: variableJoystickHorizontal
       value: 
       objectReference: {fileID: 1250460218}
-    - target: {fileID: 778437796475740380, guid: f6ba84b604f94644d9b10e96f16b587b,
-        type: 3}
-      propertyPath: m_horizontalForce
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 778437796475740380, guid: f6ba84b604f94644d9b10e96f16b587b,
-        type: 3}
-      propertyPath: maxHorizontalSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 778437796475740380, guid: f6ba84b604f94644d9b10e96f16b587b,
-        type: 3}
-      propertyPath: maxForwardSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 778437796475740381, guid: f6ba84b604f94644d9b10e96f16b587b,
-        type: 3}
-      propertyPath: m_Drag
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 778437796475740381, guid: f6ba84b604f94644d9b10e96f16b587b,
-        type: 3}
-      propertyPath: m_UseGravity
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 778437796475740382, guid: f6ba84b604f94644d9b10e96f16b587b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6056,53 +6007,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 778437796475740386, guid: f6ba84b604f94644d9b10e96f16b587b,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.x
-      value: 58
-      objectReference: {fileID: 0}
-    - target: {fileID: 778437796475740386, guid: f6ba84b604f94644d9b10e96f16b587b,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 48
-      objectReference: {fileID: 0}
-    - target: {fileID: 778437796475740387, guid: f6ba84b604f94644d9b10e96f16b587b,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.x
-      value: 58
-      objectReference: {fileID: 0}
-    - target: {fileID: 778437796475740387, guid: f6ba84b604f94644d9b10e96f16b587b,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 48
-      objectReference: {fileID: 0}
-    - target: {fileID: 778437796605064941, guid: f6ba84b604f94644d9b10e96f16b587b,
-        type: 3}
-      propertyPath: floatingJoystickobj
-      value: 
-      objectReference: {fileID: 1054083209}
-    - target: {fileID: 778437796605064941, guid: f6ba84b604f94644d9b10e96f16b587b,
-        type: 3}
-      propertyPath: radius
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 778437796605064941, guid: f6ba84b604f94644d9b10e96f16b587b,
-        type: 3}
-      propertyPath: horizontalCoefficient
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 778437796605064941, guid: f6ba84b604f94644d9b10e96f16b587b,
-        type: 3}
-      propertyPath: verticalCoefficient
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1171534151298506407, guid: f6ba84b604f94644d9b10e96f16b587b,
-        type: 3}
-      propertyPath: m_doDebugPlayerMove
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 778437796605064941, guid: f6ba84b604f94644d9b10e96f16b587b, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6ba84b604f94644d9b10e96f16b587b, type: 3}
 --- !u!1001 &3190479966403847101
 PrefabInstance:
