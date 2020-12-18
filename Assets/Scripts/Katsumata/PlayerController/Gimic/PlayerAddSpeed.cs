@@ -10,18 +10,16 @@ using UnityEngine;
 public class PlayerAddSpeed : MonoBehaviour
 {
     Rigidbody m_rb;
-    [Header("加速係数")]
+    [Header("追加の加速度")]
     /// <summary>加速する係数 </summary>
-    [SerializeField] float m_addCoefficient = 1500;
+    [SerializeField] float m_addCoefficient = 50;
     /// <summary>次に加速が始まるまでの待機時間 </summary>
     //[SerializeField] float m_accelWaitTime = 2.5f;
 
     KatsumataPlayerCameraAddforce cameraMove;
 
-    [HideInInspector] public bool m_onAccel = false;
-    //bool m_onAccel = false;
-    //float m_waitTime = 0;
-    //[SerializeField] float m_accelTime = 2.5f;
+    bool m_onAccel = false;
+    [SerializeField] float accelMaxSpeed = 20.0f;
 
     private void Start()
     {
@@ -53,13 +51,15 @@ public class PlayerAddSpeed : MonoBehaviour
             m_onAccel = true;
             cameraMove.ChangeAddSpeedCamera();
         }
+        
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "acceleration")
+        if (other.tag == "acceleration"&& m_rb.velocity.magnitude < accelMaxSpeed)
         {
-            m_rb.AddForce(other.transform.forward * m_addCoefficient);
+            m_rb.AddForce(other.transform.forward * m_addCoefficient); //ローカル座標でのforward
         }
+
     }
 
     private void OnTriggerExit(Collider other)

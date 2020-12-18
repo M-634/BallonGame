@@ -93,8 +93,8 @@ public class ForcePlayerMove : MonoBehaviour
         AdjustFallingForce();
 
 
-        Debug.Log("m_rb.velocity.x :" + m_rb.velocity.x + "m_rb.velocity.y :"
-            + m_rb.velocity.y + "m_rb.velocity.z :" + m_rb.velocity.z);
+        //Debug.Log("m_rb.velocity.x :" + m_rb.velocity.x + "m_rb.velocity.y :"
+        //    + m_rb.velocity.y + "m_rb.velocity.z :" + m_rb.velocity.z);
         //if (m_mouthDebug)
         //{
         //    SetMouthAim();
