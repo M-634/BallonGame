@@ -67,6 +67,7 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
         m_startCountDown.text = "START!!";
         yield return null;
         //StartCoroutine(m_startCountDown.FadeOut(2f, () => m_eventSystemInGameScene.ExecuteGameStartEvent()));
+        m_startCountDown.FadeOutWithDoTween(2f, () => m_eventSystemInGameScene.ExecuteGameStartEvent());
     }
 
     public void InisitializeUISetAcitve()

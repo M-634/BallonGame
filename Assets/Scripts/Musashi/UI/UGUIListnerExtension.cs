@@ -76,12 +76,12 @@ public static class UGUIListnerExtension
         graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, alpha);
     }
 
-    public static void FadeOutImageWithDoTween(this Graphic graphic, float fadeTime,UnityAction callback = null)
+    public static void FadeOutWithDoTween(this Graphic graphic, float fadeTime,UnityAction callback = null)
     {
         graphic.DOColor(Color.clear, fadeTime).OnComplete(() => callback?.Invoke());
     }
 
-    public static void FadeInImageWithDoTween(this Graphic graphic,float fadeTime,UnityAction callback = null)
+    public static void FadeInWithDoTween(this Graphic graphic,float fadeTime,UnityAction callback = null)
     {
         graphic.DOColor(Color.black, fadeTime).OnComplete(() => callback?.Invoke());
     }

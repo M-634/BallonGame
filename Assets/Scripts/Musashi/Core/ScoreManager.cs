@@ -36,20 +36,30 @@ public class ScoreManager : EventReceiver<ScoreManager>
         Sequence sequence = DOTween.Sequence();
         sequence.Append(
         DOTween.To(() => score, num => score = num, m_currentScore, 2f)
-            .OnUpdate(() => m_UISetActiveControl.GetResulScoreText.text = ("Score: " + score.ToString()))
+            .OnUpdate(() => m_UISetActiveControl.GetResulScoreText.text = "Score: " + score.ToString())
             .OnComplete(() => Debug.Log("")));
 
         int time = 0;
         sequence.Append(
             DOTween.To(() => time, num => time = num, leftTime, 2f)
-            .OnUpdate(() => m_UISetActiveControl.LeftTimeScoreText.text = ("LeftTime;" + time.ToString()))
+            .OnUpdate(() => m_UISetActiveControl.LeftTimeScoreText.text = "LeftTime;" + time.ToString())
             .OnComplete(() => Debug.Log("")));
 
         int total = 0;
         sequence.Append(
-            DOTween.To(() => total, num => total = num, totalScore, 2f))
-            .OnUpdate(() => m_UISetActiveControl.TotalScoreText.text = ("TotalScore:" + total.ToString()))
-            .OnComplete(() => SaveAndLoad(totalScore, leftTime));
+            DOTween.To(() => total, num => total = num, totalScore, 2f)
+            .OnUpdate(() => m_UISetActiveControl.TotalScoreText.text = "TotalScore:" + total.ToString())
+            .OnComplete(() =>
+            {
+                try
+                {
+                    SaveAndLoad(totalScore, leftTime);//ここで意味不明なエラーが起きてる
+                }
+                catch (System.Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
+            }));
     }
 
 
@@ -64,7 +74,7 @@ public class ScoreManager : EventReceiver<ScoreManager>
             //ステージを初期化する
             StageParent.Instance.Initialization();
         }
-
+        Debug.Log("aaa  ");
         if (SceneLoader.Instance)
         {
             //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
