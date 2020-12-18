@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using DG.Tweening;
 
 /// <summary>
 /// UGUIの拡張クラス
@@ -47,30 +48,41 @@ public static class UGUIListnerExtension
         slider.onValueChanged.AddListener(sliderCallback);
     }
 
-   public static IEnumerator FadeOut(this Graphic graphic ,float fadeTime = 2f,UnityAction callback = null)
-    {
-        while (graphic.color.a > 0f)
-        {
-            float temp = graphic.color.a - Time.deltaTime / fadeTime;
-            graphic.SetAlpha(temp);
-            yield return null;
-        }
+   //public static IEnumerator FadeOut(this Graphic graphic ,float fadeTime = 2f,UnityAction callback = null)
+   // {
+   //     while (graphic.color.a > 0f)
+   //     {
+   //         float temp = graphic.color.a - Time.deltaTime / fadeTime;
+   //         graphic.SetAlpha(temp);
+   //         yield return null;
+   //     }
+   //     graphic.DOColor(Color.clear, fadeTime);
+   //     callback?.Invoke();
+   // }
 
-        callback?.Invoke();
-    }
-
-    public static IEnumerator FadeIn(this Graphic graphic,float fadeTime = 2f)
-    {
-        while (graphic.color.a < 1f)
-        {
-            float temp = graphic.color.a + Time.deltaTime / fadeTime;
-            graphic.SetAlpha(temp);
-            yield return null;
-        }
-    }
+   // public static IEnumerator FadeIn(this Graphic graphic,float fadeTime = 2f)
+   // {
+   //     while (graphic.color.a < 1f)
+   //     {
+   //         float temp = graphic.color.a + Time.deltaTime / fadeTime;
+   //         graphic.SetAlpha(temp);
+   //         yield return null;
+   //     }
+   //     graphic.DOColor(Color.black, fadeTime);
+   // }
 
     public static void SetAlpha(this Graphic graphic ,float alpha)
     {
         graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, alpha);
+    }
+
+    public static void FadeOutWithDoTween(this Graphic graphic, float fadeTime,UnityAction callback = null)
+    {
+        graphic.DOColor(Color.clear, fadeTime).OnComplete(() => callback?.Invoke());
+    }
+
+    public static void FadeInWithDoTween(this Graphic graphic,float fadeTime,UnityAction callback = null)
+    {
+        graphic.DOColor(Color.black, fadeTime).OnComplete(() => callback?.Invoke());
     }
 }

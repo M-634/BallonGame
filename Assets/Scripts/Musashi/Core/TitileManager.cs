@@ -21,6 +21,7 @@ public class TitileManager : MonoBehaviour
         {
             m_continueBtn.interactable = false;
         }
+        StageParent.Instance.GameClearState = GameClearState.None;
     }
 
     /// <summary>
