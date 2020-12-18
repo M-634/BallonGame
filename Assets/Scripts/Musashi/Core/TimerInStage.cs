@@ -33,6 +33,9 @@ public class TimerInStage : EventReceiver<TimerInStage>
         }
     }
 
+    /// <summary>
+    /// TO:DO ここコルーチンに書きなす
+    /// </summary>
     // Update is called once per frame
     void Update()
     {
@@ -55,6 +58,18 @@ public class TimerInStage : EventReceiver<TimerInStage>
         {
             m_timeLimit = 0;
             m_eventSystemInGameScene.ExecuteGameOverEvent();
+        }
+    }
+
+    //memo
+    //int mseconds = Mathf.FloorToInt((timer - minutes * 60 - seconds) * 1000);
+    //string niceTime = string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, mseconds);
+
+    IEnumerator CountDown()
+    {
+        while (m_timeLimit > 0)
+        {
+            yield return null;
         }
     }
 
