@@ -8,6 +8,7 @@ using UnityEngine;
 public class Arai_RedCoinSwitch : MonoBehaviour
 {
     GameObject obj;
+    [Header("RedCoinのオブジェクト")]
     [SerializeField] GameObject[] switchObj;
     void Start()
     {

@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-/// <summary>Dustに動きを加えるスクリプト</summary>
+/// <summary>DustのAnimatorのSucript</summary>
 public class Arai_DustMove : MonoBehaviour
 {
-    /// <summary>this.transform.DOMoveの移動先の位置のX,Y,Z軸の変数</summary>
-    [SerializeField] Vector3 startPos;
-    /// <summary>this.transform.DOMoveの移動後の位置のX,Y,Z軸の変数</summary>
-    [SerializeField] Vector3 endPos;
-    /// <summary>this.transform.DOMoveの移動時間の変数</summary>
-    [SerializeField] private float traveTime;
+    [Header("animationのON,OFF")]
+    [SerializeField] bool dustAnim;
+
+    Animator m_anim;
+
     void Start()
     {
-        DOTween.Sequence()
-               .Append(this.transform.DOMove(startPos, traveTime).SetRelative())
-               .Append(this.transform.DOMove(endPos, traveTime).SetRelative())
-               .SetLoops(-1)
-               .Play();
+        m_anim = this.GetComponent<Animator>();
+
+        // DustAnimにチェックが入っているとAnimatorのパラメーター(DustMove)がtrueになる
+        if (dustAnim == true)
+        {
+            m_anim.SetBool("DustMove", true);
+        }
     }
 }
