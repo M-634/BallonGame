@@ -6,8 +6,9 @@ using DG.Tweening;
 /// <summary>
 /// RedCoin の スクリプト
 /// </summary>
-public class Arai_RedCoin : MonoBehaviour
+public class Arai_Coin : MonoBehaviour
 {
+    [Header("回転時間")]
     [SerializeField] private float rotationTime;
     GameObject obj;
     void Start()
