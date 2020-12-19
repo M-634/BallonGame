@@ -9,14 +9,21 @@ using DG.Tweening;
 public class Arai_Coin : MonoBehaviour
 {
     [Header("回転時間")]
-    [SerializeField] private float rotationTime;
+    /// <summary>n秒に360度回転するかの時間</summary>
+    [SerializeField] private float rotationTime = 3f;
+    [Header("遅延時間")]
+    /// <summary>コインが回転をはじめるまでの時間</summary>
+    [SerializeField] private float delayTime;
     GameObject obj;
     void Start()
     {
         obj = GameObject.Find("RedCoin");
+
+        delayTime = Random.Range(1f, 2f);
         
         DOTween.Sequence();
         transform.DOLocalRotate(new Vector3(0, 360f, 0), rotationTime, RotateMode.FastBeyond360)
+             .SetDelay(delayTime)
              .SetEase(Ease.Linear)
              .SetLoops(-1, LoopType.Restart);
     }
