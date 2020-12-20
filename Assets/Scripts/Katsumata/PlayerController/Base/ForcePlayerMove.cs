@@ -57,7 +57,7 @@ public class ForcePlayerMove : MonoBehaviour
     //Vector3 m_mouthPosi;
 
     PlayerEventHandller m_playerEventHandller;
-    PlayerAddSpeed m_playerAddSpeed;
+    PlayerOnStream m_playerAddSpeed;
 
     ///// <summary> カメラの横軸回転速度</summary>
     //public float m_RotateHorizontalSpeed;
@@ -75,7 +75,7 @@ public class ForcePlayerMove : MonoBehaviour
     {
         m_rb = GetComponent<Rigidbody>();
         m_playerEventHandller = GetComponent<PlayerEventHandller>();
-        m_playerAddSpeed = GetComponent<PlayerAddSpeed>();
+        m_playerAddSpeed = GetComponent<PlayerOnStream>();
 
         m_rb.velocity = transform.forward * startSpeed;
         variableJoystick = variableJoystickHorizontal.GetComponent<VariableJoystick>();
@@ -124,7 +124,7 @@ public class ForcePlayerMove : MonoBehaviour
     {
         if (collision.transform.tag == "acceleration")
         {
-            m_playerAddSpeed = collision.transform.GetComponent<PlayerAddSpeed>();
+            m_playerAddSpeed = collision.transform.GetComponent<PlayerOnStream>();
         }
     }
 
