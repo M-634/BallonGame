@@ -39,7 +39,7 @@ public class TailWind : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Plyer" && m_rb.velocity.magnitude < m_accelMaxSpeed)
+        if (other.tag == "Player" && m_rb.velocity.magnitude < m_accelMaxSpeed)
         {
             m_rb.AddForce(other.transform.forward * m_addCoefficient); //ローカル座標でのforward
         }
