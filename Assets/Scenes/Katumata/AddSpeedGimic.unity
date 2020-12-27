@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -480,7 +480,7 @@ MonoBehaviour:
   m_UpdateMethod: 2
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 1
+    m_Time: 2
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -545,26 +545,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_addCoefficient: 50
   m_accelMaxSpeed: 50
---- !u!1 &893671866 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 778437796475740377, guid: f6ba84b604f94644d9b10e96f16b587b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1853093116}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &893671868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 893671866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 110b003fa299d99498d5c19d16ce207e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cmVcamBase: {fileID: 1691597666}
-  cmVcamAddSpeed: {fileID: 8920106294818240030}
 --- !u!1 &906771559
 GameObject:
   m_ObjectHideFlags: 0
@@ -804,7 +784,7 @@ PrefabInstance:
     - target: {fileID: 7535924058077503688, guid: bc3d8e6aa42a75c4f9ae7c225ce66f81,
         type: 3}
       propertyPath: m_Name
-      value: accelCube
+      value: TailWind
       objectReference: {fileID: 0}
     - target: {fileID: 7535924058077503692, guid: bc3d8e6aa42a75c4f9ae7c225ce66f81,
         type: 3}
@@ -955,6 +935,16 @@ PrefabInstance:
       propertyPath: m_doDebugPlayerMove
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6764673793951893785, guid: f6ba84b604f94644d9b10e96f16b587b,
+        type: 3}
+      propertyPath: cmVcamBase
+      value: 
+      objectReference: {fileID: 1691597666}
+    - target: {fileID: 6764673793951893785, guid: f6ba84b604f94644d9b10e96f16b587b,
+        type: 3}
+      propertyPath: cmVcamAddSpeed
+      value: 
+      objectReference: {fileID: 8920106294818240030}
     m_RemovedComponents:
     - {fileID: 778437796605064941, guid: f6ba84b604f94644d9b10e96f16b587b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f6ba84b604f94644d9b10e96f16b587b, type: 3}
@@ -1058,17 +1048,17 @@ PrefabInstance:
     - target: {fileID: 1248652110680213125, guid: 5a54f81205bdb1e4cb69454a960ea08b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.12280589
+      value: -0.1228059
       objectReference: {fileID: 0}
     - target: {fileID: 1248652110680213125, guid: 5a54f81205bdb1e4cb69454a960ea08b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000018583888
+      value: 0.000000018263867
       objectReference: {fileID: 0}
     - target: {fileID: 1248652110680213125, guid: 5a54f81205bdb1e4cb69454a960ea08b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000067252928
+      value: -0.0000000066856924
       objectReference: {fileID: 0}
     - target: {fileID: 1248652110680213125, guid: 5a54f81205bdb1e4cb69454a960ea08b,
         type: 3}
