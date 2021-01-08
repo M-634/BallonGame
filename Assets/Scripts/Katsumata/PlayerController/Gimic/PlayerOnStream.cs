@@ -23,7 +23,7 @@ public class PlayerOnStream : MonoBehaviour
 
     KatsumataPlayerCameraAddforce cameraMove;
 
-    [HideInInspector] public bool m_onDGMove = false;
+    public bool m_onDGMove = false;
 
 
     private void OnTriggerEnter(Collider other)
@@ -31,7 +31,11 @@ public class PlayerOnStream : MonoBehaviour
         if (other.tag == "Player")
         {
             cameraMove = other.gameObject.GetComponent<KatsumataPlayerCameraAddforce>();
-            cameraMove.ChangeAddSpeedCamera();
+            if (!cameraMove.cameraFixed)
+            {
+                cameraMove.ChangeAddSpeedCamera();
+            }
+            
             MovePoint(other.gameObject);
             m_onDGMove = true;
         }
@@ -40,11 +44,24 @@ public class PlayerOnStream : MonoBehaviour
 
     void MovePoint(GameObject player)
     {
-        Debug.Log("MovePoint!");
-        player.transform.DOLocalMoveY(amountMovement, m_moveTime)
+        if (!cameraMove.cameraFixed)
+        {
+            player.transform.DOLocalMoveY(amountMovement, m_moveTime)
             .SetRelative(true)
             .SetEase(moveMethod)
-            .OnComplete(() => cameraMove.ChangeBaseCamera())
+            .OnComplete(() => {
+                cameraMove.ChangeBaseCamera();
+                m_onDGMove = false;
+            }); 
+        }
+        else
+        {
+            player.transform.DOLocalMoveY(amountMovement, m_moveTime)
+            .SetRelative(true)
+            .SetEase(moveMethod)
             .OnComplete(() => m_onDGMove = false);
+        }
+            Debug.Log("MovePoint!");
+        
     }
 }

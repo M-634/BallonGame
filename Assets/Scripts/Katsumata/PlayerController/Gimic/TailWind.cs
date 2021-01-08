@@ -15,14 +15,18 @@ public class TailWind : MonoBehaviour
 
     KatsumataPlayerCameraAddforce cameraMove;
 
-
+    
     private void OnTriggerEnter(Collider other)
     {
+        //StopCoroutine(cameraChangeTimeCount);
         if (other.tag == "Player")
         {
             m_rb = other.GetComponent<Rigidbody>();
             cameraMove = other.gameObject.GetComponent<KatsumataPlayerCameraAddforce>();
-            cameraMove.ChangeAddSpeedCamera();
+            if (!cameraMove.cameraFixed)
+            {
+                cameraMove.ChangeAddSpeedCamera();
+            }
         }
 
     }
@@ -37,9 +41,13 @@ public class TailWind : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && !cameraMove.cameraFixed)
         {
-            cameraMove.ChangeBaseCamera();
+            float cameraChangeTime = other.GetComponent<KatsumataPlayerCameraAddforce>().m_cameraChangeTime;
+            cameraMove.ChangeBaseCamera(cameraChangeTime);
+            //StartCoroutine(cameraChangeTimeCount);
         }
     }
+
+    
 }
