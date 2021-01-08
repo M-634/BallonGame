@@ -9,8 +9,7 @@ public class KatsumataPlayerCameraAddforce : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera cmVcamBase;
     [Header("加速時のカメラの位置、挙動")]
     [SerializeField] CinemachineVirtualCamera cmVcamAddSpeed;
-
-    CinemachineBrain cinemachineBrain;
+    [Header("加速した時のカメラから通常時のカメラに切り替わるまでの時間")]
     public float m_cameraChangeTime = 2.0f;
     Coroutine cameraChangeCountCoroutine;
     /// <summary>
@@ -18,10 +17,6 @@ public class KatsumataPlayerCameraAddforce : MonoBehaviour
     /// </summary>
     [HideInInspector] public bool cameraFixed = false;
 
-    private void Start()
-    {
-        cinemachineBrain = Camera.main.GetComponent<CinemachineBrain>();
-    }
 
     /// <summary>
     /// プレイヤーが加速オブジェの効果を得た時のカメラ。
@@ -66,7 +61,6 @@ public class KatsumataPlayerCameraAddforce : MonoBehaviour
 
     public void ChangeCameraFixed()
     {
-        cinemachineBrain = Camera.main.GetComponent<CinemachineBrain>();
         if (cameraFixed) //カメラ固定モードから固定しないモードに切り替え
         {
             cameraFixed = false;
