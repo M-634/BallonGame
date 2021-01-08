@@ -19,16 +19,18 @@ public class SelectButtons : MonoBehaviour
     {
         foreach (var btn in m_buttons)
         {
-            btn.StageData = StageParent.Instance.SendStageData(btn.StagePrefab);
             if (m_doReleaseStage)
             {
                 btn.SelectButton.interactable = true;
+                btn.SoureImage = btn.OpenedSprite;
             }
             else
             {
                 btn.SelectButton.interactable = false;
+                btn.SoureImage = btn.UnOpenedSprite;
             }
 
+            btn.StageData = StageParent.Instance.SendStageData(btn.StagePrefab);
             if (btn.StageData.IsStageClear)
             {
                 //ステージクリアした印を付ける

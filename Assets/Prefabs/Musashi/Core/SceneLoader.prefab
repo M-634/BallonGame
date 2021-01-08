@@ -58,8 +58,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -234,7 +234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.49019608}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -267,7 +267,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_text: {fileID: 2112486826}
   m_animationTime: 2
-  m_fadeColor: {r: 0, g: 0.80137205, b: 1, a: 1}
+  m_fadeColor: {r: 0, g: 0.80137205, b: 1, a: 0.9843137}
 --- !u!1 &3537571228798796410
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,7 +312,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89e05639b0b64b649ab9295326230d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_dontDestroyOnLoad: 1
   m_loadTitleSceneName: Test_TitleScene
   m_loadSelectSceneName: Test_SelectScene
   m_loadGameSceneName: Test_Game
