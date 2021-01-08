@@ -23,7 +23,7 @@ public class PlayerOnStream : MonoBehaviour
 
     KatsumataPlayerCameraAddforce cameraMove;
 
-    public bool m_onDGMove = false;
+    [HideInInspector] public bool m_onDGMove = false;
 
 
     private void OnTriggerEnter(Collider other)
@@ -39,7 +39,6 @@ public class PlayerOnStream : MonoBehaviour
             MovePoint(other.gameObject);
             m_onDGMove = true;
         }
-
     }
 
     void MovePoint(GameObject player)
@@ -61,7 +60,5 @@ public class PlayerOnStream : MonoBehaviour
             .SetEase(moveMethod)
             .OnComplete(() => m_onDGMove = false);
         }
-            Debug.Log("MovePoint!");
-        
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-using UnityEngine.UI;
 
 public class KatsumataPlayerCameraAddforce : MonoBehaviour
 {
@@ -13,7 +12,7 @@ public class KatsumataPlayerCameraAddforce : MonoBehaviour
 
     CinemachineBrain cinemachineBrain;
     public float m_cameraChangeTime = 2.0f;
-
+    Coroutine cameraChangeCountCoroutine;
     /// <summary>
     /// カメラの固定化をするかどうか。初期値は固定しない状態。必ずUIのトグルを操作してオンオフ切り替えること
     /// </summary>
@@ -32,7 +31,7 @@ public class KatsumataPlayerCameraAddforce : MonoBehaviour
     {
         cmVcamBase.Priority = 5;
         cmVcamAddSpeed.Priority = 10;
-        Debug.Log("AddSpeedCamera!");
+        //Debug.Log("AddSpeedCamera!");
     }
 
     /// <summary>
@@ -42,7 +41,7 @@ public class KatsumataPlayerCameraAddforce : MonoBehaviour
     {
         cmVcamBase.Priority = 10;
         cmVcamAddSpeed.Priority = 5;
-        Debug.Log("BaseCamera!");
+        //Debug.Log("BaseCamera!");
     }
     /// <summary>
     /// 時間をかけてBaseCameraに切り替えたいとき使う
@@ -50,8 +49,12 @@ public class KatsumataPlayerCameraAddforce : MonoBehaviour
     /// <param name="timeCount"></param>
     public void ChangeBaseCamera(float timeCount)
     {
-        StartCoroutine(CameraChangeCountTime(timeCount));
-        Debug.Log("BaseCamera!");
+        if (cameraChangeCountCoroutine != null)
+        {
+            StopCoroutine(cameraChangeCountCoroutine);
+        }
+        cameraChangeCountCoroutine = StartCoroutine(CameraChangeCountTime(timeCount));
+        //Debug.Log("BaseCamera!");
     }
 
     IEnumerator CameraChangeCountTime(float time)
@@ -64,19 +67,18 @@ public class KatsumataPlayerCameraAddforce : MonoBehaviour
     public void ChangeCameraFixed()
     {
         cinemachineBrain = Camera.main.GetComponent<CinemachineBrain>();
-        if (cameraFixed)
+        if (cameraFixed) //カメラ固定モードから固定しないモードに切り替え
         {
             cameraFixed = false;
-            
-            if (!cinemachineBrain.IsLive(cmVcamBase))
-            {
-                ChangeBaseCamera();
-            }
-            
         }
-        else
+        else //カメラ固定しないモードから固定モードに切り替える。その際すぐにCMvcamBaseに切り替える
         {
             cameraFixed = true;
+            if (cameraChangeCountCoroutine != null)
+            {
+                StopCoroutine(cameraChangeCountCoroutine);
+            }
+            ChangeBaseCamera();
         }
     }
 }
