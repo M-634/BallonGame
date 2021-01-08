@@ -26,13 +26,13 @@ public class SelectStageButton : MonoBehaviour, IPointerEnterHandler
     [SerializeField] Text m_clearScoreText;
     [SerializeField] Text m_stageNameText;
 
-
     //public Text ClearText { get => m_stageClearText; }
     public Image StageClearImage { get => m_stageClearImage; }
     public Sprite UnOpenedSprite { get => m_unOpenedSprite; }
     public Sprite OpenedSprite { get => m_openedSprite; }
 
-    public StageData StageData { get; set; }
+    private StageData m_stageData;
+    public StageData StageData { get => m_stageData; set => m_stageData = value;}
     public GameObject StagePrefab { get => m_stagePrefab; }
     private Button m_button;
     public Button SelectButton

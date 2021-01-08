@@ -19,6 +19,8 @@ public class SelectButtons : MonoBehaviour
     {
         foreach (var btn in m_buttons)
         {
+            if (btn.gameObject.activeSelf == false) return;//ボタンのアクティブがfalseだとエラーはくのを防ぐため
+
             if (m_doReleaseStage)
             {
                 btn.SelectButton.interactable = true;
@@ -31,6 +33,20 @@ public class SelectButtons : MonoBehaviour
             }
 
             btn.StageData = StageParent.Instance.SendStageData(btn.StagePrefab);
+
+            if (btn.StageData == null)
+            {
+                Debug.LogError("StageParentに設定してあるStaegeDatas内に存在するstagePrefabとボタンに設定したstagePrefabで一致するものがありません！" +
+                    "今一度、設定を確認してみてください");
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_ANDROID
+                Application.runInBackground = false;
+                Application.Quit();
+#endif
+                return;
+            }
+
             if (btn.StageData.IsStageClear)
             {
                 //ステージクリアした印を付ける
