@@ -15,16 +15,6 @@ public class TailWind : MonoBehaviour
 
     KatsumataPlayerCameraAddforce cameraMove;
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {
