@@ -8,7 +8,7 @@ using UnityEngine;
 public class SelectButtons : MonoBehaviour
 {
     /// <summary>セレクトボタンをセットする</summary>
-    [SerializeField] SelectGameSceneButton[] m_buttons;
+    [SerializeField] SelectStageButton[] m_buttons;
     /// <summary>ステージ解放フラグ </summary>
     bool m_doReleaseStage = true;//初めのステージは必ず解放する
 
