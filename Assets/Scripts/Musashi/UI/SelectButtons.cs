@@ -31,8 +31,9 @@ public class SelectButtons : MonoBehaviour
 
             if (btn.StageData.IsStageClear)
             {
-                //クリアテキストをボタンに表示
-                btn.ClearText.gameObject.SetActive(true);
+                //ステージクリアした印を付ける
+                //btn.ClearText.gameObject.SetActive(true);
+                btn.StageClearImage.gameObject.SetActive(true);
             }
             else
             {

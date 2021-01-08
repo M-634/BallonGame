@@ -16,15 +16,17 @@ public class SelectStageButton : MonoBehaviour, IPointerEnterHandler
     [SerializeField] GameObject m_stagePrefab;
     [SerializeField] VideoClip m_videoClip;
     [SerializeField] VideoPlayer m_videoPlayer;
+    [SerializeField] Image m_stageClearImage;
 
     [Header("各テキストUI")]
-    [SerializeField] Text m_stageClearText;
+    //[SerializeField] Text m_stageClearText;
     [SerializeField] Text m_clearTimeText;
     [SerializeField] Text m_clearScoreText;
     [SerializeField] Text m_stageNameText;
 
 
-    public Text ClearText { get => m_stageClearText; }
+    //public Text ClearText { get => m_stageClearText; }
+    public Image StageClearImage { get => m_stageClearImage; }
     public StageData StageData { get; set; }
     public GameObject StagePrefab { get => m_stagePrefab; }
     private Button m_button;
