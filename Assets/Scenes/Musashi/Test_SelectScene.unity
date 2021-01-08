@@ -258,6 +258,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 3537571228798796415, guid: 6c32049e33b529e44806f3f89e9b0528,
+        type: 3}
+      propertyPath: m_loadGameSceneName
+      value: Test_Game
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c32049e33b529e44806f3f89e9b0528, type: 3}
 --- !u!1001 &918738613
@@ -331,7 +336,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_stageDatas.Array.data[0].m_stagePrefab
       value: 
-      objectReference: {fileID: 9087401732524288658, guid: 180242eaff5c731479ef2e68fb3f24f0,
+      objectReference: {fileID: 3240102908380053597, guid: bb25d9c40d745894ab5b37191f85c65a,
         type: 3}
     - target: {fileID: 6638159838311558371, guid: 8c4c953ca4e48de4794807cb3e0ab8a9,
         type: 3}
@@ -984,5 +989,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 923737568}
+    - target: {fileID: 9165772762086716326, guid: e77715370d3b1b042835341a8a6e2d4c,
+        type: 3}
+      propertyPath: m_stagePrefab
+      value: 
+      objectReference: {fileID: 3240102908380053597, guid: bb25d9c40d745894ab5b37191f85c65a,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e77715370d3b1b042835341a8a6e2d4c, type: 3}
