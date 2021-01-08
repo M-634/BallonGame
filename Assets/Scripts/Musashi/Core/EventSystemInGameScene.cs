@@ -27,10 +27,12 @@ public class EventSystemInGameScene : MonoBehaviour
     public void ExecuteGameOverEvent()
     {
         GameOverEvent?.Invoke();
+        StageParent.Instance.GameClearState = GameClearState.GameOver;
     }
 
     public void ExecuteGameClearEvent()
     {
         GameClearEvent?.Invoke();
+        StageParent.Instance.GameClearState = GameClearState.GameClear;
     }
 }

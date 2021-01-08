@@ -45,6 +45,10 @@ public class ForcePlayerMove : MonoBehaviour
     [Header("最大の横移動の速さ")]
     [SerializeField] float maxHorizontalSpeed = 10;
 
+    [Header("横移動の摩擦力")]
+    [SerializeField] float dragHorizontal = 0.98f;
+
+    [Header("横移動のコントローラーUIPrefabの格納")]
     [SerializeField] GameObject variableJoystickHorizontal;
     VariableJoystick variableJoystick;
 
@@ -53,6 +57,7 @@ public class ForcePlayerMove : MonoBehaviour
     //Vector3 m_mouthPosi;
 
     PlayerEventHandller m_playerEventHandller;
+    PlayerOnStream m_playerAddSpeed;
 
     ///// <summary> カメラの横軸回転速度</summary>
     //public float m_RotateHorizontalSpeed;
@@ -70,6 +75,7 @@ public class ForcePlayerMove : MonoBehaviour
     {
         m_rb = GetComponent<Rigidbody>();
         m_playerEventHandller = GetComponent<PlayerEventHandller>();
+        m_playerAddSpeed = GetComponent<PlayerOnStream>();
 
         m_rb.velocity = transform.forward * startSpeed;
         variableJoystick = variableJoystickHorizontal.GetComponent<VariableJoystick>();
@@ -83,13 +89,25 @@ public class ForcePlayerMove : MonoBehaviour
             return;
         }
 
-        SetHorizontalMove();
+        if (m_playerAddSpeed == null)
+        {
+            SetHorizontalMove();
+            AddHorizontalDrag();
+        }
+        else
+        {
+            if (!m_playerAddSpeed.m_onDGMove)
+            {
+                SetHorizontalMove();
+                AddHorizontalDrag();
+            }
+        }
+        
         AdjustForwardForce();
         AdjustFallingForce();
 
-
-        Debug.Log("m_rb.velocity.x :" + m_rb.velocity.x + "m_rb.velocity.y :"
-            + m_rb.velocity.y + "m_rb.velocity.z :" + m_rb.velocity.z);
+        //Debug.Log("m_rb.velocity.x :" + m_rb.velocity.x + "m_rb.velocity.y :"
+        //    + m_rb.velocity.y + "m_rb.velocity.z :" + m_rb.velocity.z);
         //if (m_mouthDebug)
         //{
         //    SetMouthAim();
@@ -100,6 +118,14 @@ public class ForcePlayerMove : MonoBehaviour
         //}
         SetRotateSpeed();
         SetProgressAngle();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "acceleration")
+        {
+            m_playerAddSpeed = collision.transform.GetComponent<PlayerOnStream>();
+        }
     }
 
     ///// <summary>
@@ -241,5 +267,18 @@ public class ForcePlayerMove : MonoBehaviour
     {
         Vector3 force = new Vector3(variableJoystick.Horizontal * m_horizontalForce, 0, 0);
         if (Mathf.Abs(m_rb.velocity.x) < maxHorizontalSpeed) m_rb.AddForce(force);
+    }
+
+    /// <summary>
+    /// 横移動にの空気抵抗
+    /// </summary>
+    void AddHorizontalDrag()
+    {
+        if (variableJoystick.Horizontal == 0)
+        {
+            Vector3 newHorizontalSpeed = m_rb.velocity;
+            newHorizontalSpeed.x *= dragHorizontal;
+            m_rb.velocity = newHorizontalSpeed;
+        }
     }
 }
