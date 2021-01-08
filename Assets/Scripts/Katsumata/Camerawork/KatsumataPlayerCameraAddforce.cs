@@ -61,6 +61,7 @@ public class KatsumataPlayerCameraAddforce : MonoBehaviour
 
     public void ChangeCameraFixed()
     {
+        Debug.Log("切り替わった!");
         if (cameraFixed) //カメラ固定モードから固定しないモードに切り替え
         {
             cameraFixed = false;
