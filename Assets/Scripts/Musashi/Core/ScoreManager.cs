@@ -8,11 +8,21 @@ using Unity.Collections.LowLevel.Unsafe;
 
 /// <summary>
 ///ゲーム中のスコアを管理し、ゲームクリアしたらリザルトを表示する
+///memo:トータルスコアがランク制に変化した
 /// </summary>
 public class ScoreManager : EventReceiver<ScoreManager>
 {
     private int m_currentScore = 0;
     [SerializeField] UISetActiveControl m_UISetActiveControl;
+    private int m_totalCoinNum;
+    private int m_getCoinNum;
+
+    private void Start()
+    {
+        var coinNum = GameObject.FindGameObjectsWithTag("Coin");
+        m_totalCoinNum = coinNum.Length;
+        Debug.Log("Coin TotalNumber : " + m_totalCoinNum);
+    }
 
     /// <summary>
     /// プレイヤーがコインに衝突したら呼ばれる関数
@@ -20,7 +30,9 @@ public class ScoreManager : EventReceiver<ScoreManager>
     public void GetCoin(int score)
     {
         m_currentScore += score;
+        m_getCoinNum++;
         m_UISetActiveControl.CurrentScoreText.text = "Score: " + m_currentScore;
+
     }
 
     /// <summary>
@@ -30,8 +42,8 @@ public class ScoreManager : EventReceiver<ScoreManager>
     /// </summary>
     public void Result(int leftTime)
     {
-        int totalScore = m_currentScore * leftTime;//スコアと残り時間のスコアをどう計算するかは未定
-
+        //int totalScore = m_currentScore * leftTime;
+       
         int score = 0;
         Sequence sequence = DOTween.Sequence();
         sequence.Append(
@@ -45,21 +57,47 @@ public class ScoreManager : EventReceiver<ScoreManager>
             .OnUpdate(() => m_UISetActiveControl.LeftTimeScoreText.text = "LeftTime;" + time.ToString())
             .OnComplete(() => Debug.Log("")));
 
-        int total = 0;
-        sequence.Append(
-            DOTween.To(() => total, num => total = num, totalScore, 2f)
-            .OnUpdate(() => m_UISetActiveControl.TotalScoreText.text = "TotalScore:" + total.ToString())
-            .OnComplete(() =>
-            {
-                try
-                {
-                    SaveAndLoad(totalScore, leftTime);//ここで意味不明なエラーが起きてる
-                }
-                catch (System.Exception e)
-                {
-                    Debug.Log(e.Message);
-                }
-            }));
+        //int total = 0;
+        //sequence.Append(
+        //    DOTween.To(() => total, num => total = num, totalScore, 2f)
+        //    .OnUpdate(() => m_UISetActiveControl.TotalScoreText.text = "TotalScore:" + total.ToString())
+        //    .OnComplete(() =>
+        //    {
+        //        try
+        //        {
+        //            SaveAndLoad(totalScore, leftTime);//ここで意味不明なエラーが起きてる
+        //        }
+        //        catch (System.Exception e)
+        //        {
+        //            Debug.Log(e.Message);
+        //        }
+        //    }));
+
+        //ステージ内のコインの総数と獲得したコインの数の割合でランク付け（S～C）
+        int totalPoint = m_getCoinNum / m_totalCoinNum * 100;
+
+        m_UISetActiveControl.TotalScoreText.text = DetermineTheRank(totalPoint);
+        SaveAndLoad(totalPoint, leftTime);
+    }
+
+    private string DetermineTheRank(int raito)
+    {
+        if (raito > 90)
+        {
+            return "S";
+        }
+        else if (raito > 70)
+        {
+            return "A";
+        }
+        else if (raito > 50)
+        {
+            return "B";
+        }
+        else
+        {
+            return "C";
+        } 
     }
 
 
