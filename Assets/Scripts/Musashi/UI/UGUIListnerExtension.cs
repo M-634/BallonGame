@@ -27,7 +27,6 @@ public static class UGUIListnerExtension
     /// <summary>
     /// 時間を00:00.000形式でTextMeshProに表示する拡張クラス
     /// </summary>
-    /// <param name="timerText"></param>
     /// <param name="time">秒数</param>
     public static void TimerInfo(this TextMeshProUGUI timerText, float time)
     {
@@ -35,6 +34,11 @@ public static class UGUIListnerExtension
         float seconds = time - minutes * 60;
         float mseconds = time * 1000 / 1000;
         timerText.text = string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, mseconds);
+    }
+
+    public static void ClearScoreText(this TextMeshProUGUI scoreText,int score)
+    {
+        scoreText.text = "ClearScore:" + score.ToString();
     }
 
     public static void Show(this CanvasGroup canvasGroup)

@@ -46,14 +46,14 @@ public class ScoreManager : EventReceiver<ScoreManager>
         Sequence sequence = DOTween.Sequence();
         sequence.Append(
         DOTween.To(() => score, num => score = num, m_currentScore, 2f)
-            .OnUpdate(() => m_UISetActiveControl.ResulScoreText.text = "Score: " + score.ToString())
-            .OnComplete(() => Debug.Log("")));
+            .OnUpdate(() => m_UISetActiveControl.ResulScoreText.text = score.ToString()))
+            .OnComplete(() => Debug.Log("")) ;
 
         float time = 0;
         sequence.Append(
             DOTween.To(() => time, num => time = num, clearTime, 2f)
-            .OnUpdate(() => m_UISetActiveControl.ClearTimeScoreText.text = "LeftTime;" + time.ToString())
-            .OnComplete(() => Debug.Log("")));
+            .OnUpdate(() => m_UISetActiveControl.TimerText.TimerInfo(time)))
+            .OnComplete(() => Debug.Log(""));
 
         //ステージ内のコインの総数と獲得したコインの数の割合でランク付け（A～C）
         int ratio = m_getCoinNum / m_totalCoinNum * 100;

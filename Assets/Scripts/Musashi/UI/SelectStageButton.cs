@@ -73,7 +73,7 @@ public class SelectStageButton : MonoBehaviour, IPointerEnterHandler
     {
         //各種UIへ情報をセットする
         m_stageNameText.text = StageData.StagePrefab.name;
-        m_clearScoreText.text = StageData.HighScore.ToString();
+        m_clearScoreText.text = "ClearScore:" +  StageData.HighScore.ToString();
         m_clearTimeText.TimerInfo(StageData.ClearTime);
 
         //動画再生
