@@ -40,7 +40,7 @@ public class ScoreManager : EventReceiver<ScoreManager>
     /// 獲得スコアとクリア時間を表示。
     /// ハイスコアを更新したらセーブする
     /// </summary>
-    public void Result(int clearTime)
+    public void Result(float clearTime)
     {     
         int score = 0;
         Sequence sequence = DOTween.Sequence();
@@ -49,7 +49,7 @@ public class ScoreManager : EventReceiver<ScoreManager>
             .OnUpdate(() => m_UISetActiveControl.ResulScoreText.text = "Score: " + score.ToString())
             .OnComplete(() => Debug.Log("")));
 
-        int time = 0;
+        float time = 0;
         sequence.Append(
             DOTween.To(() => time, num => time = num, clearTime, 2f)
             .OnUpdate(() => m_UISetActiveControl.ClearTimeScoreText.text = "LeftTime;" + time.ToString())
@@ -62,7 +62,7 @@ public class ScoreManager : EventReceiver<ScoreManager>
         SaveScoreAndTime(m_currentScore, clearTime);
     }
 
-    private void SaveScoreAndTime(int totalScore, int clearTime)
+    private void SaveScoreAndTime(int totalScore, float clearTime)
     {
         if (StageParent.Instance)
         {

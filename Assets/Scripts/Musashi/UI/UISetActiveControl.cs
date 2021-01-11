@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// ゲーム中、ゲームクリア、ゲームオーバー時のUIのアクティブをコントロールするクラス
+/// ゲーム中、ゲームクリア、ゲームオーバー時のUIをまとめるクラス
 /// </summary>
 public class UISetActiveControl : EventReceiver<UISetActiveControl>
 {
@@ -17,6 +17,9 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
     [Header("スタート時のカウントダウン")]
     [SerializeField] Text m_startCountDown;
     [SerializeField] int m_countDown = 3;
+
+    [Header("タイマーテキスト")]
+    [SerializeField] TextMeshProUGUI m_timerText;
 
     [Header("スコアテキスト")]
     [SerializeField] TextMeshProUGUI m_currentScoreText;
@@ -35,6 +38,7 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
     public GameObject GameSceneUI { get => m_gameSceneUI.gameObject; }
     public GameObject GameOverUI { get => m_GameOverUI.gameObject; }
     public GameObject GameClearUI { get => m_GameClearUI.gameObject; }
+    public TextMeshProUGUI TimerText { get => m_timerText; }
     public TextMeshProUGUI CurrentScoreText { get => m_currentScoreText; }
     public TextMeshProUGUI ClearTimeScoreText { get => m_clearTimeScoreText; }
     public TextMeshProUGUI ResulScoreText { get => m_resulScoreText; }

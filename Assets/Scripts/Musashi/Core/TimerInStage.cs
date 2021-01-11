@@ -13,9 +13,9 @@ using UnityEngine.UI;
 [RequireComponent(typeof(ScoreManager))]
 public class TimerInStage : EventReceiver<TimerInStage>
 {
-    [SerializeField] Text m_timeLimitText;
-    float m_timeLimit;
+    [SerializeField] UISetActiveControl m_UISetActiveControl;
     ScoreManager m_scoreManager;
+    float m_timeLimit;
 
     /// <summary>ゲーム中かどうか判定する </summary>
     public bool InGame { get; set; }
@@ -33,9 +33,6 @@ public class TimerInStage : EventReceiver<TimerInStage>
         }
     }
 
-    /// <summary>
-    /// TO:DO ここコルーチンに書きなす
-    /// </summary>
     // Update is called once per frame
     void Update()
     {
@@ -43,15 +40,19 @@ public class TimerInStage : EventReceiver<TimerInStage>
 
         //タイムリミット
         m_timeLimit -= Time.deltaTime;
-        //分と秒を設定
-        int minute = (int)m_timeLimit / 60;
-        float seconds = m_timeLimit - minute * 60;
-        //UIに00:00形式で表示する
-        if ((int)seconds != (int)m_oldSeconds)
-        {
-            m_timeLimitText.text = minute.ToString("00") + ":" + ((int)seconds).ToString("00");
-        }
-        m_oldSeconds = seconds;
+        //分と秒とミリ秒を設定
+        int minutes = (int)m_timeLimit / 60;
+        float seconds = m_timeLimit - minutes * 60;
+        float mseconds = m_timeLimit * 1000 % 1000;
+
+        //UIに00:00:00.00形式で表示する
+        //m_UISetActiveControl.TimerText.text = minute.ToString("00") + ":" + ((int)seconds).ToString("00") + ":" + ((int)ms).ToString("F0");
+        //if ((int)seconds != (int)m_oldSeconds)
+        //{
+        //}
+        //m_oldSeconds = seconds;
+        m_UISetActiveControl.TimerText.text = string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, mseconds);
+
 
         //タイマーリミット!
         if (m_timeLimit <= 0)
@@ -65,14 +66,6 @@ public class TimerInStage : EventReceiver<TimerInStage>
     //int mseconds = Mathf.FloorToInt((timer - minutes * 60 - seconds) * 1000);
     //string niceTime = string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, mseconds);
 
-    IEnumerator CountDown()
-    {
-        while (m_timeLimit > 0)
-        {
-            yield return null;
-        }
-    }
-
     public void StartGame()
     {
         InGame = true;
@@ -85,7 +78,7 @@ public class TimerInStage : EventReceiver<TimerInStage>
     {
         InGame = false;
         //残り時間をScoreManagerに渡す
-        m_scoreManager.Result(Mathf.FloorToInt(m_timeLimit));
+        m_scoreManager.Result(m_timeLimit);
     }
 
     /// <summary>
