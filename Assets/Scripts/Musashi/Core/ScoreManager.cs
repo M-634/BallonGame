@@ -52,7 +52,7 @@ public class ScoreManager : EventReceiver<ScoreManager>
         float time = 0;
         sequence.Append(
             DOTween.To(() => time, num => time = num, clearTime, 2f)
-            .OnUpdate(() => m_UISetActiveControl.TimerText.TimerInfo(time)))
+            .OnUpdate(() => m_UISetActiveControl.ClearTimeScoreText.TimerInfo(time)))
             .OnComplete(() => Debug.Log(""));
 
         //ステージ内のコインの総数と獲得したコインの数の割合でランク付け（A～C）
