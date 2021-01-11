@@ -24,6 +24,18 @@ public static class UGUIListnerExtension
         timerText.text = minute.ToString("00") + ":" + ((int)seconds).ToString("00");
     }
 
+    /// <summary>
+    /// TextMeshPro版
+    /// </summary>
+    /// <param name="timerText"></param>
+    /// <param name="time"></param>
+    public static void TimerInfo(this TextMeshProUGUI timerText, int time)
+    {
+        int minute = time / 60;
+        float seconds = time - minute * 60;
+        timerText.text = minute.ToString("00") + ":" + ((int)seconds).ToString("00");
+    }
+
     public static void Show(this CanvasGroup canvasGroup)
     {
         canvasGroup.interactable = true;

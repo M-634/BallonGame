@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// ゲームシーン内のUIのアクティブをコントロールするクラス
+/// ゲーム中、ゲームクリア、ゲームオーバー時のUIのアクティブをコントロールするクラス
 /// </summary>
 public class UISetActiveControl : EventReceiver<UISetActiveControl>
 {
@@ -18,20 +19,26 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
     [SerializeField] int m_countDown = 3;
 
     [Header("スコアテキスト")]
-    [SerializeField] Text m_currentScoreText;
+    [SerializeField] TextMeshProUGUI m_currentScoreText;
 
     [Header("リザルトテキスト")]
-    [SerializeField] Text m_leftTimeScoreText;
-    [SerializeField] Text m_getResulScoreText;
-    [SerializeField] Text m_totalScoreText;
+    [SerializeField] TextMeshProUGUI m_clearTimeScoreText;
+    [SerializeField] TextMeshProUGUI m_resulScoreText;
+
+    [Header("RankSprites")]
+    [SerializeField] Sprite m_rankImageA;
+    [SerializeField] Sprite m_rankImageB;
+    [SerializeField] Sprite m_rankImageC;
+
+    [SerializeField] Image m_resultRankImage;
 
     public GameObject GameSceneUI { get => m_gameSceneUI.gameObject; }
     public GameObject GameOverUI { get => m_GameOverUI.gameObject; }
     public GameObject GameClearUI { get => m_GameClearUI.gameObject; }
-    public Text CurrentScoreText { get => m_currentScoreText; }
-    public Text LeftTimeScoreText { get => m_leftTimeScoreText; }
-    public Text GetResulScoreText { get => m_getResulScoreText; }
-    public Text TotalScoreText { get => m_totalScoreText; }
+    public TextMeshProUGUI CurrentScoreText { get => m_currentScoreText; }
+    public TextMeshProUGUI ClearTimeScoreText { get => m_clearTimeScoreText; }
+    public TextMeshProUGUI ResulScoreText { get => m_resulScoreText; }
+ 
 
     /// <summary> ゲームシーンのみデバックする時はチェックをいれる/// </summary>
     [SerializeField] bool m_debugGameScene;
@@ -69,6 +76,27 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
         //StartCoroutine(m_startCountDown.FadeOut(2f, () => m_eventSystemInGameScene.ExecuteGameStartEvent()));
         m_startCountDown.FadeOutWithDoTween(2f, () => m_eventSystemInGameScene.ExecuteGameStartEvent());
     }
+
+    /// <summary>
+    /// コインの総数と獲得数の比率でランクを決定する
+    /// ランクはA～C
+    /// </summary>
+    public void DetermineTheRank(int raito)
+    {
+        if(raito > 90)
+        {
+            m_resultRankImage.sprite = m_rankImageA;
+        }
+        else if(raito > 50)
+        {
+            m_resultRankImage.sprite = m_rankImageB;
+        }
+        else
+        {
+            m_resultRankImage.sprite = m_rankImageC;
+        }
+    }
+
 
     public void InisitializeUISetAcitve()
     {

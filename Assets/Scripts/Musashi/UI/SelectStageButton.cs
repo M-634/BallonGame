@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.EventSystems;
+using TMPro;
 
 /// <summary>
 /// セレクト画面のボタンにアタッチするクラス
@@ -22,9 +23,9 @@ public class SelectStageButton : MonoBehaviour, IPointerEnterHandler
 
     [Header("各テキストUI")]
     //[SerializeField] Text m_stageClearText;
-    [SerializeField] Text m_clearTimeText;
-    [SerializeField] Text m_clearScoreText;
-    [SerializeField] Text m_stageNameText;
+    [SerializeField] TextMeshProUGUI m_clearTimeText;
+    [SerializeField] TextMeshProUGUI m_clearScoreText;
+    [SerializeField] TextMeshProUGUI m_stageNameText;
 
     //public Text ClearText { get => m_stageClearText; }
     public Image StageClearImage { get => m_stageClearImage; }
