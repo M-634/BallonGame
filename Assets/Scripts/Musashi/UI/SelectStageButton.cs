@@ -22,16 +22,12 @@ public class SelectStageButton : MonoBehaviour, IPointerEnterHandler
     [SerializeField] Sprite m_openedSprite;
 
     [Header("各テキストUI")]
-    //[SerializeField] Text m_stageClearText;
     [SerializeField] TextMeshProUGUI m_clearTimeText;
     [SerializeField] TextMeshProUGUI m_clearScoreText;
     [SerializeField] TextMeshProUGUI m_stageNameText;
 
-    //public Text ClearText { get => m_stageClearText; }
     public Image StageClearImage { get => m_stageClearImage; }
-    public Sprite UnOpenedSprite { get => m_unOpenedSprite; }
-    public Sprite OpenedSprite { get => m_openedSprite; }
-
+    
     private StageData m_stageData;
     public StageData StageData { get => m_stageData; set => m_stageData = value;}
     public GameObject StagePrefab { get => m_stagePrefab; }
@@ -47,18 +43,26 @@ public class SelectStageButton : MonoBehaviour, IPointerEnterHandler
         }
     }
 
-    private Sprite m_sourceImage;
-    public Sprite SoureImage
+    private Image m_image;
+
+    public Image Image
     {
         get
         {
-            if (m_sourceImage) return m_sourceImage;
-
-            m_sourceImage = GetComponent<Image>().sprite;
-            return m_sourceImage;
+            if (m_image) return m_image;
+            m_image = GetComponent<Image>();
+            return Image;
         }
+    }
+    
+    public void SetOpenedStageSprite()
+    {
+        Image.sprite = m_openedSprite;
+    }
 
-        set { m_sourceImage = value; }
+    public void SetUnOpenedStageSprite()
+    {
+        Image.sprite = m_unOpenedSprite;
     }
 
 

@@ -24,12 +24,12 @@ public class SelectButtons : MonoBehaviour
             if (m_doReleaseStage)
             {
                 btn.SelectButton.interactable = true;
-                btn.SoureImage = btn.OpenedSprite;
+                btn.SetOpenedStageSprite();
             }
             else
             {
                 btn.SelectButton.interactable = false;
-                btn.SoureImage = btn.UnOpenedSprite;
+                btn.SetUnOpenedStageSprite();
             }
 
             btn.StageData = StageParent.Instance.SendStageData(btn.StagePrefab);

@@ -2015,8 +2015,9 @@ GameObject:
   - component: {fileID: 309331034877384782}
   - component: {fileID: 309331034877384778}
   - component: {fileID: 7563253339222608582}
+  - component: {fileID: 2085100019204909046}
   m_Layer: 5
-  m_Name: UIVolumeConfigCanvas
+  m_Name: UIConfigCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2067,7 +2068,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &309331034877384783
 MonoBehaviour:
@@ -2118,7 +2119,7 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 0
   m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &7563253339222608582
 MonoBehaviour:
@@ -2138,6 +2139,18 @@ MonoBehaviour:
   m_bgmSlider: {fileID: 309331033557082338}
   m_seSlider: {fileID: 309331034841050356}
   m_envSlider: {fileID: 309331033998555160}
+--- !u!114 &2085100019204909046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309331034877384769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54c7e4590686fb04cbd1555e8507fee4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &309331034895635562
 GameObject:
   m_ObjectHideFlags: 0
