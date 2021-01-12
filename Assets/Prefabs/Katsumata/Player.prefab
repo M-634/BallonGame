@@ -141,7 +141,6 @@ MonoBehaviour:
   maxHorizontalSpeed: 20
   dragHorizontal: 0.98
   variableJoystickHorizontal: {fileID: 0}
-  m_mouthDebug: 0
 --- !u!136 &8699206471128988562
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -151,11 +150,11 @@ CapsuleCollider:
   m_GameObject: {fileID: 778437796475740377}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 1.15
-  m_Height: 8.5
+  m_Enabled: 1
+  m_Radius: 0.38
+  m_Height: 4.24
   m_Direction: 1
-  m_Center: {x: 0, y: -2.8, z: 0}
+  m_Center: {x: 0, y: -3.82, z: 0}
 --- !u!114 &1171534151298506407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,6 +182,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cmVcamBase: {fileID: 0}
   cmVcamAddSpeed: {fileID: 0}
+  m_cameraChangeTime: 2
+  cameraFixed: 0
 --- !u!1 &778437796614284459
 GameObject:
   m_ObjectHideFlags: 0
