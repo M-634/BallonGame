@@ -18,6 +18,7 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
     [Header("Audio")]
     [SerializeField] string m_GameSceneBGMName;
     [SerializeField] string m_GameClearSEName;
+    [SerializeField] string m_GameOverSEName;
 
     ScoreManager m_scoreManager;
     float m_timeLimit;
@@ -99,9 +100,13 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
         }
 
         if (SceneLoader.Instance)
-        {
             //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
             SceneLoader.Instance.LoadSelectSceneWithTap();
+
+        if (SoundManager.Instance)
+        {
+            SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
+            SoundManager.Instance.PlaySe(m_GameOverSEName);
         }
     }
 
