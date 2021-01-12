@@ -45,6 +45,7 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
 
     public void LoadGameScene()
     {
+        SoundManager.Instance.StopBGMWithFadeOut();
         m_currentLoadCorutine = LoadGameSceneWithCorutine();
         StartCoroutine(m_currentLoadCorutine);
     }

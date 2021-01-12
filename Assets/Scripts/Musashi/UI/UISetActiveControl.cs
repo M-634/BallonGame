@@ -33,7 +33,9 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
     [SerializeField] Sprite m_rankImageB;
     [SerializeField] Sprite m_rankImageC;
 
+    [Header("RankImages")]
     [SerializeField] Image m_resultRankImage;
+    [SerializeField] ImageAnimation m_rankImageAnimation;
 
     public GameObject GameSceneUI { get => m_gameSceneUI.gameObject; }
     public GameObject GameOverUI { get => m_GameOverUI.gameObject; }
@@ -87,6 +89,7 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
     /// </summary>
     public void DetermineTheRank(int raito)
     {
+        m_rankImageAnimation.StopAnimation();
         if(raito > 90)
         {
             m_resultRankImage.sprite = m_rankImageA;

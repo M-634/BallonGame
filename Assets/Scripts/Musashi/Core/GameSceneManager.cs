@@ -11,15 +11,19 @@ using UnityEngine.UI;
 /// ゲームシーンの状態（Start,Goal,GameOver）を監視するクラス
 /// </summary>
 [RequireComponent(typeof(ScoreManager))]
-public class TimerInStage : EventReceiver<TimerInStage>
+public class GameSceneManager : EventReceiver<GameSceneManager>
 {
     [SerializeField] UISetActiveControl m_UISetActiveControl;
+
+    [Header("Audio")]
+    [SerializeField] string m_GameSceneBGMName;
+    [SerializeField] string m_GameClearSEName;
+
     ScoreManager m_scoreManager;
     float m_timeLimit;
 
     /// <summary>ゲーム中かどうか判定する </summary>
     public bool InGame { get; set; }
-    private float m_oldSeconds;//1フレーム前の秒数
 
     private void Start()
     {
@@ -30,6 +34,11 @@ public class TimerInStage : EventReceiver<TimerInStage>
             StageParent.Instance.AppearanceStageObject(StageParent.Instance.GetAppearanceStagePrefab.transform);
             //制限時間をセットする
             m_timeLimit = StageParent.Instance.GetAppearanceStageData.SetTimeLimit;
+        }
+
+        if (SoundManager.Instance)
+        {
+            SoundManager.Instance.PlayBGMWithFadeIn(m_GameSceneBGMName);
         }
     }
 
@@ -44,15 +53,8 @@ public class TimerInStage : EventReceiver<TimerInStage>
         int minutes = (int)m_timeLimit / 60;
         float seconds = m_timeLimit - minutes * 60;
         float mseconds = m_timeLimit * 1000 % 1000;
-
-        //UIに00:00:00.00形式で表示する
-        //m_UISetActiveControl.TimerText.text = minute.ToString("00") + ":" + ((int)seconds).ToString("00") + ":" + ((int)ms).ToString("F0");
-        //if ((int)seconds != (int)m_oldSeconds)
-        //{
-        //}
-        //m_oldSeconds = seconds;
         m_UISetActiveControl.TimerText.text = string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, mseconds);
-
+        //m_UISetActiveControl.TimerText.TimerInfo(m_timeLimit);
 
         //タイマーリミット!
         if (m_timeLimit <= 0)
@@ -61,10 +63,6 @@ public class TimerInStage : EventReceiver<TimerInStage>
             m_eventSystemInGameScene.ExecuteGameOverEvent();
         }
     }
-
-    //memo
-    //int mseconds = Mathf.FloorToInt((timer - minutes * 60 - seconds) * 1000);
-    //string niceTime = string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, mseconds);
 
     public void StartGame()
     {
@@ -77,8 +75,13 @@ public class TimerInStage : EventReceiver<TimerInStage>
     public void OnGoal()
     {
         InGame = false;
+        if (SoundManager.Instance)
+        {
+            SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
+            SoundManager.Instance.PlaySe(m_GameClearSEName);
+        }
         //残り時間をScoreManagerに渡す
-        m_scoreManager.Result(m_timeLimit);
+        m_scoreManager.DisplayResult(m_timeLimit);
     }
 
     /// <summary>

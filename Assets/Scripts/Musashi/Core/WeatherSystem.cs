@@ -8,6 +8,7 @@ using UnityEngine;
 /// <summary>
 /// ゲームシーンでの天候（skybox）をセットする。
 /// 天候に応じて、ステージギミック、Shadr等を制御するクラス
+/// To Do: ここStatePatternに変更する
 /// </summary>
 public class WeatherSystem : MonoBehaviour
 {

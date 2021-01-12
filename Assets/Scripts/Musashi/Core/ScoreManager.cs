@@ -40,26 +40,26 @@ public class ScoreManager : EventReceiver<ScoreManager>
     /// 獲得スコアとクリア時間を表示。
     /// ハイスコアを更新したらセーブする
     /// </summary>
-    public void Result(float clearTime)
-    {     
-        int score = 0;
+    public void DisplayResult(float clearTime)
+    {
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(
-        DOTween.To(() => score, num => score = num, m_currentScore, 2f)
-            .OnUpdate(() => m_UISetActiveControl.ResulScoreText.text = score.ToString()))
-            .OnComplete(() => Debug.Log("")) ;
 
         float time = 0;
         sequence.Append(
             DOTween.To(() => time, num => time = num, clearTime, 2f)
-            .OnUpdate(() => m_UISetActiveControl.ClearTimeScoreText.TimerInfo(time)))
-            .OnComplete(() => Debug.Log(""));
+            .OnUpdate(() => m_UISetActiveControl.ClearTimeScoreText.TimerInfo(time)));
 
-        //ステージ内のコインの総数と獲得したコインの数の割合でランク付け（A～C）
-        int ratio = m_getCoinNum / m_totalCoinNum * 100;
-        m_UISetActiveControl.DetermineTheRank(ratio);
-
-        SaveScoreAndTime(m_currentScore, clearTime);
+        int score = 0;
+        sequence.Append(
+        DOTween.To(() => score, num => score = num, m_currentScore, 2f)
+            .OnUpdate(() => m_UISetActiveControl.ResulScoreText.text = score.ToString()))
+            .OnComplete(() =>
+            {
+                //ステージ内のコインの総数と獲得したコインの数の割合でランク付け（A～C）
+                int ratio = m_getCoinNum / m_totalCoinNum * 100;
+                m_UISetActiveControl.DetermineTheRank(ratio);
+                SaveScoreAndTime(m_currentScore, clearTime);
+            });
     }
 
     private void SaveScoreAndTime(int totalScore, float clearTime)
@@ -73,7 +73,7 @@ public class ScoreManager : EventReceiver<ScoreManager>
             //ステージを初期化する
             StageParent.Instance.Initialization();
         }
-  
+
         if (SceneLoader.Instance)
         {
             //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
