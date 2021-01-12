@@ -19,10 +19,10 @@ public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
 
     protected override void Awake()
     {
+        base.Awake();
         if (m_doDebugPlayerMove) return;
         m_rb = GetComponent<Rigidbody>();
         m_rb.constraints = RigidbodyConstraints.FreezePosition;
-        base.Awake();
     }
 
 

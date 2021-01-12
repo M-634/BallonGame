@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.EventSystems;
+using TMPro;
 
 /// <summary>
 /// セレクト画面のボタンにアタッチするクラス
@@ -16,36 +17,55 @@ public class SelectStageButton : MonoBehaviour, IPointerEnterHandler
     [SerializeField] GameObject m_stagePrefab;
     [SerializeField] VideoClip m_videoClip;
     [SerializeField] VideoPlayer m_videoPlayer;
+    [SerializeField] Image m_stageClearImage;
+    [SerializeField] Sprite m_unOpenedSprite;
+    [SerializeField] Sprite m_openedSprite;
 
     [Header("各テキストUI")]
-    [SerializeField] Text m_stageClearText;
-    [SerializeField] Text m_clearTimeText;
-    [SerializeField] Text m_clearScoreText;
-    [SerializeField] Text m_stageNameText;
+    [SerializeField] TextMeshProUGUI m_clearTimeText;
+    [SerializeField] TextMeshProUGUI m_clearScoreText;
+    [SerializeField] TextMeshProUGUI m_stageNameText;
 
-
-    public Text ClearText { get => m_stageClearText; }
-    public StageData StageData { get; set; }
+    public Image StageClearImage { get => m_stageClearImage; }
+    
+    private StageData m_stageData;
+    public StageData StageData { get => m_stageData; set => m_stageData = value;}
     public GameObject StagePrefab { get => m_stagePrefab; }
     private Button m_button;
     public Button SelectButton
     {
         get
         {
-            if (m_button == null)
-            {
-                m_button = GetComponent<Button>();
-                return m_button;
-            }
+            if (m_button) return m_button;
+
+            m_button = GetComponent<Button>();
             return m_button;
         }
     }
 
+    private Image m_image;
 
-    //private void Start()
-    //{
-    //    SelectButton.onClick.AddListener(() => SetStageInfo());
-    //}
+    public Image Image
+    {
+        get
+        {
+            if (m_image) return m_image;
+            m_image = GetComponent<Image>();
+            return Image;
+        }
+    }
+    
+    public void SetOpenedStageSprite()
+    {
+        Image.sprite = m_openedSprite;
+    }
+
+    public void SetUnOpenedStageSprite()
+    {
+        Image.sprite = m_unOpenedSprite;
+    }
+
+
 
     private void SetStageInfo()
     {
@@ -57,8 +77,8 @@ public class SelectStageButton : MonoBehaviour, IPointerEnterHandler
     {
         //各種UIへ情報をセットする
         m_stageNameText.text = StageData.StagePrefab.name;
-        m_clearScoreText.text = StageData.HighScore.ToString();
-        m_clearTimeText.TimerInfo(StageData.ClearTime);
+        m_clearScoreText.text = "ClearScore:" +  StageData.HighScore.ToString();
+        m_clearTimeText.TimerInfo(StageData.ClearTime,"ClearTime:");
 
         //動画再生
         m_videoPlayer.source = VideoSource.VideoClip;
