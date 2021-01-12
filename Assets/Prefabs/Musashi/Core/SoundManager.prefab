@@ -43,11 +43,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd17ede232486a24981ad13f1c686c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_menuSeAuidoClipList: []
-  m_enviromentAudioClipList: []
-  m_voiceAudioClipList: []
-  m_bgmAuidoClipList: []
-  BGMAudiosorceNum: 1
+  m_menuSeAuidoClipList:
+  - {fileID: 8300000, guid: dcdace50f3bdcce44a4a46845fbc02be, type: 3}
+  - {fileID: 8300000, guid: dc1fbb73cc40fcf479fc3af2cbcf3f7c, type: 3}
+  - {fileID: 8300000, guid: e1d413665e3aba54c90130bff97b247e, type: 3}
+  - {fileID: 8300000, guid: e18d5a19ec000dc43abe0e442b3fae7f, type: 3}
+  - {fileID: 8300000, guid: 92db84a63ae25784e8a3e6c552f40896, type: 3}
+  m_enviromentAudioClipList:
+  - {fileID: 0}
+  m_voiceAudioClipList:
+  - {fileID: 0}
+  m_bgmAuidoClipList:
+  - {fileID: 8300000, guid: 8413c896034d2b44a99441aaca115fa3, type: 3}
+  - {fileID: 8300000, guid: 2bcdd14f9705e224c8a15a16fa731b0f, type: 3}
+  - {fileID: 8300000, guid: ea514c857bfc9b949ba00262667281a4, type: 3}
+  BGMAudiosorceNum: 3
   m_audioMixer: {fileID: 24100000, guid: 78370ad650777c14bbb9ce0b5af2fe90, type: 2}
   m_bgmAMG: {fileID: -6392468387322618446, guid: 78370ad650777c14bbb9ce0b5af2fe90,
     type: 2}
