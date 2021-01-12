@@ -13,7 +13,14 @@ using UnityEngine.UI;
 [RequireComponent(typeof(ScoreManager))]
 public class GameSceneManager : EventReceiver<GameSceneManager>
 {
+    /// <summary> ゲームシーンのみデバックする時はチェックをいれる/// </summary>
+    [SerializeField] bool m_debugGameScene;
     [SerializeField] UISetActiveControl m_UISetActiveControl;
+
+    [Header("SkyBox")]
+    [SerializeField] Material m_sunnySkyBox;
+    [SerializeField] Material m_thunderStormSkyBox;
+    [SerializeField] Material m_hurricaneSkybox;
 
     [Header("Audio")]
     [SerializeField] string m_GameSceneBGMName;
@@ -29,18 +36,40 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
     private void Start()
     {
         m_scoreManager = GetComponent<ScoreManager>();
+
+        if (SoundManager.Instance)
+        {
+            SoundManager.Instance.PlayBGMWithFadeIn(m_GameSceneBGMName);
+        }
+
+        if (m_debugGameScene) return;
+
         if (StageParent.Instance)
         {
             //ステージを出現させる
             StageParent.Instance.AppearanceStageObject(StageParent.Instance.GetAppearanceStagePrefab.transform);
             //制限時間をセットする
             m_timeLimit = StageParent.Instance.GetAppearanceStageData.SetTimeLimit;
+
+            //skyBoxをセットする
+            switch (StageParent.Instance.GetAppearanceStageData.Conditons)
+            {
+                case StageData.WeatherConditons.Initialize:
+                    break;
+                case StageData.WeatherConditons.Sunny:
+                    RenderSettings.skybox = m_sunnySkyBox;
+                    break;
+                case StageData.WeatherConditons.ThunderStorm:
+                    RenderSettings.skybox = m_thunderStormSkyBox;
+                    break;
+                case StageData.WeatherConditons.Hurricane:
+                    RenderSettings.skybox = m_hurricaneSkybox;
+                    break;
+                default:
+                    break;
+            }
         }
 
-        if (SoundManager.Instance)
-        {
-            SoundManager.Instance.PlayBGMWithFadeIn(m_GameSceneBGMName);
-        }
     }
 
     // Update is called once per frame
@@ -67,6 +96,7 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
 
     public void StartGame()
     {
+        if (m_debugGameScene) return;
         InGame = true;
     }
 

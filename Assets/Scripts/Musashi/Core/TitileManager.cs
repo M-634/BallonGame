@@ -18,16 +18,11 @@ public class TitileManager : MonoBehaviour
     {
         if(SaveAndLoadWithJSON.IsFolderPath) 
         {
-            m_beginningBtn.gameObject.SetActive(true);
-            m_continueBtn.gameObject.SetActive(true);
-            //m_continueBtn.interactable = true;
+            m_continueBtn.interactable = true;
         }
         else
         {
-            m_beginningBtn.gameObject.SetActive(false);
-            m_continueBtn.gameObject.SetActive(false);
-            SceneLoader.Instance.LoadSelectSceneWithTap();
-            //m_continueBtn.interactable = false;
+           m_continueBtn.interactable = false;
         }
         StageParent.Instance.GameClearState = GameClearState.None;
         SoundManager.Instance.PlayBGMWithFadeIn(m_TitleBGMName);
