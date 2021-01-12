@@ -45,20 +45,9 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
     public TextMeshProUGUI ClearTimeScoreText { get => m_clearTimeScoreText; }
     public TextMeshProUGUI ResulScoreText { get => m_resulScoreText; }
  
-
-    /// <summary> ゲームシーンのみデバックする時はチェックをいれる/// </summary>
-    [SerializeField] bool m_debugGameScene;
-
     private void Start()
     {
         InisitializeUISetAcitve();
-#if UNITY_EDITOR
-        if (m_debugGameScene)
-        {
-            //3,2,1スタート！！
-            StartCoroutine(StartCountDownCorutine());
-        }
-#endif
     }
 
     /// <summary>
@@ -79,7 +68,6 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
 
         m_startCountDown.text = "START!!";
         yield return null;
-        //StartCoroutine(m_startCountDown.FadeOut(2f, () => m_eventSystemInGameScene.ExecuteGameStartEvent()));
         m_startCountDown.FadeOutWithDoTween(2f, () => m_eventSystemInGameScene.ExecuteGameStartEvent());
     }
 

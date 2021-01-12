@@ -13,6 +13,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(ScoreManager))]
 public class GameSceneManager : EventReceiver<GameSceneManager>
 {
+    /// <summary> ゲームシーンのみデバックする時はチェックをいれる/// </summary>
+    [SerializeField] bool m_debugGameScene;
     [SerializeField] UISetActiveControl m_UISetActiveControl;
 
     [Header("Audio")]
@@ -67,6 +69,7 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
 
     public void StartGame()
     {
+        if (m_debugGameScene) return;
         InGame = true;
     }
 
