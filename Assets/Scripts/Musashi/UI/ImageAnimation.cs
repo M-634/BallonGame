@@ -26,14 +26,18 @@ public class ImageAnimation : MonoBehaviour
     {
         m_index = 0;
         m_frame = 0;
-        StartCoroutine(AnimateSprite());
+        StartCoroutine("AnimateSprite");
     }
 
     private void OnDisable()
     {
-        StopCoroutine(AnimateSprite());
+        StopAnimation();
     }
 
+    public void StopAnimation()
+    {
+        StopCoroutine("AnimateSprite");
+    }
     IEnumerator AnimateSprite()
     {
         while (true)
