@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 ///非同期処理を使ったシーンの読み込み機能をまとめたクラス 
@@ -18,11 +19,13 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
     [SerializeField] string m_loadGameSceneName;
  
     [Header("UI")]
-    [SerializeField] Text m_tapToLoadText;
+    [SerializeField] TextMeshProUGUI m_tapToLoadText;
     [SerializeField] Canvas m_loadCanvas;
     [SerializeField] Image m_fadeImage;
     [SerializeField] float m_fadeOutTime;
     [SerializeField] float m_fadeInTime;
+
+    [SerializeField] string m_tapAudioClipname;
 
     private IEnumerator m_currentLoadCorutine;
 
@@ -34,7 +37,7 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
 
     private void Start()
     {
-        m_tapToLoadText.gameObject.SetActive(false);
+        //m_tapToLoadText.gameObject.SetActive(false);
         m_loadCanvas.sortingOrder = 1;//描画を最前列にするため
         m_loadCanvas.enabled = true;
         m_fadeImage.raycastTarget = false;
@@ -95,11 +98,13 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
                 var touch = Input.GetTouch(0);
                 if (touch.phase == TouchPhase.Began)
                 {
+                    SoundManager.Instance.PlaySe(m_tapAudioClipname);
                     break;
                 }
             }
             else if (Input.GetMouseButtonDown(0))
             {
+                SoundManager.Instance.PlaySe(m_tapAudioClipname);
                 break;
             }
             yield return null;

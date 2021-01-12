@@ -1739,8 +1739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9820d3357526c41419a1873485a22a18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isDubug: 0
-  m_canvasGroup: {fileID: 309331034877384778}
   m_masterSlider: {fileID: 309331034854332732}
   m_bgmSlider: {fileID: 309331033557082338}
   m_seSlider: {fileID: 309331034841050356}
@@ -1757,6 +1755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54c7e4590686fb04cbd1555e8507fee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_audioClipName: OptionBtn
 --- !u!1 &384512051524519277
 GameObject:
   m_ObjectHideFlags: 0
@@ -2387,8 +2386,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7563253339222608582}
-        m_MethodName: Hide
+      - m_Target: {fileID: 2085100019204909046}
+        m_MethodName: CloseCnfigUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2397,17 +2396,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &8840872119476752645
 GameObject:

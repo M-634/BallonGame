@@ -344,7 +344,7 @@ PrefabInstance:
     - target: {fileID: 309331034877384778, guid: 84d04a7cc99a90e4fa9b05a6b0f14eb2,
         type: 3}
       propertyPath: m_Alpha
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 309331034877384781, guid: 84d04a7cc99a90e4fa9b05a6b0f14eb2,
         type: 3}
@@ -800,6 +800,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1352052859214327395, guid: e77715370d3b1b042835341a8a6e2d4c,
+        type: 3}
+      propertyPath: m_selectSceneBGM
+      value: StageSelect
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494630953583123935, guid: e77715370d3b1b042835341a8a6e2d4c,
+        type: 3}
+      propertyPath: m_audioClipName
+      value: OptionBtn
+      objectReference: {fileID: 0}
     - target: {fileID: 9165772761766530219, guid: e77715370d3b1b042835341a8a6e2d4c,
         type: 3}
       propertyPath: m_Name
