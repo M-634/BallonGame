@@ -32,8 +32,8 @@ public class SelectButtons : MonoBehaviour
                 btn.SetUnOpenedStageSprite();
             }
 
-            btn.StageData = StageParent.Instance.SendStageData(btn.StagePrefab);
-
+            //btn.StageData = StageParent.Instance.SendStageData(btn.StagePrefab);
+            btn.StageData = StageParent.Instance.SearchStageData(btn.StageNumber);
             if (btn.StageData == null)
             {
                 Debug.LogError("StageParentに設定してあるStaegeDatas内に存在するstagePrefabとボタンに設定したstagePrefabで一致するものがありません！" +
