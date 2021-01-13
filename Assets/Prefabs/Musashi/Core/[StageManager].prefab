@@ -503,6 +503,7 @@ GameObject:
   - component: {fileID: 2637302440214190609}
   - component: {fileID: 2637302440214190614}
   - component: {fileID: 887288360456710011}
+  - component: {fileID: 614948050}
   m_Layer: 0
   m_Name: '[StageManager]'
   m_TagString: StageManager
@@ -562,7 +563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d899d99d35af664e842eeff9320745a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_debugGameScene: 1
+  m_debugGameScene: 0
   m_UISetActiveControl: {fileID: 2637302440214190614}
   m_sunnySkyBox: {fileID: 2100000, guid: b2507cba8d65e4f4eac14af86f4304f2, type: 2}
   m_thunderStormSkyBox: {fileID: 2100000, guid: 08dad5c7c12f6d945937ccd4b74f4b44,
@@ -586,8 +587,6 @@ MonoBehaviour:
   m_gameSceneUI: {fileID: 2637302440496341876}
   m_GameOverUI: {fileID: 2637302441619661187}
   m_GameClearUI: {fileID: 2637302439844156205}
-  m_startCountDown: {fileID: 2637302441165336272}
-  m_countDown: 3
   m_timerText: {fileID: 2040610817329249082}
   m_currentScoreText: {fileID: 6329247056249614919}
   m_clearTimeScoreText: {fileID: 3638070008218574737}
@@ -606,14 +605,86 @@ PlayableDirector:
   m_GameObject: {fileID: 2637302440214190610}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 0}
-  m_InitialState: 0
+  m_PlayableAsset: {fileID: 11400000, guid: 4056b45025d1cdc4a8e76157b298cef0, type: 2}
+  m_InitialState: 1
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
-  m_SceneBindings: []
+  m_SceneBindings:
+  - key: {fileID: 5830405668618677122, guid: b6825e3e0d194be4cada4ed25890a23f, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 2900215659815613700, guid: b6825e3e0d194be4cada4ed25890a23f, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 7383438447535201978, guid: b6825e3e0d194be4cada4ed25890a23f, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -4166306115919729217, guid: b6825e3e0d194be4cada4ed25890a23f, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 6755111324004946033, guid: b6825e3e0d194be4cada4ed25890a23f, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1126082058346278907, guid: f71b1cb518ba09a4aafc3c8f2f3a577a, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -7258631206011588590, guid: f71b1cb518ba09a4aafc3c8f2f3a577a, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -8500740360818457020, guid: f71b1cb518ba09a4aafc3c8f2f3a577a, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -8018878692650954742, guid: f71b1cb518ba09a4aafc3c8f2f3a577a, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -3061617590989498366, guid: f71b1cb518ba09a4aafc3c8f2f3a577a, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -5821157351966705128, guid: f71b1cb518ba09a4aafc3c8f2f3a577a, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1155487810195130234, guid: f71b1cb518ba09a4aafc3c8f2f3a577a, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -1507247378488203770, guid: 18fffbaec1375d94094a06443ca4c28c, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 2426468867764308458, guid: 18fffbaec1375d94094a06443ca4c28c, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -1592298622855302910, guid: 18fffbaec1375d94094a06443ca4c28c, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -4731305030408835528, guid: 18fffbaec1375d94094a06443ca4c28c, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 0}
+    value: {fileID: 0}
+  - key: {fileID: 2543748657603964354, guid: 4056b45025d1cdc4a8e76157b298cef0, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5712689192146217377, guid: 4056b45025d1cdc4a8e76157b298cef0, type: 2}
+    value: {fileID: 2637302440214190610}
   m_ExposedReferences:
-    m_References: []
+    m_References:
+    - 9940441939cbdf44fa06ba73a83fc1e9: {fileID: 0}
+    - abba92569c1df3847b3b9f0cfc0ef462: {fileID: 0}
+    - 95b80d872f9ed9940854389340568668: {fileID: 0}
+    - 15e7fefc026bc644ea6b458ac57050a4: {fileID: 0}
+    - 2a165687bc2b2c44f9d191156bbfdd18: {fileID: 0}
+--- !u!114 &614948050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2637302440214190610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 8d5724467156c734cad67917ff851490, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2637302440214190613}
+          m_MethodName: ExecuteGameStartEvent
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2637302440404665813
 GameObject:
   m_ObjectHideFlags: 0
@@ -1047,7 +1118,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2637302441165336273
 RectTransform:
   m_ObjectHideFlags: 0
