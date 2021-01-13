@@ -37,7 +37,7 @@ public class StageParent : SingletonMonoBehavior<StageParent>
         for (int i = 0; i < m_stageDatas.Length; i++)
         {
             m_stageObjs[i] = m_stageDatas[i].StagePrefab;
-            m_stageDatas[i].StageNumber = i + 1;
+            m_stageDatas[i].StageNumber = i + 1 ;
             Debug.Log(m_stageDatas[i].StageNumber);
         }
         DontDestroyOnLoad(gameObject);
