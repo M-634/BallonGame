@@ -5,14 +5,19 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Audio;
 /// <summary>
-/// ゲーム全体のサウンド(2D音源)を管理するクラス
+/// ゲーム全体のサウンドを管理するクラス
 /// </summary>
 public class SoundManager : SingletonMonoBehavior<SoundManager>
 {
-
+    //メンバー変数
+    #region
     [SerializeField,Header("MenuSE")]
     List<AudioClip> m_menuSeAuidoClipList = new List<AudioClip>();
     private AudioSource m_menuSeAudioSouce;
+
+    [SerializeField,Header("GameSE")]
+    List<AudioClip> m_gameSeAudioClipList = new List<AudioClip>();
+    AudioSource m_gameSeAudioSource;
 
     [SerializeField,Header("EnviromentSE")]
     List<AudioClip> m_enviromentAudioClipList = new List<AudioClip>();
@@ -29,7 +34,7 @@ public class SoundManager : SingletonMonoBehavior<SoundManager>
 
     [SerializeField, Header("Audio Mixer")]
     AudioMixer m_audioMixer;
-    [SerializeField] AudioMixerGroup m_bgmAMG, m_menuSeAMG, m_envAMG, m_voiceAMG;
+    [SerializeField] AudioMixerGroup m_bgmAMG, m_menuSeAMG,m_gameSeAMG, m_envAMG, m_voiceAMG;
 
   
     public bool IsPaused { get; private set; }
@@ -38,26 +43,15 @@ public class SoundManager : SingletonMonoBehavior<SoundManager>
     private const string GameSeVolumeParamName = "GameSEVolume";
     private const string BGMVolumeParamName = "BGMVolume";
     private const string EnvVolumeParamName = "EnvironmentVolume";
-
-    protected override void Awake()
-    {
-        base.Awake();
-        DontDestroyOnLoad(gameObject);
-
-        //必要な分のAudioSorceを予め用意する
-        m_menuSeAudioSouce = InitializeAudioSource(this.gameObject, false, m_menuSeAMG);
-        m_bgmAudioSourceList = InitializeAudioSources(this.gameObject, true, m_bgmAMG, BGMAudiosorceNum);
-        m_enviromentAudioSource = InitializeAudioSource(this.gameObject, true, m_envAMG);
-        m_voiceAudioSource = InitializeAudioSource(this.gameObject, false, m_voiceAMG);
-    }
+    #endregion
 
     //Audioの各種ボリュームのプロパティ
+    #region
     public float MasterVolume
     {
         get { return m_audioMixer.GetVolumeByLinear(MasterVolumeParamName); }
         set { m_audioMixer.SetVolumeByLinear(MasterVolumeParamName, value); }
     }
-
     public float GameSeVolume 
     {
         get { return m_audioMixer.GetVolumeByLinear(GameSeVolumeParamName); }
@@ -75,7 +69,23 @@ public class SoundManager : SingletonMonoBehavior<SoundManager>
         get { return m_audioMixer.GetVolumeByLinear(EnvVolumeParamName); }
         set { m_audioMixer.SetVolumeByLinear(EnvVolumeParamName, value); }
     }
+    #endregion
 
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
+
+        //必要な分のAudioSorceを予め用意する
+        m_menuSeAudioSouce = InitializeAudioSource(this.gameObject, false, m_menuSeAMG);
+        m_gameSeAudioSource = InitializeAudioSource(this.gameObject, false, m_gameSeAMG);
+        m_bgmAudioSourceList = InitializeAudioSources(this.gameObject, true, m_bgmAMG, BGMAudiosorceNum);
+        m_enviromentAudioSource = InitializeAudioSource(this.gameObject, true, m_envAMG);
+        m_voiceAudioSource = InitializeAudioSource(this.gameObject, false, m_voiceAMG);
+    }
+
+    //AudioSoureceの初期化 
+    #region
     private AudioSource InitializeAudioSource(GameObject parentGameObject,bool isLoop = false,AudioMixerGroup amg = null)
     {
         var audioSource = parentGameObject.AddComponent<AudioSource>();
@@ -103,8 +113,11 @@ public class SoundManager : SingletonMonoBehavior<SoundManager>
         }
         return audioSources;
     }
+    #endregion
 
-    public void PlaySe(string clipName)
+    //メソッド
+    #region 
+    public void PlayMenuSe(string clipName)
     {
         var audioClip = m_menuSeAuidoClipList.FirstOrDefault(clip => clip.name == clipName);
 
@@ -115,6 +128,35 @@ public class SoundManager : SingletonMonoBehavior<SoundManager>
         }
 
         m_menuSeAudioSouce.Play(audioClip);
+    }
+
+    /// <summary>
+    /// ゲームシーンで繰り返しなる音はピッチをランダムに、
+    /// 特殊演出などの音源は少しボリュームを上げる
+    /// </summary>
+    /// <param name="clipName"></param>
+    /// <param name="pitchRandom"></param>
+    /// <param name="range"></param>
+    public void PlayGameSe(string clipName,bool pitchRandom = true,float range = 0.5f)
+    {
+        var audioClip = m_gameSeAudioClipList.FirstOrDefault(clip => clip.name == clipName);
+
+        if (audioClip == null)
+        {
+            Debug.LogWarning(clipName + "は見つかりません");
+            return;
+        }
+
+        if (pitchRandom)
+        {
+            range = Mathf.Clamp(range, 0.1f, 1f);
+            m_gameSeAudioSource.pitch = Random.Range(1f - range, 1f + range);
+        }
+        else
+        {
+            m_gameSeAudioSource.pitch = 1;
+        }
+        m_gameSeAudioSource.Play(audioClip); 
     }
 
     public void PlayEnviroment(string clipName)
@@ -201,4 +243,5 @@ public class SoundManager : SingletonMonoBehavior<SoundManager>
 
         m_voiceAudioSource.PlayScheduled(AudioSettings.dspTime + delayTime);
     }
+    #endregion
 }

@@ -99,13 +99,13 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
                 var touch = Input.GetTouch(0);
                 if (touch.phase == TouchPhase.Began)
                 {
-                    SoundManager.Instance.PlaySe(m_tapAudioClipname);
+                    SoundManager.Instance.PlayMenuSe(m_tapAudioClipname);
                     break;
                 }
             }
             else if (Input.GetMouseButtonDown(0))
             {
-                SoundManager.Instance.PlaySe(m_tapAudioClipname);
+                SoundManager.Instance.PlayMenuSe(m_tapAudioClipname);
                 break;
             }
             yield return null;

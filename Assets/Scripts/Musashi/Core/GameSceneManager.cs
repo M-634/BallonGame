@@ -109,7 +109,7 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
         if (SoundManager.Instance)
         {
             SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
-            SoundManager.Instance.PlaySe(m_GameClearSEName);
+            SoundManager.Instance.PlayGameSe(m_GameClearSEName,false);
         }
         //残り時間をScoreManagerに渡す
         m_scoreManager.DisplayResult(m_timeLimit);
@@ -136,7 +136,7 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
         if (SoundManager.Instance)
         {
             SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
-            SoundManager.Instance.PlaySe(m_GameOverSEName);
+            SoundManager.Instance.PlayGameSe(m_GameOverSEName,false);
         }
     }
 

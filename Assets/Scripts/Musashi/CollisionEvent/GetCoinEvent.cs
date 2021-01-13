@@ -14,7 +14,7 @@ public class GetCoinEvent : MonoBehaviour, IEventCollision
 
     public void CollisionEvent(EventSystemInGameScene eventSystem)
     {
-        SoundManager.Instance.PlaySe(m_getCoinClipName);
+        SoundManager.Instance.PlayGameSe(m_getCoinClipName);
         eventSystem.ExecuteGetCoinEvent(m_getScore);
         gameObject.SetActive(false);
     }

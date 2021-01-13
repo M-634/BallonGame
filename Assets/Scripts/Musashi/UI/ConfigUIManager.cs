@@ -23,13 +23,13 @@ public class ConfigUIManager :SingletonMonoBehavior<ConfigUIManager>
 
     public void ShowConfigUI()
     {
-        SoundManager.Instance.PlaySe(m_audioClipName);
+        SoundManager.Instance.PlayMenuSe(m_audioClipName);
         m_canvasGroup.Show();
     }
 
     public void CloseCnfigUI()
     {
-        SoundManager.Instance.PlaySe(m_audioClipName);
+        SoundManager.Instance.PlayMenuSe(m_audioClipName);
         m_canvasGroup.Hide();
     }
 }
