@@ -50,8 +50,10 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
             StageParent.Instance.AppearanceStageObject(StageParent.Instance.GetAppearanceStagePrefab.transform);
             //制限時間をセットする
             m_timeLimit = StageParent.Instance.GetAppearanceStageData.SetTimeLimit;
+            //コインの総数を数える
+            m_scoreManager.CountCoinNumber();
 
-            //skyBoxをセットする
+            //skyBoxをセットする ー＞ ここ、将来的にステートパターンに
             switch (StageParent.Instance.GetAppearanceStageData.Conditons)
             {
                 case StageData.WeatherConditons.Initialize:

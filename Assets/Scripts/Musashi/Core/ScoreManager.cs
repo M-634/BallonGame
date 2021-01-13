@@ -17,7 +17,10 @@ public class ScoreManager : EventReceiver<ScoreManager>
     private int m_totalCoinNum;
     private int m_getCoinNum;
 
-    private void Start()
+    /// <summary>
+    /// ゲームシーン内のコインの総数を数える関数
+    /// </summary>
+    public void CountCoinNumber()
     {
         var coinNum = GameObject.FindGameObjectsWithTag("Coin");
         m_totalCoinNum = coinNum.Length;
@@ -54,8 +57,15 @@ public class ScoreManager : EventReceiver<ScoreManager>
             .OnComplete(() =>
             {
                 //ステージ内のコインの総数と獲得したコインの数の割合でランク付け（A～C）
-                int ratio = m_getCoinNum / m_totalCoinNum * 100;
-                m_UISetActiveControl.DetermineTheRank(ratio);
+                if (m_totalCoinNum == 0)
+                {
+                    m_UISetActiveControl.DetermineTheRank(0);
+                }
+                else
+                {
+                    int ratio = m_getCoinNum / m_totalCoinNum * 100;
+                    m_UISetActiveControl.DetermineTheRank(ratio);
+                }
                 SaveScoreAndTime(m_currentScore, clearTime);
             });
     }

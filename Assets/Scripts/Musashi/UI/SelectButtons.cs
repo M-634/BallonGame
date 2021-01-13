@@ -11,6 +11,7 @@ public class SelectButtons : MonoBehaviour
     [SerializeField] SelectStageButton[] m_buttons;
     /// <summary>ステージ解放フラグ </summary>
     bool m_doReleaseStage = true;//初めのステージは必ず解放する
+    int stageNumber = 1;
 
     /// <summary>
     /// 各ボタンにステージ情報を送り,ステージを解放するかどうかを決める
@@ -19,7 +20,7 @@ public class SelectButtons : MonoBehaviour
     {
         foreach (var btn in m_buttons)
         {
-            if (btn.gameObject.activeSelf == false) return;//ボタンのアクティブがfalseだとエラーはくのを防ぐため
+            //if (btn.gameObject.activeSelf == false) return;//ボタンのアクティブがfalseだとエラーはくのを防ぐため
 
             if (m_doReleaseStage)
             {
@@ -32,21 +33,11 @@ public class SelectButtons : MonoBehaviour
                 btn.SetUnOpenedStageSprite();
             }
 
-            //btn.StageData = StageParent.Instance.SendStageData(btn.StagePrefab);
+            btn.StageNumber = stageNumber;
+            //ボタンにステージデータを送る
             btn.StageData = StageParent.Instance.SearchStageData(btn.StageNumber);
-            if (btn.StageData == null)
-            {
-                Debug.LogError("StageParentに設定してあるStaegeDatas内に存在するstagePrefabとボタンに設定したstagePrefabで一致するものがありません！" +
-                    "今一度、設定を確認してみてください");
-//#if UNITY_EDITOR
-//                UnityEditor.EditorApplication.isPlaying = false;
-//#elif UNITY_ANDROID
-//                Application.runInBackground = false;
-//                Application.Quit();
-//#endif
-                return;
-            }
-
+            stageNumber++;
+          
             if (btn.StageData.IsStageClear)
             {
                 //ステージクリアした印を付ける

@@ -9,6 +9,7 @@ using UnityEngine;
 /// </summary>
 public class StageParent : SingletonMonoBehavior<StageParent>
 {
+
     /// <summary>ステージデータ</summary>
     [SerializeField] StageData[] m_stageDatas;
     /// <summary>Hierarchy上に生成されたステージプレハブ</summary>
@@ -38,7 +39,6 @@ public class StageParent : SingletonMonoBehavior<StageParent>
         {
             m_stageObjs[i] = m_stageDatas[i].StagePrefab;
             m_stageDatas[i].StageNumber = i + 1 ;
-            Debug.Log(m_stageDatas[i].StageNumber);
         }
         DontDestroyOnLoad(gameObject);
     }

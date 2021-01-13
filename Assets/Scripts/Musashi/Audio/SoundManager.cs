@@ -244,4 +244,19 @@ public class SoundManager : SingletonMonoBehavior<SoundManager>
         m_voiceAudioSource.PlayScheduled(AudioSettings.dspTime + delayTime);
     }
     #endregion
+
+    /// <summary>
+    /// ゲームシーンでポーズ中、環境音とBGMを止める
+    /// </summary>
+    public void Pause()
+    {
+        m_enviromentAudioSource.Pause();
+        m_bgmAudioSourceList.ForEach(bgm => bgm.Pause());
+    }
+
+    public void Resume()
+    {
+        m_enviromentAudioSource.UnPause();
+        m_bgmAudioSourceList.ForEach(bgm => bgm.UnPause());
+    }
 }
