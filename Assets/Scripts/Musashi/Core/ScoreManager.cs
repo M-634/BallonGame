@@ -24,15 +24,13 @@ public class ScoreManager : EventReceiver<ScoreManager>
         Debug.Log("Coin TotalNumber : " + m_totalCoinNum);
     }
 
-    /// <summary>
-    /// プレイヤーがコインに衝突したら呼ばれる関数
-    /// </summary>
-    public void GetCoin(int score)
+
+    public void GetScoreItem(int score, ItemType itemType)
     {
         m_currentScore += score;
-        m_getCoinNum++;
         m_UISetActiveControl.CurrentScoreText.text = "Score: " + m_currentScore;
 
+        if (itemType == ItemType.Coin) m_getCoinNum++;
     }
 
     /// <summary>
@@ -83,11 +81,11 @@ public class ScoreManager : EventReceiver<ScoreManager>
 
     protected override void OnEnable()
     {
-        m_eventSystemInGameScene.GetCoinEvent += GetCoin;
+        m_eventSystemInGameScene.GetItemEvent += GetScoreItem;
     }
 
     protected override void OnDisable()
     {
-        m_eventSystemInGameScene.GetCoinEvent -= GetCoin;
+        m_eventSystemInGameScene.GetItemEvent -= GetScoreItem;
     }
 }

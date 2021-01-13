@@ -5,9 +5,9 @@ using UnityEngine.Events;
 using DG.Tweening;
 
 /// <summary>
-/// コイン獲得時のイベント
+/// コイン,ダイヤモンド、月、獲得時のイベント
 /// </summary>
-public class GetCoinEvent : MonoBehaviour, IEventCollision
+public class GetItemEvent : MonoBehaviour, IEventCollision
 {
     /// <summary>コイン獲得時のスコアを設定してね</summary>
     [SerializeField] int m_getScore;

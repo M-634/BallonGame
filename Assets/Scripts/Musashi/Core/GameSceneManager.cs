@@ -121,6 +121,15 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
     public void GameOver()
     {
         InGame = false;
+
+        if (SoundManager.Instance)
+        {
+            SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
+            SoundManager.Instance.PlayGameSe(m_GameOverSEName,false);
+        }
+
+        if (m_debugGameScene) return;
+
         if (StageParent.Instance)
         {
             //ステージを非表示にする
@@ -133,11 +142,6 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
             //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
             SceneLoader.Instance.LoadSelectSceneWithTap();
 
-        if (SoundManager.Instance)
-        {
-            SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
-            SoundManager.Instance.PlayGameSe(m_GameOverSEName,false);
-        }
     }
 
     protected override void OnEnable()

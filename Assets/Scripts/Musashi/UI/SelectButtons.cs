@@ -38,12 +38,12 @@ public class SelectButtons : MonoBehaviour
             {
                 Debug.LogError("StageParentに設定してあるStaegeDatas内に存在するstagePrefabとボタンに設定したstagePrefabで一致するものがありません！" +
                     "今一度、設定を確認してみてください");
-#if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-#elif UNITY_ANDROID
-                Application.runInBackground = false;
-                Application.Quit();
-#endif
+//#if UNITY_EDITOR
+//                UnityEditor.EditorApplication.isPlaying = false;
+//#elif UNITY_ANDROID
+//                Application.runInBackground = false;
+//                Application.Quit();
+//#endif
                 return;
             }
 
