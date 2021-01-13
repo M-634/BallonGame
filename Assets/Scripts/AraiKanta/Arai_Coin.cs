@@ -28,13 +28,13 @@ public class Arai_Coin : MonoBehaviour
              .SetLoops(-1, LoopType.Restart);
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            // ゲームオブジェクトを非表示にする
-            gameObject.SetActive(false);
-            Debug.Log("Coin消えた");
-        }
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "Player")
+    //    {
+    //        // ゲームオブジェクトを非表示にする
+    //        gameObject.SetActive(false);
+    //        Debug.Log("Coin消えた");
+    //    }
+    //}
 }
