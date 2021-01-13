@@ -502,6 +502,7 @@ GameObject:
   - component: {fileID: 2637302440214190608}
   - component: {fileID: 2637302440214190609}
   - component: {fileID: 2637302440214190614}
+  - component: {fileID: 887288360456710011}
   m_Layer: 0
   m_Name: '[StageManager]'
   m_TagString: StageManager
@@ -596,6 +597,23 @@ MonoBehaviour:
   m_rankImageC: {fileID: 21300000, guid: 349052c44004a244b9f7dd3643df3401, type: 3}
   m_resultRankImage: {fileID: 7946548910239486501}
   m_rankImageAnimation: {fileID: 73382149}
+--- !u!320 &887288360456710011
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2637302440214190610}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 0}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings: []
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &2637302440404665813
 GameObject:
   m_ObjectHideFlags: 0

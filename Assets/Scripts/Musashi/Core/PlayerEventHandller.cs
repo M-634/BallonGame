@@ -20,7 +20,7 @@ public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
     protected override void Awake()
     {
         base.Awake();
-        if (m_doDebugPlayerMove) return;
+        //if (m_doDebugPlayerMove) return;
         m_rb = GetComponent<Rigidbody>();
         m_rb.constraints = RigidbodyConstraints.FreezePosition;
     }
@@ -54,7 +54,6 @@ public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
     {
         m_rb.constraints = RigidbodyConstraints.None;
         InGame = true;
-
     }
 
     public void EndGaem()
@@ -65,11 +64,11 @@ public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
 
     protected override void OnEnable()
     {
-        if (m_doDebugPlayerMove)
-        {
-            InGame = true;
-            return;
-        }
+        //if (m_doDebugPlayerMove)
+        //{
+        //    InGame = true;
+        //    return;
+        //}
         m_eventSystemInGameScene.GameStartEvent += GameStart;
         m_eventSystemInGameScene.GameClearEvent += EndGaem;
         m_eventSystemInGameScene.GameOverEvent += EndGaem;
@@ -77,7 +76,7 @@ public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
 
     protected override void OnDisable()
     {
-        if (m_doDebugPlayerMove) return;
+        //if (m_doDebugPlayerMove) return;
         m_eventSystemInGameScene.GameStartEvent -= GameStart;
         m_eventSystemInGameScene.GameClearEvent -= EndGaem;
         m_eventSystemInGameScene.GameOverEvent -= EndGaem;
