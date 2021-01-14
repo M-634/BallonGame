@@ -403,7 +403,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2637302439844156204
 RectTransform:
   m_ObjectHideFlags: 0
@@ -560,8 +560,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d899d99d35af664e842eeff9320745a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_debugGameScene: 0
+  m_debugGameScene: 1
   m_UISetActiveControl: {fileID: 2637302440214190614}
+  m_player: {fileID: 0}
+  m_gameOverPlayer: {fileID: 0}
   m_sunnySkyBox: {fileID: 2100000, guid: b2507cba8d65e4f4eac14af86f4304f2, type: 2}
   m_thunderStormSkyBox: {fileID: 2100000, guid: 08dad5c7c12f6d945937ccd4b74f4b44,
     type: 2}

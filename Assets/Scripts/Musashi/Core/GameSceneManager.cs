@@ -19,6 +19,9 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
     [SerializeField] bool m_debugGameScene;
     [SerializeField] UISetActiveControl m_UISetActiveControl;
 
+    [SerializeField] GameObject m_player;
+    [SerializeField] GameObject m_gameOverPlayer;
+
     [Header("SkyBox")]
     [SerializeField] Material m_sunnySkyBox;
     [SerializeField] Material m_thunderStormSkyBox;
@@ -42,6 +45,9 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
     {
         m_scoreManager = GetComponent<ScoreManager>();
         m_director = GetComponent<PlayableDirector>();
+
+        m_player.SetActive(true);
+        m_gameOverPlayer.SetActive(false);
 
         if (SoundManager.Instance)
         {
@@ -116,7 +122,7 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
         InGame = false;
         if (SoundManager.Instance)
         {
-            SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
+            //SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
             SoundManager.Instance.PlayGameSe(m_GameClearSEName,false);
         }
         //ここで演出
@@ -132,13 +138,18 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
     {
         InGame = false;
 
+        //GameOver時の演出用のプレイヤーに切り替え、Playerの位置にセットする
+        var pos = m_player.transform.position;
+        m_gameOverPlayer.transform.position = pos;
+        m_player.SetActive(false);
+        m_gameOverPlayer.SetActive(true);
         m_director.playableAsset = m_playableAssets[1];
         m_playCamera.enabled = false;
 
         if (SoundManager.Instance)
         {
-            SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
-            //SoundManager.Instance.PlayGameSe(m_GameOverSEName,false);
+            //SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
+            SoundManager.Instance.PlayGameSe(m_GameOverSEName,false);
             m_director.Play();
         }
 

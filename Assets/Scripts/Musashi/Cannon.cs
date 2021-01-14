@@ -9,6 +9,7 @@ public class Cannon : MonoBehaviour
     [SerializeField] Transform m_muzzlePos;
     [SerializeField] float m_shootPower;
     [SerializeField] float m_coolTime;
+    [SerializeField] string m_shootSe;
     int m_index = 0;
 
     private void OnTriggerEnter(Collider other)
@@ -23,6 +24,7 @@ public class Cannon : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, 1f);
             //発射
             m_bullets[m_index].Shoot(dir.normalized * m_shootPower);
+            SoundManager.Instance.PlayGameSe(m_shootSe);
         }
     }
 }
