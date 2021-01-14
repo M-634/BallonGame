@@ -37,6 +37,8 @@ public class StageParent : SingletonMonoBehavior<StageParent>
         for (int i = 0; i < m_stageDatas.Length; i++)
         {
             m_stageObjs[i] = m_stageDatas[i].StagePrefab;
+            m_stageDatas[i].StageNumber = i + 1 ;
+            Debug.Log(m_stageDatas[i].StageNumber);
         }
         DontDestroyOnLoad(gameObject);
     }
@@ -81,20 +83,22 @@ public class StageParent : SingletonMonoBehavior<StageParent>
     /// <summary>
     /// 各ステージセレクトボタンにアタッチされている
     /// SelectGameSceneButtonにStageDataを渡す
+    /// 検索をステージ番号に変更する
     /// </summary>
-    public StageData SendStageData(GameObject stagePrefab)
+    public StageData SearchStageData(int stageNumber)
     {
         //stageDataを検索
-        //foreach (var data in m_stageDatas)
+        //for (int i = 0; i < m_stageDatas.Length; i++)
         //{
-        //    if (data.StagePrefab == stagePrefab)
+        //    if (m_stageObjs[i] == stagePrefab)
         //    {
-        //        return data;
+        //        return m_stageDatas[i];
         //    }
         //}
+        //return null;
         for (int i = 0; i < m_stageDatas.Length; i++)
         {
-            if (m_stageObjs[i] == stagePrefab)
+            if (m_stageDatas[i].StageNumber == stageNumber)
             {
                 return m_stageDatas[i];
             }
@@ -103,33 +107,23 @@ public class StageParent : SingletonMonoBehavior<StageParent>
     }
 
     /// <summary>
-    /// ステージセレクトボタンを押した時に、次のゲームシーンで出現させる
-    /// ステージ情報を確定させる
+    /// ステージセレクトボタンをタップした時に、次のゲームシーンで出現させる
+    /// ステージ情報をセットする
     /// </summary>
-    public void SetStageInfo(GameObject stage)
+    public void SetStageInfo(int stageNumber)
     {
-        if (stage == null)
-        {
-            Debug.LogError("ステージプレハブがセットされていません！！");
-            return;
-        }
-
         //stageを検索
         for (int i = 0; i < m_stageDatas.Length; i++)
         {
-           //if (m_stageDatas[i].StagePrefab.Equals(stage))
-            if(m_stageObjs[i] == stage)
+            if(m_stageDatas[i].StageNumber == stageNumber)
             {
                 //stageをセットする
                 GetAppearanceStageData = m_stageDatas[i];
                 GetAppearanceStagePrefab = m_stagePrefabList[i];
-                //ゲームシーンをロード
-                //SceneLoader.Instance.LoadGameScene();
                 return;
             }
         }
-
-        Debug.LogError("該当するStagePrefabがStageDataに存在しません");
+        Debug.LogWarning("該当するStagePrefabがStageDataに存在しません");
     }
 
     /// <summary>

@@ -9,19 +9,20 @@ using System.Collections.Generic;
 /// </summary>
 public class EventSystemInGameScene : MonoBehaviour
 {
-    public event Action<int> GetCoinEvent;
+    public event Action<int,ItemType> GetItemEvent;
     public event Action GameStartEvent;
     public event Action GameOverEvent;
     public event Action GameClearEvent;
+
   
     public void ExecuteGameStartEvent()
     {
         GameStartEvent?.Invoke();
     }
 
-    public void ExecuteGetCoinEvent(int score)
+    public void ExecuteGetItemEvent(int score,ItemType itemType)
     {
-        GetCoinEvent?.Invoke(score);
+        GetItemEvent?.Invoke(score,itemType);
     }
 
     public void ExecuteGameOverEvent()

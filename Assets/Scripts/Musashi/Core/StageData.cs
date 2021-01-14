@@ -17,6 +17,7 @@ public class StageData
     [SerializeField] GameObject m_stagePrefab;
     [SerializeField] WeatherConditons m_weatherConditons;
     [SerializeField] float m_timeLimit = 300f;
+    private int m_stageNumber;
     #endregion
 
     #region Master Data Property
@@ -24,7 +25,7 @@ public class StageData
     public WeatherConditons Conditons { get => m_weatherConditons; }
     public float SetTimeLimit { get => m_timeLimit; }
     public string GetStagePath { get => m_stagePrefab.name; }
-  
+    public int StageNumber { get => m_stageNumber; set => m_stageNumber = value; }
     #endregion
 
     #region Save Data

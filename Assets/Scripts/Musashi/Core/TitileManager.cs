@@ -33,7 +33,7 @@ public class TitileManager : MonoBehaviour
     /// </summary>
     public void OnBeginningBtn()
     {
-        SoundManager.Instance.PlaySe(m_BtnClickClipName);
+        SoundManager.Instance.PlayMenuSe(m_BtnClickClipName);
         SaveAndLoadWithJSON.DeleteSaveData();
         SceneLoader.Instance.LoadSelectScene();
     }
@@ -43,7 +43,7 @@ public class TitileManager : MonoBehaviour
     /// </summary>
     public void OnContinueBtn()
     {
-        SoundManager.Instance.PlaySe(m_BtnClickClipName);
+        SoundManager.Instance.PlayMenuSe(m_BtnClickClipName);
         SceneLoader.Instance.LoadSelectScene();
     }
 }

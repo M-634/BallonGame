@@ -14,23 +14,23 @@ using TMPro;
 public class SelectStageButton : MonoBehaviour, IPointerEnterHandler
 {
     [Header("フィールド")]
-    [SerializeField] GameObject m_stagePrefab;
-    [SerializeField] VideoClip m_videoClip;
+    [SerializeField] VideoClip m_videoClip;//ここけす
     [SerializeField] VideoPlayer m_videoPlayer;
     [SerializeField] Image m_stageClearImage;
     [SerializeField] Sprite m_unOpenedSprite;
     [SerializeField] Sprite m_openedSprite;
+    [SerializeField] int m_stageNumber;
 
     [Header("各テキストUI")]
     [SerializeField] TextMeshProUGUI m_clearTimeText;
     [SerializeField] TextMeshProUGUI m_clearScoreText;
     [SerializeField] TextMeshProUGUI m_stageNameText;
 
+    public int StageNumber { get => m_stageNumber;}
     public Image StageClearImage { get => m_stageClearImage; }
     
     private StageData m_stageData;
     public StageData StageData { get => m_stageData; set => m_stageData = value;}
-    public GameObject StagePrefab { get => m_stagePrefab; }
     private Button m_button;
     public Button SelectButton
     {
@@ -70,7 +70,7 @@ public class SelectStageButton : MonoBehaviour, IPointerEnterHandler
     private void SetStageInfo()
     {
         if (StageParent.Instance)
-            StageParent.Instance.SetStageInfo(m_stagePrefab);
+            StageParent.Instance.SetStageInfo(m_stageNumber);
     }
 
     private void ShowStageInfo()

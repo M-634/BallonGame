@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4051109467932509707}
   - component: {fileID: 4999954532195236925}
   - component: {fileID: 1612254911180964036}
+  - component: {fileID: 1195210237}
+  - component: {fileID: 4995382715601034173}
   m_Layer: 0
   m_Name: star
   m_TagString: Untagged
@@ -25,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1036733087272154136}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.670723, y: 6.57, z: 5.854621}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -79,3 +81,31 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1195210237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036733087272154136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66287d6028977e740a3df7121d8910b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_itemType: 3
+  m_getScore: 500
+  m_getItemClipName: 
+--- !u!65 &4995382715601034173
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036733087272154136}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.08, y: 1.34, z: 0.58012986}
+  m_Center: {x: 0.00000008940697, y: 0.76804346, z: 0}

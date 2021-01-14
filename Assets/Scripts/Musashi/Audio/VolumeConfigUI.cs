@@ -24,6 +24,12 @@ public class VolumeConfigUI : MonoBehaviour
             SetBGMSliderEvent(vol => SoundManager.Instance.BGMVolume = vol);
             SetGameSeSliderEvent(vol => SoundManager.Instance.GameSeVolume = vol);
             SetEnvSliderEvent(vol => SoundManager.Instance.EnvironmentVolume = vol);
+
+            //sliderにAudioMixerの初期ボリュームをセットする
+            SetMasterVolume(SoundManager.Instance.MasterVolume);
+            SetBGMVolume(SoundManager.Instance.BGMVolume);
+            SetSeVolume(SoundManager.Instance.GameSeVolume);
+            SetEnvVolume(SoundManager.Instance.EnvironmentVolume);
         }
     }
 

@@ -53,7 +53,7 @@ public class ForcePlayerMove : MonoBehaviour
     VariableJoystick variableJoystick;
 
     /// <summary>unity上でマウスを使ってデバッグを行う時にフラグをオンにする </summary>
-    [SerializeField] bool m_mouthDebug;
+    //[SerializeField] bool m_mouthDebug;
     //Vector3 m_mouthPosi;
 
     PlayerEventHandller m_playerEventHandller;
