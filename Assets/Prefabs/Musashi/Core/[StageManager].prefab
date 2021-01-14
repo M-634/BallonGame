@@ -563,7 +563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d899d99d35af664e842eeff9320745a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_debugGameScene: 0
+  m_debugGameScene: 1
   m_UISetActiveControl: {fileID: 2637302440214190614}
   m_sunnySkyBox: {fileID: 2100000, guid: b2507cba8d65e4f4eac14af86f4304f2, type: 2}
   m_thunderStormSkyBox: {fileID: 2100000, guid: 08dad5c7c12f6d945937ccd4b74f4b44,
@@ -572,6 +572,9 @@ MonoBehaviour:
   m_GameSceneBGMName: GameScene
   m_GameClearSEName: GameClearSe
   m_GameOverSEName: GameOverSe
+  m_playableAssets:
+  - {fileID: 11400000, guid: 4056b45025d1cdc4a8e76157b298cef0, type: 2}
+  - {fileID: 11400000, guid: e159dfb6d0ef5e54c923afd7503ffba2, type: 2}
 --- !u!114 &2637302440214190614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -605,8 +608,8 @@ PlayableDirector:
   m_GameObject: {fileID: 2637302440214190610}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 4056b45025d1cdc4a8e76157b298cef0, type: 2}
-  m_InitialState: 1
+  m_PlayableAsset: {fileID: 0}
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -649,11 +652,29 @@ PlayableDirector:
     value: {fileID: 0}
   - key: {fileID: 5712689192146217377, guid: 4056b45025d1cdc4a8e76157b298cef0, type: 2}
     value: {fileID: 2637302440214190610}
+  - key: {fileID: -4441403358836984530, guid: 4056b45025d1cdc4a8e76157b298cef0, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -1783166959385218169, guid: e159dfb6d0ef5e54c923afd7503ffba2, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -7507229300563819915, guid: e159dfb6d0ef5e54c923afd7503ffba2, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -4527178064279793619, guid: e159dfb6d0ef5e54c923afd7503ffba2, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -6333103497194395411, guid: e159dfb6d0ef5e54c923afd7503ffba2, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -8593879592501122527, guid: e159dfb6d0ef5e54c923afd7503ffba2, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -9105670992130690122, guid: e159dfb6d0ef5e54c923afd7503ffba2, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References:
+    - 2ac9099b0f3f32948873f15ec6ab82f0: {fileID: 0}
     - 9940441939cbdf44fa06ba73a83fc1e9: {fileID: 0}
     - abba92569c1df3847b3b9f0cfc0ef462: {fileID: 0}
+    - 8929a3bd738d5e545bb39688b12d4908: {fileID: 0}
     - 95b80d872f9ed9940854389340568668: {fileID: 0}
+    - 92cfcd7c1dee9cc4c92c21731ce0e7fe: {fileID: 0}
+    - 27ad315692d8cc64187a31700d9f0e69: {fileID: 0}
     - 15e7fefc026bc644ea6b458ac57050a4: {fileID: 0}
     - 2a165687bc2b2c44f9d191156bbfdd18: {fileID: 0}
 --- !u!114 &614948050

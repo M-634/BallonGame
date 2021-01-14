@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Playables;
+using Cinemachine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -28,8 +29,10 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
     [SerializeField] string m_GameClearSEName;
     [SerializeField] string m_GameOverSEName;
 
-    ScoreManager m_scoreManager;
+    [SerializeField] CinemachineVirtualCamera m_playCamera;
+    [SerializeField] PlayableAsset[] m_playableAssets;
     PlayableDirector m_director;
+    ScoreManager m_scoreManager;
     float m_timeLimit;
 
     /// <summary>ゲーム中かどうか判定する </summary>
@@ -72,7 +75,9 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
                     break;
             }
         }
+        m_director.playableAsset = m_playableAssets[0];
         m_director.Play();
+        m_playCamera.enabled = true;
     }
 
     // Update is called once per frame
@@ -125,10 +130,14 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
     {
         InGame = false;
 
+        m_director.playableAsset = m_playableAssets[1];
+        m_playCamera.enabled = false;
+
         if (SoundManager.Instance)
         {
             SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
-            SoundManager.Instance.PlayGameSe(m_GameOverSEName,false);
+            //SoundManager.Instance.PlayGameSe(m_GameOverSEName,false);
+            m_director.Play();
         }
 
         if (m_debugGameScene) return;
