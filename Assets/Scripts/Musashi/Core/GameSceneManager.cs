@@ -27,10 +27,11 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
     [SerializeField] Material m_thunderStormSkyBox;
     [SerializeField] Material m_hurricaneSkybox;
 
-    [Header("Audio")]
-    [SerializeField] string m_GameSceneBGMName;
-    [SerializeField] string m_GameClearSEName;
-    [SerializeField] string m_GameOverSEName;
+    //[Header("Audio")]
+    //[SerializeField] string[] m_GameSceneBGMName;
+    //[SerializeField] string[] m_GameSceneEnvSeName;
+    //[SerializeField] string m_GameClearSEName;
+    //[SerializeField] string m_GameOverSEName;
 
     [SerializeField] CinemachineVirtualCamera m_playCamera;
     [SerializeField] PlayableAsset[] m_playableAssets;
@@ -49,37 +50,38 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
         m_player.SetActive(true);
         m_gameOverPlayer.SetActive(false);
 
-        if (SoundManager.Instance)
-        {
-            SoundManager.Instance.PlayBGMWithFadeIn(m_GameSceneBGMName);
-        }
-
         if (StageParent.Instance && !m_debugGameScene)
         {
+            var stageData = StageParent.Instance.GetAppearanceStageData;
             //ステージを出現させる
             StageParent.Instance.AppearanceStageObject(StageParent.Instance.GetAppearanceStagePrefab.transform);
             //制限時間をセットする
-            m_timeLimit = StageParent.Instance.GetAppearanceStageData.SetTimeLimit;
+            //m_timeLimit = StageParent.Instance.GetAppearanceStageData.SetTimeLimit;
+            m_timeLimit = stageData.SetTimeLimit;
             //コインの総数を数える
             m_scoreManager.CountCoinNumber();
-
+            //skyboxをセットする
+            RenderSettings.skybox = stageData.SkyBox;
+            //BGMと環境音を再生する
+            SoundManager.Instance.PlayBGMWithFadeIn(stageData.BGMName);
+            SoundManager.Instance.PlayEnviroment(stageData.EnvSeName);
             //skyBoxをセットする ー＞ ここ、将来的にステートパターンに
-            switch (StageParent.Instance.GetAppearanceStageData.Conditons)
-            {
-                case StageData.WeatherConditons.Initialize:
-                    break;
-                case StageData.WeatherConditons.Sunny:
-                    RenderSettings.skybox = m_sunnySkyBox;
-                    break;
-                case StageData.WeatherConditons.ThunderStorm:
-                    RenderSettings.skybox = m_thunderStormSkyBox;
-                    break;
-                case StageData.WeatherConditons.Hurricane:
-                    RenderSettings.skybox = m_hurricaneSkybox;
-                    break;
-                default:
-                    break;
-            }
+            //switch (stageData.Conditons)
+            //{
+            //    case StageData.WeatherConditons.Initialize:
+            //        break;
+            //    case StageData.WeatherConditons.Sunny:
+            //        RenderSettings.skybox = m_sunnySkyBox;
+            //        break;
+            //    case StageData.WeatherConditons.ThunderStorm:
+            //        RenderSettings.skybox = m_thunderStormSkyBox;
+            //        break;
+            //    case StageData.WeatherConditons.Hurricane:
+            //        RenderSettings.skybox = m_hurricaneSkybox;
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
         m_director.playableAsset = m_playableAssets[0];
         m_director.Play();
@@ -123,7 +125,7 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
         if (SoundManager.Instance)
         {
             //SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
-            SoundManager.Instance.PlayGameSe(m_GameClearSEName,false);
+            SoundManager.Instance.PlayGameSe("GameClearSe", false);
         }
         //ここで演出
 
@@ -148,8 +150,8 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
 
         if (SoundManager.Instance)
         {
-            //SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
-            SoundManager.Instance.PlayGameSe(m_GameOverSEName,false);
+            SoundManager.Instance.StopBGMWithFadeOut(0.1f);
+            SoundManager.Instance.StopEnviromet();
             m_director.Play();
         }
 

@@ -12,6 +12,14 @@ public class Cannon : MonoBehaviour
     [SerializeField] string m_shootSe;
     int m_index = 0;
 
+    private void OnEnable()
+    {
+        foreach (var item in m_bullets)
+        {
+            item.transform.position = m_muzzlePos.position;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
