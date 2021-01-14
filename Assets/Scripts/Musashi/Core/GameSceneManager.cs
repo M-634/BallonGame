@@ -119,6 +119,8 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
             SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
             SoundManager.Instance.PlayGameSe(m_GameClearSEName,false);
         }
+        //ここで演出
+
         //残り時間をScoreManagerに渡す
         m_scoreManager.DisplayResult(m_timeLimit);
     }

@@ -28,6 +28,8 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
     [SerializeField] TextMeshProUGUI m_clearTimeScoreText;
     [SerializeField] TextMeshProUGUI m_resulScoreText;
 
+    [SerializeField] Image m_clearImage;
+
     [Header("RankSprites")]
     [SerializeField] Sprite m_rankImageA;
     [SerializeField] Sprite m_rankImageB;
@@ -40,6 +42,7 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
     public GameObject GameSceneUI { get => m_gameSceneUI.gameObject; }
     public GameObject GameOverUI { get => m_GameOverUI.gameObject; }
     public GameObject GameClearUI { get => m_GameClearUI.gameObject; }
+    public Image GameClearImage { get => m_clearImage; }
     public TextMeshProUGUI TimerText { get => m_timerText; }
     public TextMeshProUGUI CurrentScoreText { get => m_currentScoreText; }
     public TextMeshProUGUI ClearTimeScoreText { get => m_clearTimeScoreText; }
@@ -91,7 +94,6 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
             m_resultRankImage.sprite = m_rankImageC;
         }
     }
-
 
     public void InisitializeUISetAcitve()
     {
