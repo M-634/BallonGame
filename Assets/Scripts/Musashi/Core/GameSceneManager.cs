@@ -140,9 +140,7 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
             m_director.Play();
         }
 
-        if (m_debugGameScene) return;
-
-        if (StageParent.Instance)
+        if (StageParent.Instance && !m_debugGameScene)
         {
             //ステージを非表示にする
             StageParent.Instance.GetAppearanceStagePrefab.SetActive(false);
@@ -152,7 +150,7 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
 
         if (SceneLoader.Instance)
             //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
-            SceneLoader.Instance.LoadSelectSceneWithTap();
+            SceneLoader.Instance.LoadSceneWithTap(8f);
 
     }
 

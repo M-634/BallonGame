@@ -85,7 +85,7 @@ public class ScoreManager : EventReceiver<ScoreManager>
         if (SceneLoader.Instance)
         {
             //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
-            SceneLoader.Instance.LoadSelectSceneWithTap();
+            SceneLoader.Instance.LoadSceneWithTap();
         }
     }
 

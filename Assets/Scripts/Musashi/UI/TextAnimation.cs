@@ -7,9 +7,9 @@ using TMPro;
 using JetBrains.Annotations;
 
 /// <summary>
-/// タップを促すテキストのアニメーションを制御するクラス
+/// テキストのアニメーションを制御するクラス
 /// </summary>
-public class TapToLoadTextAnimation : MonoBehaviour
+public class TextAnimation : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI m_text;
     [SerializeField] float m_animationTime = 2f;
