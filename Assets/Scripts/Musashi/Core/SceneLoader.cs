@@ -62,20 +62,11 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
         {
             yield return null;
         }
-  
-        m_fadeImage.FadeOutWithDoTween(m_fadeInTime, () => m_fadeImage.raycastTarget = false);
-        yield return new WaitForSeconds(m_fadeInTime);
 
-        //ゲームシーン開始前は、TimeLineが実行される！！今は、仮でカウントダウンしている
-        var countDownUI = GameObject.FindGameObjectWithTag("StageManager").GetComponent<UISetActiveControl>();
-        if (countDownUI)
+        m_fadeImage.FadeOutWithDoTween(m_fadeInTime, () =>
         {
-            StartCoroutine(countDownUI.StartCountDownCorutine());
-        }
-        else
-        {
-            Debug.LogError("StageMagerにUISetActiveControlコンポーネントがアタッチされていません！！");
-        }
+            m_fadeImage.raycastTarget = false;
+        });
     }
 
     /// <summary>

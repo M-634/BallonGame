@@ -14,9 +14,9 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
     [SerializeField] Canvas m_GameOverUI;
     [SerializeField] Canvas m_GameClearUI;
 
-    [Header("スタート時のカウントダウン")]
-    [SerializeField] Text m_startCountDown;
-    [SerializeField] int m_countDown = 3;
+    //[Header("スタート時のカウントダウン")]
+    //[SerializeField] Text m_startCountDown;
+    //[SerializeField] int m_countDown = 3;
 
     [Header("タイマーテキスト")]
     [SerializeField] TextMeshProUGUI m_timerText;
@@ -56,20 +56,20 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
     /// カウントダウンが開始される。
     /// </summary>
     /// <returns></returns>
-    public IEnumerator StartCountDownCorutine()
-    {
-        m_startCountDown.SetAlpha(1f);
-        while (m_countDown > 0)
-        {
-            m_startCountDown.text = m_countDown.ToString();
-            yield return new WaitForSeconds(1f);
-            m_countDown--;
-        }
+    //public IEnumerator StartCountDownCorutine()
+    //{
+    //    m_startCountDown.SetAlpha(1f);
+    //    while (m_countDown > 0)
+    //    {
+    //        m_startCountDown.text = m_countDown.ToString();
+    //        yield return new WaitForSeconds(1f);
+    //        m_countDown--;
+    //    }
 
-        m_startCountDown.text = "START!!";
-        yield return null;
-        m_startCountDown.FadeOutWithDoTween(2f, () => m_eventSystemInGameScene.ExecuteGameStartEvent());
-    }
+    //    m_startCountDown.text = "START!!";
+    //    yield return null;
+    //    m_startCountDown.FadeOutWithDoTween(2f, () => m_eventSystemInGameScene.ExecuteGameStartEvent());
+    //}
 
     /// <summary>
     /// コインの総数と獲得数の比率でランクを決定する
@@ -99,7 +99,7 @@ public class UISetActiveControl : EventReceiver<UISetActiveControl>
         GameOverUI.SetActive(false);
         GameClearUI.SetActive(false);
         CurrentScoreText.text = "Score:";
-        m_startCountDown.SetAlpha(0f);
+        //m_startCountDown.SetAlpha(0f);
     }
 
     public void UISetActiveWithGameOver()

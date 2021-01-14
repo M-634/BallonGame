@@ -4,6 +4,7 @@ using System.Diagnostics.Tracing;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 /// <summary>
@@ -28,6 +29,7 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
     [SerializeField] string m_GameOverSEName;
 
     ScoreManager m_scoreManager;
+    PlayableDirector m_director;
     float m_timeLimit;
 
     /// <summary>ゲーム中かどうか判定する </summary>
@@ -36,22 +38,23 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
     private void Start()
     {
         m_scoreManager = GetComponent<ScoreManager>();
+        m_director = GetComponent<PlayableDirector>();
 
         if (SoundManager.Instance)
         {
             SoundManager.Instance.PlayBGMWithFadeIn(m_GameSceneBGMName);
         }
 
-        if (m_debugGameScene) return;
-
-        if (StageParent.Instance)
+        if (StageParent.Instance && !m_debugGameScene)
         {
             //ステージを出現させる
             StageParent.Instance.AppearanceStageObject(StageParent.Instance.GetAppearanceStagePrefab.transform);
             //制限時間をセットする
             m_timeLimit = StageParent.Instance.GetAppearanceStageData.SetTimeLimit;
+            //コインの総数を数える
+            m_scoreManager.CountCoinNumber();
 
-            //skyBoxをセットする
+            //skyBoxをセットする ー＞ ここ、将来的にステートパターンに
             switch (StageParent.Instance.GetAppearanceStageData.Conditons)
             {
                 case StageData.WeatherConditons.Initialize:
@@ -69,7 +72,7 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
                     break;
             }
         }
-
+        m_director.Play();
     }
 
     // Update is called once per frame

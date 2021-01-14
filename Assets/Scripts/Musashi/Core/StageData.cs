@@ -7,21 +7,22 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.Video;
 
 [Serializable]
 public class StageData
 {
-    //memo; Master Dataもシリアライズされる......さして問題が、別にシリアライズする必要が無いからなぁ～。
-    //将来的に内部クラスでも持たせて、そいつだけシリアライズする方針を検討中
     #region Master Data
     [SerializeField] GameObject m_stagePrefab;
+    [SerializeField] VideoClip m_stagePvClip;
     [SerializeField] WeatherConditons m_weatherConditons;
     [SerializeField] float m_timeLimit = 300f;
-    private int m_stageNumber;
+    [SerializeField, HideInInspector] int m_stageNumber;
     #endregion
 
     #region Master Data Property
     public GameObject StagePrefab { get => m_stagePrefab; }
+    public VideoClip StagePvClip { get => m_stagePvClip; }
     public WeatherConditons Conditons { get => m_weatherConditons; }
     public float SetTimeLimit { get => m_timeLimit; }
     public string GetStagePath { get => m_stagePrefab.name; }

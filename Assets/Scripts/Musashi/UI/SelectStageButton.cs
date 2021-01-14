@@ -14,19 +14,19 @@ using TMPro;
 public class SelectStageButton : MonoBehaviour, IPointerEnterHandler
 {
     [Header("フィールド")]
-    [SerializeField] VideoClip m_videoClip;//ここけす
+    //[SerializeField] VideoClip m_videoClip;//ここけす
     [SerializeField] VideoPlayer m_videoPlayer;
     [SerializeField] Image m_stageClearImage;
     [SerializeField] Sprite m_unOpenedSprite;
     [SerializeField] Sprite m_openedSprite;
-    [SerializeField] int m_stageNumber;
 
     [Header("各テキストUI")]
     [SerializeField] TextMeshProUGUI m_clearTimeText;
     [SerializeField] TextMeshProUGUI m_clearScoreText;
     [SerializeField] TextMeshProUGUI m_stageNameText;
 
-    public int StageNumber { get => m_stageNumber;}
+    private int m_stageNumber;
+    public int StageNumber { get => m_stageNumber; set => m_stageNumber = value; }
     public Image StageClearImage { get => m_stageClearImage; }
     
     private StageData m_stageData;
@@ -82,7 +82,7 @@ public class SelectStageButton : MonoBehaviour, IPointerEnterHandler
 
         //動画再生
         m_videoPlayer.source = VideoSource.VideoClip;
-        m_videoPlayer.clip = m_videoClip;
+        m_videoPlayer.clip = StageData.StagePvClip;
         m_videoPlayer.isLooping = true;
         m_videoPlayer.Play();
 

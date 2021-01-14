@@ -25,11 +25,16 @@ public class ConfigUIManager :SingletonMonoBehavior<ConfigUIManager>
     {
         SoundManager.Instance.PlayMenuSe(m_audioClipName);
         m_canvasGroup.Show();
+        //ゲームシーンなら一時停止する
+        Time.timeScale = 0f;
+        SoundManager.Instance.Pause();
     }
 
     public void CloseCnfigUI()
     {
         SoundManager.Instance.PlayMenuSe(m_audioClipName);
         m_canvasGroup.Hide();
+        Time.timeScale = 1f;
+        SoundManager.Instance.Resume();
     }
 }
