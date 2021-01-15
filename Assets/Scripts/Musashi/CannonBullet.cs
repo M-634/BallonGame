@@ -10,11 +10,11 @@ public class CannonBullet : MonoBehaviour
         m_rb = GetComponent<Rigidbody>();
     }
 
-    public void Shoot(Vector3 dir)
+    public void Shoot(Vector3 dir,float lifeTime)
     {
-        gameObject.SetActive(true);
+       // gameObject.SetActive(true);
         m_rb.AddForce(dir);
-        StartCoroutine(gameObject.SetActive(false,10f));
+        StartCoroutine(gameObject.SetActive(false,lifeTime));
     }
 }
 
