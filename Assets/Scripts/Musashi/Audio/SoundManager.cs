@@ -259,4 +259,12 @@ public class SoundManager : SingletonMonoBehavior<SoundManager>
         m_enviromentAudioSource.UnPause();
         m_bgmAudioSourceList.ForEach(bgm => bgm.UnPause());
     }
+
+    public void ReStart()
+    {
+        m_bgmAudioSourceList.ForEach(bgm => bgm.UnPause());
+        StopBGMWithFadeOut(0f);
+        PlayBGMWithFadeIn(StageParent.Instance.GetAppearanceStageData.BGMName,0f);
+        PlayEnviroment(StageParent.Instance.GetAppearanceStageData.EnvSeName);
+    }
 }

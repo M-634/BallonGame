@@ -34,6 +34,7 @@ public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
     {
         if (collision.gameObject.TryGetComponent<IEventCollision>(out var eventCollision))
         {
+            Debug.Log(collision.gameObject.name);
             eventCollision.CollisionEvent(m_eventSystemInGameScene);
         }
     }
@@ -46,6 +47,7 @@ public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
     {
         if (other.gameObject.TryGetComponent<IEventCollision>(out var eventCollision))
         {
+            Debug.Log(other.gameObject.name);
             eventCollision.CollisionEvent(m_eventSystemInGameScene);
         }
     }

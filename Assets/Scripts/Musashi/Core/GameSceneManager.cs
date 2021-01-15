@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Playables;
+using Cinemachine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -18,18 +19,24 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
     [SerializeField] bool m_debugGameScene;
     [SerializeField] UISetActiveControl m_UISetActiveControl;
 
+    [SerializeField] GameObject m_player;
+    [SerializeField] GameObject m_gameOverPlayer;
+
     [Header("SkyBox")]
     [SerializeField] Material m_sunnySkyBox;
     [SerializeField] Material m_thunderStormSkyBox;
     [SerializeField] Material m_hurricaneSkybox;
 
-    [Header("Audio")]
-    [SerializeField] string m_GameSceneBGMName;
-    [SerializeField] string m_GameClearSEName;
-    [SerializeField] string m_GameOverSEName;
+    //[Header("Audio")]
+    //[SerializeField] string[] m_GameSceneBGMName;
+    //[SerializeField] string[] m_GameSceneEnvSeName;
+    //[SerializeField] string m_GameClearSEName;
+    //[SerializeField] string m_GameOverSEName;
 
-    ScoreManager m_scoreManager;
+    [SerializeField] CinemachineVirtualCamera m_playCamera;
+    [SerializeField] PlayableAsset[] m_playableAssets;
     PlayableDirector m_director;
+    ScoreManager m_scoreManager;
     float m_timeLimit;
 
     /// <summary>ゲーム中かどうか判定する </summary>
@@ -40,39 +47,45 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
         m_scoreManager = GetComponent<ScoreManager>();
         m_director = GetComponent<PlayableDirector>();
 
-        if (SoundManager.Instance)
-        {
-            SoundManager.Instance.PlayBGMWithFadeIn(m_GameSceneBGMName);
-        }
+        m_player.SetActive(true);
+        m_gameOverPlayer.SetActive(false);
 
         if (StageParent.Instance && !m_debugGameScene)
         {
+            var stageData = StageParent.Instance.GetAppearanceStageData;
             //ステージを出現させる
             StageParent.Instance.AppearanceStageObject(StageParent.Instance.GetAppearanceStagePrefab.transform);
             //制限時間をセットする
-            m_timeLimit = StageParent.Instance.GetAppearanceStageData.SetTimeLimit;
+            //m_timeLimit = StageParent.Instance.GetAppearanceStageData.SetTimeLimit;
+            m_timeLimit = stageData.SetTimeLimit;
             //コインの総数を数える
             m_scoreManager.CountCoinNumber();
-
+            //skyboxをセットする
+            RenderSettings.skybox = stageData.SkyBox;
+            //BGMと環境音を再生する
+            SoundManager.Instance.PlayBGMWithFadeIn(stageData.BGMName);
+            SoundManager.Instance.PlayEnviroment(stageData.EnvSeName);
             //skyBoxをセットする ー＞ ここ、将来的にステートパターンに
-            switch (StageParent.Instance.GetAppearanceStageData.Conditons)
-            {
-                case StageData.WeatherConditons.Initialize:
-                    break;
-                case StageData.WeatherConditons.Sunny:
-                    RenderSettings.skybox = m_sunnySkyBox;
-                    break;
-                case StageData.WeatherConditons.ThunderStorm:
-                    RenderSettings.skybox = m_thunderStormSkyBox;
-                    break;
-                case StageData.WeatherConditons.Hurricane:
-                    RenderSettings.skybox = m_hurricaneSkybox;
-                    break;
-                default:
-                    break;
-            }
+            //switch (stageData.Conditons)
+            //{
+            //    case StageData.WeatherConditons.Initialize:
+            //        break;
+            //    case StageData.WeatherConditons.Sunny:
+            //        RenderSettings.skybox = m_sunnySkyBox;
+            //        break;
+            //    case StageData.WeatherConditons.ThunderStorm:
+            //        RenderSettings.skybox = m_thunderStormSkyBox;
+            //        break;
+            //    case StageData.WeatherConditons.Hurricane:
+            //        RenderSettings.skybox = m_hurricaneSkybox;
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
+        m_director.playableAsset = m_playableAssets[0];
         m_director.Play();
+        m_playCamera.enabled = true;
     }
 
     // Update is called once per frame
@@ -111,9 +124,11 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
         InGame = false;
         if (SoundManager.Instance)
         {
-            SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
-            SoundManager.Instance.PlayGameSe(m_GameClearSEName,false);
+            //SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
+            SoundManager.Instance.PlayGameSe("GameClearSe", false);
         }
+        //ここで演出
+
         //残り時間をScoreManagerに渡す
         m_scoreManager.DisplayResult(m_timeLimit);
     }
@@ -125,15 +140,22 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
     {
         InGame = false;
 
+        //GameOver時の演出用のプレイヤーに切り替え、Playerの位置にセットする
+        var pos = m_player.transform.position;
+        m_gameOverPlayer.transform.position = pos;
+        m_player.SetActive(false);
+        m_gameOverPlayer.SetActive(true);
+        m_director.playableAsset = m_playableAssets[1];
+        m_playCamera.enabled = false;
+
         if (SoundManager.Instance)
         {
-            SoundManager.Instance.StopBGMWithFadeOut(m_GameSceneBGMName, 0.1f);
-            SoundManager.Instance.PlayGameSe(m_GameOverSEName,false);
+            SoundManager.Instance.StopBGMWithFadeOut(0.1f);
+            SoundManager.Instance.StopEnviromet();
+            m_director.Play();
         }
 
-        if (m_debugGameScene) return;
-
-        if (StageParent.Instance)
+        if (StageParent.Instance && !m_debugGameScene)
         {
             //ステージを非表示にする
             StageParent.Instance.GetAppearanceStagePrefab.SetActive(false);
@@ -143,7 +165,7 @@ public class GameSceneManager : EventReceiver<GameSceneManager>
 
         if (SceneLoader.Instance)
             //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
-            SceneLoader.Instance.LoadSelectSceneWithTap();
+            SceneLoader.Instance.LoadSceneWithTap(8f);
 
     }
 

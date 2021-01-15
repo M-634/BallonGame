@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 185436710055862062}
   - component: {fileID: 6076194061977021260}
   - component: {fileID: 6540962917356614187}
+  - component: {fileID: 3793470123782467902}
+  - component: {fileID: 8007535168954979630}
   m_Layer: 0
   m_Name: dust
   m_TagString: Untagged
@@ -79,6 +81,31 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &3793470123782467902
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2560261846301426628}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1476.4238, y: 612.82007, z: 131.8}
+  m_Center: {x: 1.5030823, y: 1.1890106, z: 42.53}
+--- !u!114 &8007535168954979630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2560261846301426628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d34ba180592f6a47b69ebaaa02bbe55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3233090342567474521
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +149,7 @@ GameObject:
   - component: {fileID: 4955352771634804414}
   - component: {fileID: 6211834990102154667}
   - component: {fileID: 3014544964359138027}
+  - component: {fileID: 4160917239572932110}
   m_Layer: 0
   m_Name: mesh
   m_TagString: Untagged
@@ -190,3 +218,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &4160917239572932110
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6689603378210632227}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 100.000015, y: 100, z: 100}
+  m_Center: {x: 0, y: 0.000011444091, z: -0.000032424927}

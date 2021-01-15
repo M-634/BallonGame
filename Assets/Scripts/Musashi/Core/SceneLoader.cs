@@ -70,16 +70,17 @@ public class SceneLoader : SingletonMonoBehavior<SceneLoader>
     }
 
     /// <summary>
-    /// GameScene → SelectScene
+    /// tap load
     /// </summary>
-    public void LoadSelectSceneWithTap()
+    public void LoadSceneWithTap(float waitTime = 2f)
     {
-        m_currentLoadCorutine = LoadWithTapCorutine(m_loadSelectSceneName);
+        m_currentLoadCorutine = LoadWithTapCorutine(m_loadSelectSceneName,waitTime);
         StartCoroutine(m_currentLoadCorutine);
     }
 
-    private IEnumerator LoadWithTapCorutine(string loadSceneName)
+    private IEnumerator LoadWithTapCorutine(string loadSceneName,float waitTime = 2f)
     {
+        yield return new WaitForSeconds(waitTime);
         m_fadeImage.raycastTarget = true;
         m_tapToLoadText.gameObject.SetActive(true);
 

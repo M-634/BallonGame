@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Net.NetworkInformation;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 /// <summary>
 /// ゲームシーンで起こるイベントをまとめたクラス
@@ -13,6 +14,8 @@ public class EventSystemInGameScene : MonoBehaviour
     public event Action GameStartEvent;
     public event Action GameOverEvent;
     public event Action GameClearEvent;
+
+    [SerializeField] UISetActiveControl m_ui; 
 
   
     public void ExecuteGameStartEvent()
@@ -33,7 +36,8 @@ public class EventSystemInGameScene : MonoBehaviour
 
     public void ExecuteGameClearEvent()
     {
-        GameClearEvent?.Invoke();
+        m_ui.GameClearImage.FadeInWithDoTween(2f,() => GameClearEvent?.Invoke());
+        //GameClearEvent?.Invoke();
         StageParent.Instance.GameClearState = GameClearState.GameClear;
     }
 }
