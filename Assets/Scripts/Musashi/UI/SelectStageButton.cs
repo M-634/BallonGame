@@ -94,6 +94,7 @@ public class SelectStageButton : MonoBehaviour, IPointerEnterHandler
     {
         if (SelectButton.interactable)
         {
+            SoundManager.Instance.PlayMenuSe("SelectStage");
             ShowStageInfo();
         }
     }

@@ -12,7 +12,6 @@ public class Cannon : MonoBehaviour
     [SerializeField] float m_startWaitTime;
     [SerializeField] float m_coolTime;
     [SerializeField] float m_bulletLifeTime;
-    [SerializeField] string m_shootSe;
 
     private void OnEnable()
     {
@@ -27,7 +26,7 @@ public class Cannon : MonoBehaviour
 
     IEnumerator CannonUpdate()
     {
-        float r = Random.Range(0.1f, 1f);
+        float r = Random.Range(1f, 10f);
         yield return new WaitForSeconds(m_startWaitTime + r);//ゲーム開始から何秒か経ってから起動する
         while (true)
         {
