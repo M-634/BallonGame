@@ -80,7 +80,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 232599577}
   m_Enabled: 1
-  m_VideoClip: {fileID: 0}
+  m_VideoClip: {fileID: 32900000, guid: 7a9242336d516674796b389f343bc201, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -514,14 +514,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162d868230feb944db8c09e82f6b7d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_stagePrefab: {fileID: 9087401732524288658, guid: 8cb2314741a5b0d4a9d22f5b745b2b19,
-    type: 3}
-  m_videoClip: {fileID: 32900000, guid: 7a9242336d516674796b389f343bc201, type: 3}
   m_videoPlayer: {fileID: 232599581}
   m_stageClearImage: {fileID: 2265373553806609114}
   m_unOpenedSprite: {fileID: 21300000, guid: 1d4ce5f0d5c854f40b7fd61591777fad, type: 3}
   m_openedSprite: {fileID: 21300000, guid: b957df5aeaf913144aa35f7bfb4e273e, type: 3}
-  m_stageNumber: 5
   m_clearTimeText: {fileID: 9158585862241389390}
   m_clearScoreText: {fileID: 2648244887160801157}
   m_stageNameText: {fileID: 3368113490307631953}
@@ -731,14 +727,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162d868230feb944db8c09e82f6b7d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_stagePrefab: {fileID: 9087401732524288658, guid: badaf7b8bd214d74b83ed7f9316ada40,
-    type: 3}
-  m_videoClip: {fileID: 32900000, guid: 7a9242336d516674796b389f343bc201, type: 3}
   m_videoPlayer: {fileID: 232599581}
   m_stageClearImage: {fileID: 1359161402629700163}
   m_unOpenedSprite: {fileID: 21300000, guid: a3623084e59b4bd4088f93a700bb533d, type: 3}
   m_openedSprite: {fileID: 21300000, guid: d12bbe724c1e87e4086d0c39242da1e1, type: 3}
-  m_stageNumber: 7
   m_clearTimeText: {fileID: 9158585862241389390}
   m_clearScoreText: {fileID: 2648244887160801157}
   m_stageNameText: {fileID: 3368113490307631953}
@@ -1155,14 +1147,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162d868230feb944db8c09e82f6b7d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_stagePrefab: {fileID: 9087401732524288658, guid: 4e2053ef6b04b3f4bafa4c1b7f56e86e,
-    type: 3}
-  m_videoClip: {fileID: 32900000, guid: 7a9242336d516674796b389f343bc201, type: 3}
   m_videoPlayer: {fileID: 232599581}
   m_stageClearImage: {fileID: 1147880266128833305}
   m_unOpenedSprite: {fileID: 21300000, guid: a3623084e59b4bd4088f93a700bb533d, type: 3}
   m_openedSprite: {fileID: 21300000, guid: 10ed8c76b298a324fbb5fb0e68f1dbd5, type: 3}
-  m_stageNumber: 3
   m_clearTimeText: {fileID: 9158585862241389390}
   m_clearScoreText: {fileID: 2648244887160801157}
   m_stageNameText: {fileID: 3368113490307631953}
@@ -1225,8 +1213,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
+  m_RaycastTarget: 0
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1532,7 +1520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc51574259dc3e40b628d49a5ba9da1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_stageNameText: {fileID: 0}
+  m_stageNameText: {fileID: 3368113490307631953}
 --- !u!1 &2781280437889038126
 GameObject:
   m_ObjectHideFlags: 0
@@ -1814,14 +1802,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162d868230feb944db8c09e82f6b7d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_stagePrefab: {fileID: 9087401732524288658, guid: ed723a468b8f19a43b67d1ed2cb7e8ce,
-    type: 3}
-  m_videoClip: {fileID: 32900000, guid: 7a9242336d516674796b389f343bc201, type: 3}
   m_videoPlayer: {fileID: 232599581}
   m_stageClearImage: {fileID: 1900294676160212411}
   m_unOpenedSprite: {fileID: 21300000, guid: 2f0feefcacceae94e9307e40efd1dbfe, type: 3}
   m_openedSprite: {fileID: 21300000, guid: 3274a374d21b7124c8ad40549f26f267, type: 3}
-  m_stageNumber: 4
   m_clearTimeText: {fileID: 9158585862241389390}
   m_clearScoreText: {fileID: 2648244887160801157}
   m_stageNameText: {fileID: 3368113490307631953}
@@ -1932,7 +1916,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -2449,14 +2433,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162d868230feb944db8c09e82f6b7d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_stagePrefab: {fileID: 9087401732524288658, guid: aa8ef7371839020488f4121546f07d8b,
-    type: 3}
-  m_videoClip: {fileID: 32900000, guid: 7a9242336d516674796b389f343bc201, type: 3}
   m_videoPlayer: {fileID: 232599581}
   m_stageClearImage: {fileID: 848320443842726961}
   m_unOpenedSprite: {fileID: 21300000, guid: 22ff22b19388f0742bfb1da294fa984e, type: 3}
   m_openedSprite: {fileID: 21300000, guid: e9af032d3ad5ecc488e1f8ca639fd4c6, type: 3}
-  m_stageNumber: 2
   m_clearTimeText: {fileID: 9158585862241389390}
   m_clearScoreText: {fileID: 2648244887160801157}
   m_stageNameText: {fileID: 3368113490307631953}
@@ -2703,14 +2683,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162d868230feb944db8c09e82f6b7d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_stagePrefab: {fileID: 9087401732524288658, guid: 57dbab009072b644c99e4fbecad3ce8f,
-    type: 3}
-  m_videoClip: {fileID: 32900000, guid: 7a9242336d516674796b389f343bc201, type: 3}
   m_videoPlayer: {fileID: 232599581}
   m_stageClearImage: {fileID: 3788426167904176991}
   m_unOpenedSprite: {fileID: 21300000, guid: 22ff22b19388f0742bfb1da294fa984e, type: 3}
   m_openedSprite: {fileID: 21300000, guid: 9646eb7c5e89a8642a870cda2fcb3fdb, type: 3}
-  m_stageNumber: 6
   m_clearTimeText: {fileID: 9158585862241389390}
   m_clearScoreText: {fileID: 2648244887160801157}
   m_stageNameText: {fileID: 3368113490307631953}
@@ -3219,14 +3195,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162d868230feb944db8c09e82f6b7d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_stagePrefab: {fileID: 9087401732524288658, guid: 180242eaff5c731479ef2e68fb3f24f0,
-    type: 3}
-  m_videoClip: {fileID: 32900000, guid: 7a9242336d516674796b389f343bc201, type: 3}
   m_videoPlayer: {fileID: 232599581}
   m_stageClearImage: {fileID: 3090902755701056904}
   m_unOpenedSprite: {fileID: 21300000, guid: 1d4ce5f0d5c854f40b7fd61591777fad, type: 3}
   m_openedSprite: {fileID: 21300000, guid: 0c3438204e544bd4bbad7ad0cb4707bf, type: 3}
-  m_stageNumber: 1
   m_clearTimeText: {fileID: 9158585862241389390}
   m_clearScoreText: {fileID: 2648244887160801157}
   m_stageNameText: {fileID: 3368113490307631953}
