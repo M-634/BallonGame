@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 /// </summary>
 public class TextAnimation : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI m_text;
+    [SerializeField] TextMeshProUGUI m_text = default;
     [SerializeField] float m_animationTime = 2f;
     [SerializeField] Color m_fadeColor;
     Sequence m_sequence;
@@ -31,3 +31,6 @@ public class TextAnimation : MonoBehaviour
         m_sequence.Pause();
     }
 }
+
+
+
