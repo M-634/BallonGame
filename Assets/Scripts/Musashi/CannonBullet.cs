@@ -5,26 +5,17 @@ using UnityEngine;
 public class CannonBullet : MonoBehaviour
 {
     Rigidbody m_rb;
-    Vector3 m_firstpos;
-
     private void Start()
     {
         m_rb = GetComponent<Rigidbody>();
-        m_firstpos = transform.position;
     }
 
-    public void Shoot(Vector3 dir)
+    public void Shoot(Vector3 dir,float lifeTime)
     {
         gameObject.SetActive(true);
         m_rb.AddForce(dir);
-        StartCoroutine(gameObject.SetActive(false,10f));
+        StartCoroutine(gameObject.SetActive(false,lifeTime));
     }
-
-    public void OnDisable()
-    {
-        transform.position = m_firstpos; 
-    }
-
 }
 
 public static class ExtendGameObjectClass

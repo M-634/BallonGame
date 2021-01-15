@@ -13,7 +13,6 @@ public class Obstacle : MonoBehaviour,IEventCollision
     public void CollisionEvent(EventSystemInGameScene eventSystem)
     {
         eventSystem.ExecuteGameOverEvent();
-        Debug.Log("GameOver!");
     }
 }
 

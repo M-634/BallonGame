@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6204894029793784256}
   - component: {fileID: 8520661957226768800}
   - component: {fileID: 1604485970606185511}
+  - component: {fileID: 7864891181407271569}
   m_Layer: 9
   m_Name: CannonBullet
   m_TagString: Untagged
@@ -123,4 +124,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084dbe008915d4c43bcb6e6639a768c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_muzzlePos: {fileID: 0}
+--- !u!114 &7864891181407271569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6204894029793784262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d34ba180592f6a47b69ebaaa02bbe55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
