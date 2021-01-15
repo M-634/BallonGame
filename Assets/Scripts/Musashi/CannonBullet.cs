@@ -12,7 +12,7 @@ public class CannonBullet : MonoBehaviour
 
     public void Shoot(Vector3 dir,float lifeTime)
     {
-       // gameObject.SetActive(true);
+        gameObject.SetActive(true);
         m_rb.AddForce(dir);
         StartCoroutine(gameObject.SetActive(false,lifeTime));
     }
