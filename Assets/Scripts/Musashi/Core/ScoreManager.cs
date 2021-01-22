@@ -12,121 +12,90 @@ using Unity.Collections.LowLevel.Unsafe;
 /// </summary>
 public class ScoreManager : EventReceiver<ScoreManager>
 {
-    private int m_currentScore = 0;
     [SerializeField] UISetActiveControl m_UISetActiveControl;
+    private int m_currentScore = 0;
     private int m_totalCoinNum;
     private int m_getCoinNum;
 
-    private void Start()
+    /// <summary>
+    /// ゲームシーン内のコインの総数を数える関数
+    /// </summary>
+    public void CountCoinNumber()
     {
         var coinNum = GameObject.FindGameObjectsWithTag("Coin");
         m_totalCoinNum = coinNum.Length;
         Debug.Log("Coin TotalNumber : " + m_totalCoinNum);
     }
 
-    /// <summary>
-    /// プレイヤーがコインに衝突したら呼ばれる関数
-    /// </summary>
-    public void GetCoin(int score)
+
+    public void GetScoreItem(int score, ItemType itemType)
     {
         m_currentScore += score;
-        m_getCoinNum++;
         m_UISetActiveControl.CurrentScoreText.text = "Score: " + m_currentScore;
 
+        if (itemType == ItemType.Coin) m_getCoinNum++;
     }
 
     /// <summary>
     /// ゲームクリア!
-    /// 獲得スコアと残り時間を表示。それらを掛け合わせたトータルスコアを表示する。
+    /// 獲得スコアとクリア時間を表示。
     /// ハイスコアを更新したらセーブする
     /// </summary>
-    public void Result(int leftTime)
+    public void DisplayResult(float clearTime)
     {
-        //int totalScore = m_currentScore * leftTime;
-       
-        int score = 0;
         Sequence sequence = DOTween.Sequence();
+
+        float time = 0;
+        sequence.Append(
+            DOTween.To(() => time, num => time = num, clearTime, 2f)
+            .OnUpdate(() => m_UISetActiveControl.ClearTimeScoreText.TimerInfo(time)));
+
+        int score = 0;
         sequence.Append(
         DOTween.To(() => score, num => score = num, m_currentScore, 2f)
-            .OnUpdate(() => m_UISetActiveControl.GetResulScoreText.text = "Score: " + score.ToString())
-            .OnComplete(() => Debug.Log("")));
-
-        int time = 0;
-        sequence.Append(
-            DOTween.To(() => time, num => time = num, leftTime, 2f)
-            .OnUpdate(() => m_UISetActiveControl.LeftTimeScoreText.text = "LeftTime;" + time.ToString())
-            .OnComplete(() => Debug.Log("")));
-
-        //int total = 0;
-        //sequence.Append(
-        //    DOTween.To(() => total, num => total = num, totalScore, 2f)
-        //    .OnUpdate(() => m_UISetActiveControl.TotalScoreText.text = "TotalScore:" + total.ToString())
-        //    .OnComplete(() =>
-        //    {
-        //        try
-        //        {
-        //            SaveAndLoad(totalScore, leftTime);//ここで意味不明なエラーが起きてる
-        //        }
-        //        catch (System.Exception e)
-        //        {
-        //            Debug.Log(e.Message);
-        //        }
-        //    }));
-
-        //ステージ内のコインの総数と獲得したコインの数の割合でランク付け（S～C）
-        int totalPoint = m_getCoinNum / m_totalCoinNum * 100;
-
-        m_UISetActiveControl.TotalScoreText.text = DetermineTheRank(totalPoint);
-        SaveAndLoad(totalPoint, leftTime);
+            .OnUpdate(() => m_UISetActiveControl.ResulScoreText.text = score.ToString()))
+            .OnComplete(() =>
+            {
+                //ステージ内のコインの総数と獲得したコインの数の割合でランク付け（A～C）
+                if (m_totalCoinNum == 0)
+                {
+                    m_UISetActiveControl.DetermineTheRank(0);
+                }
+                else
+                {
+                    int ratio = m_getCoinNum / m_totalCoinNum * 100;
+                    m_UISetActiveControl.DetermineTheRank(ratio);
+                }
+                SaveScoreAndTime(m_currentScore, clearTime);
+            });
     }
 
-    private string DetermineTheRank(int raito)
-    {
-        if (raito > 90)
-        {
-            return "S";
-        }
-        else if (raito > 70)
-        {
-            return "A";
-        }
-        else if (raito > 50)
-        {
-            return "B";
-        }
-        else
-        {
-            return "C";
-        } 
-    }
-
-
-    private void SaveAndLoad(int totalScore, int leftTime)
+    private void SaveScoreAndTime(int totalScore, float clearTime)
     {
         if (StageParent.Instance)
         {
             //ステージデータをセーブ
-            StageParent.Instance.GetAppearanceStageData.Save(totalScore, leftTime);
+            StageParent.Instance.GetAppearanceStageData.Save(totalScore, clearTime);
             //ステージを非表示にする
             StageParent.Instance.GetAppearanceStagePrefab.SetActive(false);
             //ステージを初期化する
             StageParent.Instance.Initialization();
         }
-        Debug.Log("aaa  ");
+
         if (SceneLoader.Instance)
         {
             //タップしたらセレクト画面に戻る(タップしてください。みたいなテキストを出す)
-            SceneLoader.Instance.LoadSelectSceneWithTap();
+            SceneLoader.Instance.LoadSceneWithTap(3f);
         }
     }
 
     protected override void OnEnable()
     {
-        m_eventSystemInGameScene.GetCoinEvent += GetCoin;
+        m_eventSystemInGameScene.GetItemEvent += GetScoreItem;
     }
 
     protected override void OnDisable()
     {
-        m_eventSystemInGameScene.GetCoinEvent -= GetCoin;
+        m_eventSystemInGameScene.GetItemEvent -= GetScoreItem;
     }
 }

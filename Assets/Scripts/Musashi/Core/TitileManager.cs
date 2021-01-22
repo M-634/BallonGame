@@ -11,6 +11,9 @@ public class TitileManager : MonoBehaviour
     [SerializeField] Button m_beginningBtn;
     [SerializeField] Button m_continueBtn;
 
+    [SerializeField] string m_TitleBGMName;
+    [SerializeField] string m_BtnClickClipName;
+
     private void Start()
     {
         if(SaveAndLoadWithJSON.IsFolderPath) 
@@ -19,9 +22,10 @@ public class TitileManager : MonoBehaviour
         }
         else
         {
-            m_continueBtn.interactable = false;
+           m_continueBtn.interactable = false;
         }
         StageParent.Instance.GameClearState = GameClearState.None;
+        SoundManager.Instance.PlayBGMWithFadeIn(m_TitleBGMName);
     }
 
     /// <summary>
@@ -29,6 +33,7 @@ public class TitileManager : MonoBehaviour
     /// </summary>
     public void OnBeginningBtn()
     {
+        SoundManager.Instance.PlayMenuSe(m_BtnClickClipName);
         SaveAndLoadWithJSON.DeleteSaveData();
         SceneLoader.Instance.LoadSelectScene();
     }
@@ -38,6 +43,7 @@ public class TitileManager : MonoBehaviour
     /// </summary>
     public void OnContinueBtn()
     {
+        SoundManager.Instance.PlayMenuSe(m_BtnClickClipName);
         SceneLoader.Instance.LoadSelectScene();
     }
 }

@@ -12,16 +12,33 @@ using DG.Tweening;
 /// </summary>
 public static class UGUIListnerExtension 
 {
+    ///// <summary>
+    ///// 時間を00:00形式でUIに表示する拡張クラス
+    ///// </summary>
+    ///// <param name="timerText"></param>
+    ///// <param name="time"></param>
+    //public static void TimerInfo(this Text timerText, int time) 
+    //{
+    //    int minute = time / 60;
+    //    float seconds = time - minute * 60;
+    //    timerText.text = minute.ToString("00") + ":" + ((int)seconds).ToString("00");
+    //}
+
     /// <summary>
-    /// 時間を00:00形式でUIに表示する拡張クラス
+    /// 時間を00:00.000形式でTextMeshProに表示する拡張クラス
     /// </summary>
-    /// <param name="timerText"></param>
-    /// <param name="time"></param>
-    public static void TimerInfo(this Text timerText, int time) 
+    /// <param name="time">秒数</param>
+    public static void TimerInfo(this TextMeshProUGUI timerText, float time,string addText = null)
     {
-        int minute = time / 60;
-        float seconds = time - minute * 60;
-        timerText.text = minute.ToString("00") + ":" + ((int)seconds).ToString("00");
+        int minutes = (int)time / 60;
+        float seconds = time - minutes * 60;
+        float mseconds = time * 1000 / 1000;
+        timerText.text = addText + string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, mseconds);
+    }
+
+    public static void ClearScoreText(this TextMeshProUGUI scoreText,int score)
+    {
+        scoreText.text = "ClearScore:" + score.ToString();
     }
 
     public static void Show(this CanvasGroup canvasGroup)

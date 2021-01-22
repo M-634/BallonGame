@@ -9,9 +9,7 @@ using UnityEngine.UI;
 /// </summary>
 public class VolumeConfigUI : MonoBehaviour
 {
-    public bool m_isDubug;
 
-    [SerializeField] CanvasGroup m_canvasGroup;
     [SerializeField, Header("各種Sliderをセットする")]
     Slider m_masterSlider, m_bgmSlider, m_seSlider, m_envSlider;
 
@@ -21,31 +19,18 @@ public class VolumeConfigUI : MonoBehaviour
     {
         if (SoundManager.Instance)
         {
-            //設定画面のボリュームsliderの初期化
+            //設定画面のボリュームsliderにイベントを登録
             SetMaseterSliderEvent(vol => SoundManager.Instance.MasterVolume = vol);
             SetBGMSliderEvent(vol => SoundManager.Instance.BGMVolume = vol);
             SetGameSeSliderEvent(vol => SoundManager.Instance.GameSeVolume = vol);
             SetEnvSliderEvent(vol => SoundManager.Instance.EnvironmentVolume = vol);
-        }
 
-        if (m_isDubug)
-        {
-            Show();
+            //sliderにAudioMixerの初期ボリュームをセットする
+            SetMasterVolume(SoundManager.Instance.MasterVolume);
+            SetBGMVolume(SoundManager.Instance.BGMVolume);
+            SetSeVolume(SoundManager.Instance.GameSeVolume);
+            SetEnvVolume(SoundManager.Instance.EnvironmentVolume);
         }
-        else
-        {
-            Hide();
-        }
-    }
-
-    public void Show()
-    {
-        m_canvasGroup.Show();
-    }
-
-    public void Hide()
-    {
-        m_canvasGroup.Hide();
     }
 
     public void SetMasterVolume(float masterVolume)

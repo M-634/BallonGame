@@ -12,21 +12,19 @@ public class GameSePlayer : MonoBehaviour
     [SerializeField] List<AudioClip> m_audioClipList = new List<AudioClip>();
     AudioSource m_audioSource;
 
-    /// <summary>
-    /// このコンポーネントをアタッチされた時に呼ばれる関数
-    /// </summary>
-    private void Reset()
+    private void Start()
     {
         m_audioSource = GetComponent<AudioSource>();
         m_audioSource.playOnAwake = false;
         m_audioSource.spatialBlend = 0.7f;
     }
 
-    public void PlayFirstAudioClip()
+    public void PlayFirstAudioClip(float range = 0.5f)
     {
         if (m_audioClipList.Count > 0)
         {
-            m_audioSource.pitch = 1f;
+            //m_audioSource.pitch = 1f;
+            m_audioSource.pitch = Random.Range(1f - range, 1f + range);
             m_audioSource.Play(m_audioClipList[0]);
         }
     }
@@ -48,7 +46,7 @@ public class GameSePlayer : MonoBehaviour
     public void PlaySePitchRandomize(string clipName, float range = 0.5f)
     {
         var audioClip = m_audioClipList.FirstOrDefault(clip => clip.name == clipName);
-        
+
         if (audioClip)
         {
             m_audioSource.pitch = Random.Range(1f - range, 1f + range);

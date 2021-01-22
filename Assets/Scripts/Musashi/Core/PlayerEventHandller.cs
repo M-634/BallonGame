@@ -19,10 +19,10 @@ public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
 
     protected override void Awake()
     {
-        if (m_doDebugPlayerMove) return;
+        base.Awake();
+        //if (m_doDebugPlayerMove) return;
         m_rb = GetComponent<Rigidbody>();
         m_rb.constraints = RigidbodyConstraints.FreezePosition;
-        base.Awake();
     }
 
 
@@ -34,6 +34,7 @@ public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
     {
         if (collision.gameObject.TryGetComponent<IEventCollision>(out var eventCollision))
         {
+            Debug.Log(collision.gameObject.name);
             eventCollision.CollisionEvent(m_eventSystemInGameScene);
         }
     }
@@ -46,6 +47,7 @@ public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
     {
         if (other.gameObject.TryGetComponent<IEventCollision>(out var eventCollision))
         {
+            Debug.Log(other.gameObject.name);
             eventCollision.CollisionEvent(m_eventSystemInGameScene);
         }
     }
@@ -54,7 +56,6 @@ public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
     {
         m_rb.constraints = RigidbodyConstraints.None;
         InGame = true;
-
     }
 
     public void EndGaem()
@@ -65,11 +66,11 @@ public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
 
     protected override void OnEnable()
     {
-        if (m_doDebugPlayerMove)
-        {
-            InGame = true;
-            return;
-        }
+        //if (m_doDebugPlayerMove)
+        //{
+        //    InGame = true;
+        //    return;
+        //}
         m_eventSystemInGameScene.GameStartEvent += GameStart;
         m_eventSystemInGameScene.GameClearEvent += EndGaem;
         m_eventSystemInGameScene.GameOverEvent += EndGaem;
@@ -77,7 +78,7 @@ public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
 
     protected override void OnDisable()
     {
-        if (m_doDebugPlayerMove) return;
+        //if (m_doDebugPlayerMove) return;
         m_eventSystemInGameScene.GameStartEvent -= GameStart;
         m_eventSystemInGameScene.GameClearEvent -= EndGaem;
         m_eventSystemInGameScene.GameOverEvent -= EndGaem;
